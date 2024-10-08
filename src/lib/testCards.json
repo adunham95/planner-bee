@@ -1,0 +1,16 @@
+{
+	"cards": [
+		{
+			"sku": "BASC",
+			"name": "Basic Ecard",
+			"description": "Basic Ecard",
+			"colors": ["#AF8E7C", "#1FF324", "#03D371", "#603B55"],
+			"messages": [
+				{ "name": "Birthday", "message": "Happy Birthday" },
+				{ "name": "Anniversary", "message": "Happy Birthday" }
+			],
+			"customMessage": true,
+			"cost": 299
+		}
+	]
+}
