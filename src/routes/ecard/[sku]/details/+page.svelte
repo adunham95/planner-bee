@@ -1,4 +1,4 @@
-<script>
+<script lang="ts">
 	export let data;
 
 	console.log(data);
@@ -90,7 +90,7 @@
 						</div>
 						<div aria-hidden="true" class="ml-4 text-sm text-gray-300">·</div>
 						<div class="ml-4 flex">
-							<a href="#" class="text-sm font-medium text-indigo-600 hover:text-indigo-500"
+							<a href="/" class="text-sm font-medium text-indigo-600 hover:text-indigo-500"
 								>See all 512 reviews</a
 							>
 						</div>
@@ -144,10 +144,10 @@
 						</div>
 
 						<fieldset aria-label="Choose a size" class="mt-2">
-							<div class="grid grid-cols-3 gap-3 sm:grid-cols-6">
+							<div class="flex gap-3">
 								{#each data?.product.messages as type}
 									<label
-										class="flex cursor-pointer items-center justify-center rounded-md border px-3 py-3 text-sm font-medium uppercase focus:outline-none sm:flex-1"
+										class="flex cursor-pointer items-center justify-center rounded-md border px-3 py-3 text-sm font-medium uppercase focus:outline-none sm:flex-1 min-[100px]:"
 									>
 										<input type="radio" name="size-choice" value={type.name} class="sr-only" />
 										<p>{type.name}</p>
