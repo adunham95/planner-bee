@@ -13,7 +13,7 @@
 
 <div class="relative">
 	<div class="mx-auto max-w-7xl px-8">
-		<div class="grid grid-cols-4 gap-x-8 gap-y-10 py-16">
+		<div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-x-8 gap-y-10 pb-16">
 			{#each products.cards as item}
 				<div
 					class="group relative flex flex-col overflow-hidden rounded-lg border border-gray-200 bg-white"

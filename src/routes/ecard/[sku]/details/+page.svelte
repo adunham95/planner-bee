@@ -159,6 +159,17 @@
 
 					<div class="mt-8">
 						<div class="flex items-center justify-between">
+							<h2 class="text-sm font-medium text-gray-900">Headline</h2>
+						</div>
+						<input
+							name="text"
+							id="text"
+							class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+						/>
+					</div>
+
+					<div class="mt-8">
+						<div class="flex items-center justify-between">
 							<h2 class="text-sm font-medium text-gray-900">Message</h2>
 						</div>
 						<textarea
@@ -172,8 +183,9 @@
 					<button
 						type="submit"
 						class="mt-8 flex w-full items-center justify-center rounded-md border border-transparent bg-indigo-600 px-8 py-3 text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
-						>Add to cart</button
 					>
+						Send Card
+					</button>
 				</form>
 
 				<!-- Product details -->
