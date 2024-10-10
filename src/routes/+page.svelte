@@ -1,5 +1,8 @@
 <script>
 	import PhoneMock from '$lib/components/phoneMock.svelte';
+
+	export let data;
+	console.log({ data });
 </script>
 
 <h1>Welcome to SvelteKit</h1>

@@ -4,6 +4,9 @@
 	let mobileMenuOpen = false;
 
 	const links = [{ name: 'eCards', href: '/ecard' }];
+
+	export let data;
+	console.log('data', data);
 </script>
 
 <div class="bg-white">
@@ -45,6 +48,15 @@
 				<!-- Links -->
 
 				<div class="space-y-6 border-t border-gray-200 px-4 py-6">
+					{#if !data?.user}
+						<div class="flex flex-1 items-center space-x-3">
+							<a href="/login" class="-m-2 block p-2 font-medium text-gray-900"> Sign in </a>
+							<span class="h-6 w-px bg-gray-200" aria-hidden="true"></span>
+							<a href="/sign-up" class="-m-2 block p-2 font-medium text-gray-900">
+								Create account
+							</a>
+						</div>
+					{/if}
 					{#each links as link}
 						<div class="flow-root">
 							<a href={link.href} class="-m-2 block p-2 font-medium text-gray-900">{link.name}</a>
@@ -107,24 +119,37 @@
 
 					<div class="flex flex-1 items-center justify-end">
 						<!-- Account -->
-						<a href="#" class="p-2 text-gray-400 hover:text-gray-500 lg:ml-4">
-							<span class="sr-only">Account</span>
-							<svg
-								class="h-6 w-6"
-								fill="none"
-								viewBox="0 0 24 24"
-								stroke-width="1.5"
-								stroke="currentColor"
-								aria-hidden="true"
-								data-slot="icon"
-							>
-								<path
-									stroke-linecap="round"
-									stroke-linejoin="round"
-									d="M15.75 6a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0ZM4.501 20.118a7.5 7.5 0 0 1 14.998 0A17.933 17.933 0 0 1 12 21.75c-2.676 0-5.216-.584-7.499-1.632Z"
-								/>
-							</svg>
-						</a>
+
+						{#if data?.user}
+							<a href="#" class="p-2 text-gray-400 hover:text-gray-500 lg:ml-4">
+								<span class="sr-only">Account</span>
+								<svg
+									class="h-6 w-6"
+									fill="none"
+									viewBox="0 0 24 24"
+									stroke-width="1.5"
+									stroke="currentColor"
+									aria-hidden="true"
+									data-slot="icon"
+								>
+									<path
+										stroke-linecap="round"
+										stroke-linejoin="round"
+										d="M15.75 6a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0ZM4.501 20.118a7.5 7.5 0 0 1 14.998 0A17.933 17.933 0 0 1 12 21.75c-2.676 0-5.216-.584-7.499-1.632Z"
+									/>
+								</svg>
+							</a>
+						{:else}
+							<div class="hidden sm:flex flex-1 items-center justify-end lg:space-x-6 space-x-3">
+								<a href="/login" class="text-sm font-medium text-gray-700 hover:text-gray-800">
+									Sign in
+								</a>
+								<span class="h-6 w-px bg-gray-200" aria-hidden="true"></span>
+								<a href="/sign-up" class="text-sm font-medium text-gray-700 hover:text-gray-800">
+									Create account
+								</a>
+							</div>
+						{/if}
 
 						<!-- Cart -->
 						<div class="ml-4 flow-root lg:ml-6">
