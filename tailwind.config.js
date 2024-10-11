@@ -33,5 +33,8 @@ export default {
 			}
 		}
 	},
-	plugins: []
+	corePlugins: {
+		aspectRatio: false
+	},
+	plugins: ['@tailwindcss/forms', '@tailwindcss/container-queries', '@tailwindcss/aspect-ratio']
 };
