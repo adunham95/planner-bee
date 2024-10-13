@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { generateID } from '$helpers/generateId';
+	import { generateID } from '../../utils/generateID';
 	import TextInput from './TextInput.svelte';
 
 	export let inputType = 'text';
@@ -21,6 +21,7 @@
 	{#each array as item}
 		<li class="flex items-center justify-between py-3">
 			<TextInput
+				label={item.id}
 				class="w-full"
 				id={`datetime-test-${item.id}`}
 				{placeholder}
