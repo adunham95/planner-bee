@@ -30,31 +30,32 @@ model Session {
 }
 
 model ECard {
-  id             String               @id @default(uuid())
-  sku            String               @unique
-  name           String
-  description    String
-  cost           Int
-  customizations ECardCustomization[]
-  cartIems       CartItem[]
+  id          String           @id @default(uuid())
+  sku         String           @unique
+  name        String
+  description String
+  cost        Int
+  components  ECardComponent[]
+  cartIems    CartItem[]
 
   @@index([sku])
 }
 
-model ECardCustomization {
-  id      String                     @id @default(uuid())
-  ecardID String
-  eCard   ECard                      @relation(references: [id], fields: [ecardID])
-  value   String
-  options ECardCustomizationOption[]
+model ECardComponent {
+  id          String                 @id @default(uuid())
+  ecardID     String
+  eCard       ECard                  @relation(references: [id], fields: [ecardID])
+  value       String
+  options     ECardComponentOption[]
+  cartOptions CartItemOption[]
 }
 
-model ECardCustomizationOption {
-  id                   String             @id @default(uuid())
-  ecardCustomizationID String
-  ecardCustomization   ECardCustomization @relation(references: [id], fields: [ecardCustomizationID])
-  key                  String
-  value                String
+model ECardComponentOption {
+  id               String         @id @default(uuid())
+  ecardComponentID String
+  ecardComponent   ECardComponent @relation(references: [id], fields: [ecardComponentID])
+  key              String
+  value            String
 }
 
 model Cart {
@@ -72,9 +73,10 @@ model CartItem {
 }
 
 model CartItemOption {
-  id         String   @id @default(uuid())
-  cartItemID String
-  cartItem   CartItem @relation(references: [id], fields: [cartItemID])
-  key        String
-  value      String
+  id               String         @id @default(uuid())
+  cartItemID       String
+  cartItem         CartItem       @relation(references: [id], fields: [cartItemID])
+  value            String
+  ecardComponentID String
+  ecardComponent   ECardComponent @relation(references: [id], fields: [ecardComponentID])
 }
