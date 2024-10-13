@@ -30,31 +30,40 @@ model Session {
 }
 
 model ECard {
-  id          String           @id @default(uuid())
-  sku         String           @unique
+  id          String               @id @default(uuid())
+  sku         String               @unique
   name        String
   description String
   cost        Int
-  components  ECardComponent[]
+  components  ECardCustomization[]
   cartIems    CartItem[]
 
   @@index([sku])
 }
 
+model ECardCustomization {
+  id               String         @id @default(uuid())
+  ecardComponentID String
+  ecardComponent   ECardComponent @relation(references: [id], fields: [ecardComponentID])
+  ecardID          String
+  ecard            ECard          @relation(references: [id], fields: [ecardID])
+}
+
 model ECardComponent {
-  id          String                 @id @default(uuid())
-  ecardID     String
-  eCard       ECard                  @relation(references: [id], fields: [ecardID])
-  value       String
-  options     ECardComponentOption[]
-  cartOptions CartItemOption[]
+  id                 String                 @id @default(uuid())
+  ecardCustomization ECardCustomization[]
+  componentKey       String
+  title              String
+  description        String
+  value              String
+  options            ECardComponentOption[]
+  cartOptions        CartItemOption[]
 }
 
 model ECardComponentOption {
   id               String         @id @default(uuid())
   ecardComponentID String
   ecardComponent   ECardComponent @relation(references: [id], fields: [ecardComponentID])
-  key              String
   value            String
 }
 
