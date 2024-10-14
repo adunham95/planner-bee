@@ -19,7 +19,12 @@
 		<Checklist
 			class="col-span-2"
 			name="components"
-			options={data.eCardComponents.map((c) => ({ ...c, subtitle: c.description, checked: false }))}
+			options={data.eCardComponents.map((c) => ({
+				id: c.id,
+				title: c.name,
+				subtitle: c.description,
+				checked: false
+			}))}
 		/>
 		<div>
 			<button type="submit">Save</button>

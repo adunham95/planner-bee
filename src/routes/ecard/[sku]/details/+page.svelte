@@ -1,4 +1,5 @@
 <script lang="ts">
+	import EcardEditComponent from '$lib/components/EcardEditComponent.svelte';
 	import { formatCurrency } from '$lib/utils/formatCurrency.js';
 
 	export let data;
@@ -31,71 +32,11 @@
 
 			<div class="mt-8 lg:col-span-5">
 				<form>
-					<!-- Color picker -->
-					<div>
-						<h2 class="text-sm font-medium text-gray-900">Color</h2>
-
-						<!-- <fieldset aria-label="Choose a color" class="mt-2">
-							<div class="flex items-center space-x-3">
-								{#each data?.product.colors as color}
-									<label
-										aria-label="Black"
-										class="relative -m-0.5 flex cursor-pointer items-center justify-center rounded-full p-0.5 ring-gray-900 focus:outline-none"
-									>
-										<input type="radio" name="color-choice" value="Black" class="sr-only" />
-										<span
-											style="background-color: {color}"
-											aria-hidden="true"
-											class="h-8 w-8 rounded-full border border-black border-opacity-10 bg-gray-900"
-										></span>
-									</label>
-								{/each}
-							</div>
-						</fieldset> -->
-					</div>
-
-					<!-- Size picker -->
-					<div class="mt-8">
-						<div class="flex items-center justify-between">
-							<h2 class="text-sm font-medium text-gray-900">Size</h2>
+					{#each data?.product.components as component}
+						<div>
+							<EcardEditComponent componentKey={component.ecardComponentID} />
 						</div>
-
-						<!-- <fieldset aria-label="Choose a size" class="mt-2">
-							<div class="flex gap-3">
-								{#each data?.product.messages as type}
-									<label
-										class="flex cursor-pointer items-center justify-center rounded-md border px-3 py-3 text-sm font-medium uppercase focus:outline-none sm:flex-1 min-[100px]:"
-									>
-										<input type="radio" name="size-choice" value={type.name} class="sr-only" />
-										<p>{type.name}</p>
-									</label>
-								{/each}
-							</div>
-						</fieldset> -->
-					</div>
-
-					<div class="mt-8">
-						<div class="flex items-center justify-between">
-							<h2 class="text-sm font-medium text-gray-900">Headline</h2>
-						</div>
-						<input
-							name="text"
-							id="text"
-							class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-						/>
-					</div>
-
-					<div class="mt-8">
-						<div class="flex items-center justify-between">
-							<h2 class="text-sm font-medium text-gray-900">Message</h2>
-						</div>
-						<textarea
-							name="message"
-							id="message"
-							rows="4"
-							class="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
-						/>
-					</div>
+					{/each}
 
 					<a
 						href="/order"

@@ -1,10 +1,9 @@
 import prisma from '$lib/prisma';
 import { fail } from '@sveltejs/kit';
 import type { Actions } from './$types';
+import { eCardComponents } from '$lib/ecardComponents';
 
 export const load = async () => {
-	const eCardComponents = await prisma.eCardComponent.findMany({ include: { options: true } });
-
 	return { eCardComponents };
 };
 
@@ -42,7 +41,7 @@ export const actions: Actions = {
 			});
 		}
 
-		const ecard = await prisma.eCard.create({
+		const ecard = await prisma.eCardTemplate.create({
 			data: {
 				name,
 				description: description || '',

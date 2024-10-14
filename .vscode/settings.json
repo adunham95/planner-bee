@@ -1,0 +1,14 @@
+{
+	"sqltools.connections": [
+		{
+			"previewLimit": 50,
+			"server": "localhost",
+			"port": 5432,
+			"driver": "PostgreSQL",
+			"name": "Planner Bee Cards",
+			"database": "planner_bee-cards",
+			"username": "postgres",
+			"password": "Apd@21295"
+		}
+	]
+}

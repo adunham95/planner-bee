@@ -29,42 +29,23 @@ model Session {
   user User @relation(references: [id], fields: [userId], onDelete: Cascade)
 }
 
-model ECard {
-  id          String               @id @default(uuid())
-  sku         String               @unique
+model ECardTemplate {
+  id          String           @id @default(uuid())
+  sku         String           @unique
   name        String
   description String
   cost        Int
-  components  ECardCustomization[]
+  components  ECardComponent[]
   cartIems    CartItem[]
 
   @@index([sku])
 }
 
-model ECardCustomization {
-  id               String         @id @default(uuid())
-  ecardComponentID String
-  ecardComponent   ECardComponent @relation(references: [id], fields: [ecardComponentID])
-  ecardID          String
-  ecard            ECard          @relation(references: [id], fields: [ecardID])
-}
-
 model ECardComponent {
-  id                 String                 @id @default(uuid())
-  ecardCustomization ECardCustomization[]
-  componentKey       String
-  title              String
-  description        String?
-  value              String?
-  options            ECardComponentOption[]
-  cartOptions        CartItemOption[]
-}
-
-model ECardComponentOption {
-  id               String         @id @default(uuid())
+  id               String        @id @default(uuid())
   ecardComponentID String
-  ecardComponent   ECardComponent @relation(references: [id], fields: [ecardComponentID])
-  value            String
+  ecardID          String
+  ecard            ECardTemplate @relation(references: [id], fields: [ecardID])
 }
 
 model Cart {
@@ -77,15 +58,14 @@ model CartItem {
   cartID   String
   cart     Cart             @relation(references: [id], fields: [cartID], onDelete: Cascade)
   ecardSku String
-  eCard    ECard            @relation(references: [sku], fields: [ecardSku])
+  eCard    ECardTemplate    @relation(references: [sku], fields: [ecardSku])
   options  CartItemOption[]
 }
 
 model CartItemOption {
-  id               String         @id @default(uuid())
+  id               String   @id @default(uuid())
   cartItemID       String
-  cartItem         CartItem       @relation(references: [id], fields: [cartItemID])
+  cartItem         CartItem @relation(references: [id], fields: [cartItemID])
   value            String
   ecardComponentID String
-  ecardComponent   ECardComponent @relation(references: [id], fields: [ecardComponentID])
 }

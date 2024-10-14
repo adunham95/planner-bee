@@ -1,6 +1,7 @@
 import prisma from '$lib/prisma';
 import { error } from '@sveltejs/kit';
 import type { PageServerLoad } from './$types';
+import { eCardComponents } from '$lib/ecardComponents';
 
 export const load: PageServerLoad = async (event) => {
 	// console.log({ user: event.locals });
@@ -25,6 +26,7 @@ export const load: PageServerLoad = async (event) => {
 	}
 
 	return {
-		product
+		product,
+		eCardComponents
 	};
 };
