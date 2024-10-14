@@ -1,4 +1,5 @@
 import prisma from '$lib/prisma';
+import { error } from '@sveltejs/kit';
 import type { PageServerLoad } from './$types';
 
 export const load: PageServerLoad = async (event) => {
@@ -15,7 +16,11 @@ export const load: PageServerLoad = async (event) => {
 	console.log({ product });
 
 	// if (!product) redirect(404, '/404');
-	if (!product) throw new Error('Product not found');
+	if (!product) {
+		error(404, {
+			message: 'Not found'
+		});
+	}
 
 	return {
 		product
