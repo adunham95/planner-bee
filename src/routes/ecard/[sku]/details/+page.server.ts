@@ -15,7 +15,6 @@ export const load: PageServerLoad = async (event) => {
 
 	console.log({ product });
 
-	// if (!product) redirect(404, '/404');
 	if (!product) {
 		error(404, {
 			message: 'Not found'
