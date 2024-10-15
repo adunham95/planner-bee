@@ -34,7 +34,11 @@
 				<form>
 					{#each data?.product.components as component}
 						<div>
-							<EcardEditComponent componentKey={component.ecardComponentID} />
+							<EcardEditComponent
+								label={component.label}
+								value={component.default}
+								componentKey={component.ecardComponentID}
+							/>
 						</div>
 					{/each}
 

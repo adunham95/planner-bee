@@ -5,6 +5,8 @@
 	import TextInput from './Inputs/TextInput.svelte';
 
 	export let componentKey: string;
+	export let label: string | null | undefined = undefined;
+	export let value: string | null | undefined = undefined;
 
 	$: component = eCardComponents.find((c) => c.id === componentKey);
 
@@ -14,13 +16,13 @@
 {#if !component}
 	<p>Error loading {componentKey}</p>
 {:else if component.editComponentKey === 'text'}
-	<TextInput label={component.name} id="textInput" showLabel />
+	<TextInput label={label || component.name} id="textInput" showLabel {value} />
 {:else if component.editComponentKey === 'textArea'}
-	<TextArea label={component.name} id="textArea" showLabel class="col-span-2" />
+	<TextArea label={label || component.name} id="textArea" showLabel class="col-span-2" {value} />
 {:else if component.editComponentKey === 'colorPicker'}
 	<ColorInput
 		groupName={component.id}
-		label={component.name}
+		label={label || component.name}
 		id="colorPicker"
 		options={component.options}
 		showLabel
