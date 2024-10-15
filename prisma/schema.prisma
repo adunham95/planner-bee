@@ -46,6 +46,9 @@ model ECardComponent {
   ecardComponentID String
   ecardID          String
   ecard            ECardTemplate @relation(references: [id], fields: [ecardID])
+  label            String?       @default("")
+  editaable        Boolean?      @default(false)
+  default          String?       @default("")
 }
 
 model Cart {

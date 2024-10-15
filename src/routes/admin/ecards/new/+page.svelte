@@ -1,5 +1,6 @@
 <script lang="ts">
 	import { enhance } from '$app/forms';
+	import ComponentList from '$lib/components/ComponentList.svelte';
 	import SmallContainer from '$lib/components/Containers/SmallContainer.svelte';
 	import Checklist from '$lib/components/Inputs/Checklist.svelte';
 	import TextArea from '$lib/components/Inputs/TextArea.svelte';
@@ -16,14 +17,12 @@
 		<TextInput label="SKU" id="sku" showLabel />
 		<TextInput type="number" min="0" label="Price" id="price" showLabel />
 		<TextArea label="Description" id="description" showLabel class="col-span-2" />
-		<Checklist
+		<ComponentList
+			groupName="component"
 			class="col-span-2"
-			name="components"
-			options={data.eCardComponents.map((c) => ({
+			components={data.eCardComponents.map((c) => ({
 				id: c.id,
-				title: c.name,
-				subtitle: c.description,
-				checked: false
+				label: c.name
 			}))}
 		/>
 		<div>
