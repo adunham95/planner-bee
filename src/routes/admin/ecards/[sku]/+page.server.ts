@@ -90,6 +90,9 @@ export const actions: Actions = {
 		//Delete all the ones we have removed
 		await prisma.eCardComponent.deleteMany({
 			where: {
+				ecardID: {
+					equals: id
+				},
 				ecardComponentID: {
 					notIn: components
 				}
