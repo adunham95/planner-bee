@@ -12,6 +12,7 @@
 <SmallContainer>
 	<h1>New eCard Template</h1>
 	<form method="POST" use:enhance class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+		<input type="hidden" name="id" value={data.product.id} />
 		<TextInput value={data.product.name} label="Name" id="name" showLabel />
 		<TextInput value={data.product.sku} label="SKU" id="sku" showLabel />
 		<TextInput value={data.product.cost} type="number" min="0" label="Price" id="price" showLabel />
