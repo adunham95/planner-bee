@@ -4,14 +4,22 @@ export const eCardComponents = [
 		name: 'Color',
 		description: 'Pick a color',
 		editComponentKey: 'colorPicker',
-		displayComponentKey: 'color'
+		displayComponentKey: 'color',
+		options: [{ id: '#ff0000', title: 'Red' }]
 	},
 	{
 		id: 'custom-color',
 		name: 'Custom Color',
 		description: 'Pick a color',
 		editComponentKey: 'colorPicker',
-		displayComponentKey: 'color'
+		displayComponentKey: 'color',
+		options: [
+			{ id: '#FF4500', title: 'Orange Red' },
+			{ id: '#FFFAFA', title: 'Snow' },
+			{ id: '#FFF8DC', title: 'Cornsilk' },
+			{ id: '#A0522D', title: 'Sienna' },
+			{ id: '#D2691E', title: 'Chocolate' }
+		]
 	},
 	{
 		id: 'title',
