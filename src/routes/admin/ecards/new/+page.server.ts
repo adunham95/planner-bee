@@ -26,11 +26,11 @@ export const actions: Actions = {
 		} = {};
 
 		[...data.entries()]
-			.filter(([key]) => key.startsWith('component-'))
+			.filter(([key]) => key.startsWith('component%%'))
 			.forEach(([key, value]) => {
 				console.log({ key, value });
-				const randomID = key.split('-')[1];
-				const val = key.split('-')[2];
+				const randomID = key.split('%%')[1];
+				const val = key.split('%%')[2];
 				if (!eCardComponents[randomID]) {
 					eCardComponents[randomID] = { ecardComponentID: '' };
 				}

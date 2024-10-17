@@ -47,7 +47,7 @@ model ECardComponent {
   ecardID          String
   ecard            ECardTemplate @relation(references: [id], fields: [ecardID])
   label            String?       @default("")
-  editaable        Boolean?      @default(false)
+  editable         Boolean?      @default(false)
   default          String?       @default("")
 }
 

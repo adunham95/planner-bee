@@ -40,10 +40,33 @@ export const actions: Actions = {
 		const sku = data.get('sku');
 		const price = data.get('price');
 
-		const components: string[] =
-			data.getAll('components').filter((a): a is string => {
-				return typeof a === 'string' && a !== '';
-			}) || [];
+		console.log('dataEntries', [...data.entries()]);
+
+		const eCardComponents: {
+			[key: string]: {
+				label?: string;
+				ecardComponentID: string;
+				default?: string;
+				editable?: string;
+				id?: string;
+				action?: string;
+				[key: string]: unknown;
+			};
+		} = {};
+
+		[...data.entries()]
+			.filter(([key]) => key.startsWith('component%%'))
+			.forEach(([key, value]) => {
+				console.log({ key, value });
+				const randomID = key.split('%%')[1];
+				const val = key.split('%%')[2];
+				if (!eCardComponents[randomID]) {
+					eCardComponents[randomID] = { ecardComponentID: '' };
+				}
+				eCardComponents[randomID][val] = value;
+			});
+
+		console.log({ eCardComponents });
 
 		if (!id || typeof id !== 'string') {
 			return fail(400, {
@@ -87,6 +110,10 @@ export const actions: Actions = {
 			}
 		});
 
+		const slotsToDelete = Object.values(eCardComponents)
+			.filter((c) => c.id !== undefined && c.action === 'remove')
+			.map((c) => c.id || '');
+
 		//Delete all the ones we have removed
 		await prisma.eCardComponent.deleteMany({
 			where: {
@@ -94,30 +121,51 @@ export const actions: Actions = {
 					equals: id
 				},
 				ecardComponentID: {
-					notIn: components
-				}
-			}
-		});
-
-		//Current components
-		const currentComponents = await prisma.eCardComponent.findMany({
-			where: {
-				ecardID: {
-					equals: id
+					in: slotsToDelete
 				}
 			}
 		});
 
 		//Add new ones
 		await prisma.eCardComponent.createMany({
-			data: components
-				.filter((a: string) => !currentComponents.some((b) => b.ecardComponentID === a))
-				.map((a: string) => ({
+			data: Object.values(eCardComponents)
+				.filter((c) => c.action === 'add')
+				.map((c) => ({
 					ecardID: id,
-					ecardComponentID: a
+					ecardComponentID: c.ecardComponentID,
+					label: c.label,
+					default: c.default,
+					editable: c.editable === 'on'
 				}))
 		});
 
+		const valuesToUpdate = Object.values(eCardComponents)
+			.filter((c) => c.action === 'undefined')
+			.map((c) => ({
+				id: c.id,
+				ecardID: id,
+				ecardComponentID: c.ecardComponentID,
+				label: c.label,
+				default: c.default,
+				editable: c.editable === 'on'
+			}));
+
+		for (let index = 0; index < valuesToUpdate.length; index++) {
+			const element = valuesToUpdate[index];
+			await prisma.eCardComponent.update({
+				where: {
+					id: element.id
+				},
+				data: {
+					ecardComponentID: element.ecardComponentID,
+					label: element.label,
+					default: element.default,
+					editable: element.editable || true
+				}
+			});
+		}
+
+		return { success: true };
 		return { ecard };
 	}
 };
