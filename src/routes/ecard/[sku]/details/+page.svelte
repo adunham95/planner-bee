@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { enhance } from '$app/forms';
 	import EcardEditComponent from '$lib/components/EcardEditComponent.svelte';
 	import { formatCurrency } from '$lib/utils/formatCurrency.js';
 
@@ -31,7 +32,7 @@
 			</div>
 
 			<div class="mt-8 lg:col-span-5">
-				<form>
+				<form method="POST" use:enhance>
 					{#each data?.product.components.filter((c) => c.editable) as component}
 						<div>
 							<EcardEditComponent
