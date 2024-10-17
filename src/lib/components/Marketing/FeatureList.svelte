@@ -1,7 +1,7 @@
 <script lang="ts">
 	export let title = '';
 	export let description = '';
-	export let featureList: { title: string; description: string }[] = [];
+	export let featureList: { title: string; description: string; comingSoon?: boolean }[] = [];
 </script>
 
 <div class="bg-white py-24 sm:py-32">
@@ -23,7 +23,7 @@
 			>
 				{#each featureList as feature}
 					<div class="relative pl-9">
-						<dt class="font-semibold text-gray-900">
+						<dt class="font-semibold text-gray-900 flex items-center">
 							<svg
 								class="absolute left-0 top-1 h-5 w-5 text-indigo-500"
 								viewBox="0 0 20 20"
@@ -38,6 +38,16 @@
 								/>
 							</svg>
 							{feature.title}
+							{#if feature.comingSoon}
+								<span
+									class="ml-1 inline-flex items-center gap-x-1.5 rounded-full px-2 py-1 text-xs font-medium text-gray-900 ring-1 ring-inset ring-gray-200"
+								>
+									<svg class="h-1.5 w-1.5 fill-purple-500" viewBox="0 0 6 6" aria-hidden="true">
+										<circle cx="3" cy="3" r="3" />
+									</svg>
+									Coming Soon
+								</span>
+							{/if}
 						</dt>
 						<dd class="mt-2">
 							{feature.description}

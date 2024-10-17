@@ -22,25 +22,30 @@
 	featureList={[
 		{
 			title: 'Automation',
-			description: 'Create a list of birthdays, well make sure they arrive on time'
+			description: 'Create a list of birthdays, well make sure they arrive on time',
+			comingSoon: true
 		},
 		{
 			title: 'Invitation',
-			description: 'Curate the perfect guest list. Well take care of the contact'
+			description: 'Curate the perfect guest list. Well take care of the contact',
+			comingSoon: true
 		},
 		{
 			title: 'Collaboration',
 			description:
-				"Don't worry about passing the card around to all the family. Give us a list, well make sure they sign"
+				"Don't worry about passing the card around to all the family. Give us a list, well make sure they sign",
+			comingSoon: true
 		},
 		{
 			title: 'Contacts',
 			description:
-				"Save a list of contacts so you don't have to hunt down emails or phone numbers any more"
+				"Save a list of contacts so you don't have to hunt down emails or phone numbers any more",
+			comingSoon: true
 		},
 		{
 			title: 'Schedule',
-			description: 'PreSchedule cards to out on when you want'
+			description: 'PreSchedule cards to out on when you want',
+			comingSoon: true
 		}
 	]}
 />
