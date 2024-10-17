@@ -1,7 +1,11 @@
 import prisma from '$lib/prisma';
 
 export const load = async () => {
-	const eCards = await prisma.eCardTemplate.findMany();
+	const eCards = await prisma.eCardTemplate.findMany({
+		orderBy: {
+			createdAt: 'asc'
+		}
+	});
 
 	console.log(eCards);
 

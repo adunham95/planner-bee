@@ -18,6 +18,8 @@ model User {
   id            String    @id
   email         String    @unique
   password_hash String
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
   sessions      Session[]
 }
 
@@ -35,6 +37,8 @@ model ECardTemplate {
   name        String
   description String
   cost        Int
+  createdAt   DateTime         @default(now())
+  updatedAt   DateTime         @updatedAt @default(now())
   components  ECardComponent[]
   cartIems    CartItem[]
 
@@ -49,20 +53,26 @@ model ECardComponent {
   label            String?       @default("")
   editable         Boolean?      @default(false)
   default          String?       @default("")
+  createdAt        DateTime      @default(now())
+  updatedAt        DateTime      @updatedAt @default(now())
 }
 
 model Cart {
   id        String     @id @default(uuid())
+  createdAt DateTime   @default(now())
+  updatedAt DateTime   @updatedAt
   cartItems CartItem[]
 }
 
 model CartItem {
-  id       String           @id @default(uuid())
-  cartID   String
-  cart     Cart             @relation(references: [id], fields: [cartID], onDelete: Cascade)
-  ecardSku String
-  eCard    ECardTemplate    @relation(references: [sku], fields: [ecardSku])
-  options  CartItemOption[]
+  id        String           @id @default(uuid())
+  cartID    String
+  cart      Cart             @relation(references: [id], fields: [cartID], onDelete: Cascade)
+  ecardSku  String
+  eCard     ECardTemplate    @relation(references: [sku], fields: [ecardSku])
+  createdAt DateTime         @default(now())
+  updatedAt DateTime         @updatedAt
+  options   CartItemOption[]
 }
 
 model CartItemOption {
@@ -71,4 +81,6 @@ model CartItemOption {
   cartItem         CartItem @relation(references: [id], fields: [cartItemID])
   value            String
   ecardComponentID String
+  createdAt        DateTime @default(now())
+  updatedAt        DateTime @updatedAt
 }
