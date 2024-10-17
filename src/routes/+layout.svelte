@@ -1,4 +1,5 @@
 <script lang="ts">
+	import Footer from '$lib/components/Footer.svelte';
 	import '../app.css';
 
 	let mobileMenuOpen = false;
@@ -10,11 +11,6 @@
 </script>
 
 <div class="bg-white">
-	<!--
-	  Mobile menu
-  
-	  Off-canvas menu for mobile, show/hide based on off-canvas menu state.
-	-->
 	<div
 		class={`${mobileMenuOpen ? 'block' : 'hidden'} relative z-40 lg:hidden`}
 		role="dialog"
@@ -183,3 +179,5 @@
 </div>
 
 <slot />
+
+<Footer />
