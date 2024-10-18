@@ -38,8 +38,7 @@
 		},
 		{
 			title: 'Customization',
-			description: 'Customize with a custom message, and colors to make the perfect eCard',
-			comingSoon: true
+			description: 'Customize with a custom message, and colors to make the perfect eCard'
 		},
 		{
 			title: 'Contacts',

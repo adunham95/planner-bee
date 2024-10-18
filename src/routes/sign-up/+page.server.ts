@@ -11,8 +11,9 @@ export const actions: Actions = {
 		const formData = await event.request.formData();
 		const email = formData.get('email');
 		const password = formData.get('password');
-		// email must be between 4 ~ 31 characters, and only consists of lowercase letters, 0-9, -, and _
-		// keep in mind some database (e.g. mysql) are case insensitive
+		const firstName = formData.get('firstName');
+		const lastName = formData.get('firstName');
+
 		if (typeof email !== 'string' || email.length < 3 || email.length > 31) {
 			return fail(400, {
 				message: 'Invalid email'
@@ -21,6 +22,16 @@ export const actions: Actions = {
 		if (typeof password !== 'string' || password.length < 6 || password.length > 255) {
 			return fail(400, {
 				message: 'Invalid password'
+			});
+		}
+		if (typeof firstName !== 'string') {
+			return fail(400, {
+				message: 'Invalid first name'
+			});
+		}
+		if (typeof lastName !== 'string') {
+			return fail(400, {
+				message: 'Invalid last name'
 			});
 		}
 
@@ -38,7 +49,9 @@ export const actions: Actions = {
 			data: {
 				id: userId,
 				email: email,
-				password_hash: passwordHash
+				password_hash: passwordHash,
+				firstName,
+				lastName
 			}
 		});
 
