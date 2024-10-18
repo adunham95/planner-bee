@@ -1,3 +1,88 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer components {
+	/* Buttons */
+	.btn {
+		@apply rounded-md  px-2.5 py-1.5 text-sm font-semibold  shadow-sm  focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 bg-brand-600 text-white  hover:bg-brand-500 focus-visible:outline-brand-600;
+	}
+	.btn-text {
+		@apply bg-transparent hover:bg-brand-200 outline-none shadow-none text-brand-600 hover:text-brand-500;
+	}
+	.btn-outline {
+		@apply border border-brand-700 hover:border-brand-900;
+	}
+
+	/* Disabled */
+	.btn:disabled {
+		@apply text-white cursor-not-allowed opacity-30;
+	}
+	.btn:disabled + .btn-text {
+		@apply bg-transparent text-disabled-600;
+	}
+
+	/* Sizes */
+	.btn-small {
+		@apply px-2 py-1;
+	}
+
+	.btn-large {
+		@apply px-3.5 py-2.5;
+	}
+
+	/* Primary */
+	.btn-primary {
+		@apply bg-indigo-600 text-white  hover:bg-indigo-500 focus-visible:outline-indigo-600;
+	}
+	.btn-primary + .btn-text {
+		@apply hover:bg-indigo-200 text-indigo-600 hover:text-indigo-500;
+	}
+	.btn-primary + .btn-outline {
+		@apply border-indigo-700 hover:border-indigo-900;
+	}
+
+	/* Success */
+	.btn-success {
+		@apply bg-success-600 text-white  hover:bg-success-500 focus-visible:outline-success-600;
+	}
+	.btn-success + .btn-text {
+		@apply hover:bg-success-100 text-success-600 hover:text-success-500;
+	}
+	.btn-success + .btn-outline {
+		@apply border-success-700 hover:border-success-900;
+	}
+
+	/* Info */
+	.btn-info {
+		@apply bg-info-600 text-white  hover:bg-info-500 focus-visible:outline-info-600;
+	}
+	.btn-info + .btn-text {
+		@apply hover:bg-info-100 text-info-600 hover:text-info-500;
+	}
+	.btn-info + .btn-outline {
+		@apply border-info-700 hover:border-info-900;
+	}
+
+	/* Warning */
+	.btn-warn {
+		@apply bg-warning-600 text-white  hover:bg-warning-500 focus-visible:outline-warning-600;
+	}
+	.btn-warn + .btn-text {
+		@apply hover:bg-warning-100 text-warning-600 hover:text-warning-500;
+	}
+	.btn-warn + .btn-outline {
+		@apply border-warning-700 hover:border-warning-900;
+	}
+
+	/* Error */
+	.btn-error {
+		@apply bg-error-600 text-white  hover:bg-error-500 focus-visible:outline-error-600;
+	}
+	.btn-error + .btn-text {
+		@apply hover:bg-error-100 text-error-600 hover:text-error-500;
+	}
+	.btn-error + .btn-outline {
+		@apply border-error-700 hover:border-error-900;
+	}
+}

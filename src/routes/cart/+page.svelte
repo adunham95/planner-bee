@@ -2,21 +2,17 @@
 	import TextInput from '$lib/components/Inputs/TextInput.svelte';
 	import Toggle from '$lib/components/Inputs/Toggle.svelte';
 	import SidecarLayout from '$lib/components/layout/SidecarLayout.svelte';
-	import TabContent from '$lib/components/TabContent.svelte';
-	import Tabs from '$lib/components/Tabs.svelte';
+	import { formatCurrency } from '$lib/utils/formatCurrency';
 
-	let activeTab = 'details';
+	export let data;
+	console.log(data);
 </script>
 
 <SidecarLayout>
 	<div class="divide-y divide-gray-200">
 		<div class="pb-4">
 			<h2 class="w-full pb-2 text-left text-lg font-medium text-gray-500">Sender</h2>
-			<a
-				href="login"
-				class="block w-full pb-2 text-left text-lg font-medium text-gray-900 bg-blue-500 mb-2"
-				>Login</a
-			>
+			<a href="login" class="btn btn-large w-full block text-center mb-2">Login</a>
 			<div class="relative">
 				<div class="absolute inset-0 flex items-center" aria-hidden="true">
 					<div class="w-full border-t border-gray-300"></div>
@@ -50,27 +46,29 @@
 		</div>
 	</div>
 	<div class="flow-root" slot="sidecar">
-		<ul role="list" class="-my-6 divide-y divide-gray-200">
-			<li class="flex space-x-6 py-6">
-				<img
-					src="https://tailwindui.com/plus/img/ecommerce-images/checkout-page-05-product-01.jpg"
-					alt="Front of women&#039;s basic tee in heather gray."
-					class="h-24 w-24 flex-none rounded-md bg-gray-100 object-cover object-center"
-				/>
-				<div class="flex-auto">
-					<div class="space-y-1 sm:flex sm:items-start sm:justify-between sm:space-x-6">
-						<div class="flex-auto space-y-1 text-sm font-medium">
-							<h3 class="text-gray-900">Basic eCard</h3>
-							<p class="text-gray-900">$2.99</p>
-							<p class="hidden text-gray-500 sm:block">Hello World</p>
-							<p class="hidden text-gray-500 sm:block">This is my message</p>
+		<ul role="list" class="-my-6 divide-y divide-gray-200 mb-2">
+			{#each data?.cart?.cartItems || [] as cartItem}
+				<li class="flex space-x-6 py-6">
+					<img
+						src="https://tailwindui.com/plus/img/ecommerce-images/checkout-page-05-product-01.jpg"
+						alt="Front of women&#039;s basic tee in heather gray."
+						class="h-24 w-24 flex-none rounded-md bg-gray-100 object-cover object-center"
+					/>
+					<div class="flex-auto">
+						<div class="space-y-1 sm:flex sm:items-start sm:justify-between sm:space-x-6">
+							<div class="flex-auto space-y-1 text-sm font-medium">
+								<h3 class="text-gray-900">{cartItem.eCard.name}</h3>
+								<p class="text-gray-900">{formatCurrency(cartItem.eCard.cost)}</p>
+							</div>
 						</div>
 					</div>
-				</div>
-			</li>
+				</li>
+			{/each}
 
 			<!-- More products... -->
 		</ul>
-		<button>Send Card</button>
+		<div class="flex justify-end">
+			<button class="btn">Send Card</button>
+		</div>
 	</div>
 </SidecarLayout>
