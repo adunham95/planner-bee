@@ -9,6 +9,7 @@
 </script>
 
 <Container>
+	<a href="/admin/ecards/new">Add New Card</a>
 	<Table title="eCards" headers={['SKU', 'Name', 'Components']}>
 		{#each data.eCards as ecard}
 			<TableRow>

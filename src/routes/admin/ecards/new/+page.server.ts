@@ -20,7 +20,7 @@ export const actions: Actions = {
 				label?: string;
 				ecardComponentID: string;
 				default?: string;
-				editable?: boolean;
+				editable?: string;
 				[key: string]: unknown;
 			};
 		} = {};
@@ -72,7 +72,14 @@ export const actions: Actions = {
 				cost: parseInt(price) || 0,
 				components: {
 					createMany: {
-						data: Object.values(eCardComponents)
+						data: Object.values(eCardComponents).map((element) => {
+							return {
+								ecardComponentID: element.ecardComponentID,
+								label: element.label,
+								default: element.default,
+								editable: element.editable === 'on' || true
+							};
+						})
 					}
 				}
 			}

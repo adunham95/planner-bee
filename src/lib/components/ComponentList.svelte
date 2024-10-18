@@ -10,7 +10,7 @@
 	export let components: { id: string; label: string }[] = [];
 
 	export let value: { id: string; value: any; action?: string }[] = [
-		{ id: generateID(4), value: {} }
+		{ id: generateID(4), value: {}, action: 'add' }
 	];
 
 	const addItem = () => {
