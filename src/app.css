@@ -85,4 +85,8 @@
 	.btn-error + .btn-outline {
 		@apply border-error-700 hover:border-error-900;
 	}
+
+	.card {
+		@apply bg-white px-6 py-12 shadow sm:rounded-lg sm:px-12;
+	}
 }
