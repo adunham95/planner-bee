@@ -18,7 +18,7 @@
 
 <FeatureList
 	title="All In One eCards"
-	description="Automation, Invitation, Collaboration. Send and celebrate with our eCards"
+	description="Automation, Invitation, Collaboration and Customization. Send and celebrate with our eCards"
 	featureList={[
 		{
 			title: 'Automation',
@@ -34,6 +34,11 @@
 			title: 'Collaboration',
 			description:
 				"Don't worry about passing the card around to all the family. Give us a list, well make sure they sign",
+			comingSoon: true
+		},
+		{
+			title: 'Customization',
+			description: 'Customize with a custom message, and colors to make the perfect eCard',
 			comingSoon: true
 		},
 		{
