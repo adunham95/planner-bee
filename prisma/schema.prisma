@@ -21,6 +21,7 @@ model User {
   createdAt     DateTime  @default(now())
   updatedAt     DateTime  @updatedAt
   sessions      Session[]
+  orders        Order[]
 }
 
 model Session {
@@ -38,9 +39,9 @@ model ECardTemplate {
   description String
   cost        Int
   createdAt   DateTime         @default(now())
-  updatedAt   DateTime         @updatedAt @default(now())
+  updatedAt   DateTime         @default(now()) @updatedAt
   components  ECardComponent[]
-  cartIems    CartItem[]
+  order       Order[]
 
   @@index([sku])
 }
@@ -54,31 +55,31 @@ model ECardComponent {
   editable         Boolean?      @default(false)
   default          String?       @default("")
   createdAt        DateTime      @default(now())
-  updatedAt        DateTime      @updatedAt @default(now())
+  updatedAt        DateTime      @default(now()) @updatedAt
 }
 
-model Cart {
-  id        String     @id @default(uuid())
-  createdAt DateTime   @default(now())
-  updatedAt DateTime   @updatedAt
-  cartItems CartItem[]
+model Order {
+  id                 String              @id @default(uuid())
+  orderNumber        String?             @default("")
+  createdAt          DateTime            @default(now())
+  updatedAt          DateTime            @updatedAt
+  ecardSku           String
+  eCard              ECardTemplate       @relation(references: [sku], fields: [ecardSku])
+  senderName         String?             @default("")
+  senderEmail        String?             @default("")
+  senderID           String?
+  sender             User?               @relation(references: [id], fields: [senderID])
+  eCardOptions       EcardOrderOptions[]
+  recipeintFirstName String?             @default("")
+  recipeintLastName  String?             @default("")
+  recipeintEmail     String?             @default("")
+  status             String?             @default("draft")
 }
 
-model CartItem {
-  id        String           @id @default(uuid())
-  cartID    String
-  cart      Cart             @relation(references: [id], fields: [cartID], onDelete: Cascade)
-  ecardSku  String
-  eCard     ECardTemplate    @relation(references: [sku], fields: [ecardSku])
-  createdAt DateTime         @default(now())
-  updatedAt DateTime         @updatedAt
-  options   CartItemOption[]
-}
-
-model CartItemOption {
+model EcardOrderOptions {
   id               String   @id @default(uuid())
-  cartItemID       String
-  cartItem         CartItem @relation(references: [id], fields: [cartItemID])
+  orderID          String
+  order            Order    @relation(references: [id], fields: [orderID])
   value            String
   ecardComponentID String
   createdAt        DateTime @default(now())
