@@ -1,5 +1,6 @@
 <script lang="ts">
 	import { enhance } from '$app/forms';
+	import ECard from '$lib/components/ECard.svelte';
 	import EcardEditComponent from '$lib/components/EcardEditComponent.svelte';
 	import { formatCurrency } from '$lib/utils/formatCurrency.js';
 
@@ -29,15 +30,16 @@
 
 			<!-- Image gallery -->
 			<div class="mt-8 lg:col-span-7 lg:col-start-1 lg:row-span-3 lg:row-start-1 lg:mt-0">
-				<h2 class="sr-only">Images</h2>
-
-				<div class=" lg:gap-8">
-					<img
-						src="https://tailwindui.com/plus/img/ecommerce-images/product-page-01-featured-product-shot.jpg"
-						alt="Back of women&#039;s Basic Tee in black."
-						class="rounded-lg lg:col-span-2 lg:row-span-2"
-					/>
-				</div>
+				<ECard
+					components={data?.product?.components.map((c) => {
+						return {
+							id: c.id,
+							ecardComponentID: c.ecardComponentID,
+							style: c.customStyles || undefined,
+							value: c.default || ''
+						};
+					})}
+				/>
 			</div>
 
 			<div class="mt-8 lg:col-span-5">
@@ -46,7 +48,7 @@
 						<div>
 							<EcardEditComponent
 								label={component.label}
-								value={component.default}
+								bind:value={component.default}
 								componentKey={component.ecardComponentID}
 							/>
 						</div>
