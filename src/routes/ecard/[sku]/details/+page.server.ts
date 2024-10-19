@@ -43,34 +43,22 @@ export const actions: Actions = {
 
 		console.log('dataEntries', [...data.entries()]);
 
-		let cartID = cookies.get('cart');
+		const cartID = cookies.get('cart');
 
 		console.log('cartID', cartID);
 
-		if (!cartID) {
-			const cart = await prisma.cart.create({
-				data: {}
-			});
-			if (cart.id) {
-				cartID = cart.id;
-			}
-		}
-
-		const cartItems = await prisma.cartItem.create({
+		const cart = await prisma.order.create({
 			data: {
-				cartID: cartID || '',
 				ecardSku: sku,
-				options: {
-					createMany: {
-						data: cartOptions
-					}
+				eCardOptions: {
+					createMany: { data: cartOptions }
 				}
 			}
 		});
 
-		console.log({ cartID, cartItems });
+		console.log({ cart });
 
-		cookies.set('cart', cartID || '', { path: '/', maxAge: 86400 });
+		cookies.set('cart', cart.id || '', { path: '/', maxAge: 86400 });
 
 		redirect(303, '/cart');
 	}

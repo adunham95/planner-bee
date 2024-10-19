@@ -4,17 +4,14 @@ import type { PageServerLoad } from './$types';
 export const load: PageServerLoad = async ({ cookies }) => {
 	const cartID = cookies.get('cart');
 
-	const cart = await prisma.cart.findFirst({
+	console.log('cartID', cartID);
+
+	const cart = await prisma.order.findFirst({
 		where: {
 			id: cartID
 		},
 		include: {
-			cartItems: {
-				include: {
-					eCard: true,
-					options: true
-				}
-			}
+			eCard: true
 		}
 	});
 
