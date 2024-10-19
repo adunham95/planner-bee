@@ -1,8 +1,8 @@
 <footer class="bg-white">
 	<div class="mx-auto max-w-7xl overflow-hidden px-6 py-20 sm:py-24 lg:px-8">
-		<nav class="-mb-6 columns-2 sm:flex sm:justify-center sm:space-x-12" aria-label="Footer">
+		<!-- <nav class="-mb-6 columns-2 sm:flex sm:justify-center sm:space-x-12" aria-label="Footer">
 			<div class="pb-6">
-				<a href="#" class="text-sm leading-6 text-gray-600 hover:text-gray-900">About</a>
+				<a href="/" class="text-sm leading-6 text-gray-600 hover:text-gray-900">About</a>
 			</div>
 			<div class="pb-6">
 				<a href="#" class="text-sm leading-6 text-gray-600 hover:text-gray-900">Blog</a>
@@ -19,8 +19,8 @@
 			<div class="pb-6">
 				<a href="#" class="text-sm leading-6 text-gray-600 hover:text-gray-900">Partners</a>
 			</div>
-		</nav>
-		<div class="mt-10 flex justify-center space-x-10">
+		</nav> -->
+		<!-- <div class="mt-10 flex justify-center space-x-10">
 			<a href="#" class="text-gray-400 hover:text-gray-500">
 				<span class="sr-only">Facebook</span>
 				<svg class="h-6 w-6" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
@@ -69,9 +69,9 @@
 					/>
 				</svg>
 			</a>
-		</div>
+		</div> -->
 		<p class="mt-10 text-center text-xs leading-5 text-gray-500">
-			&copy; 2020 Your Company, Inc. All rights reserved.
+			&copy; {new Date().getFullYear()} Planner Bee Card, Inc. All rights reserved.
 		</p>
 	</div>
 </footer>
