@@ -1,5 +1,4 @@
 <script lang="ts">
-	import products from '$lib/testCards.json';
 	import { formatCurrency } from '$lib/utils/formatCurrency.js';
 
 	export let data;
@@ -22,11 +21,9 @@
 				<div
 					class="group relative flex flex-col overflow-hidden rounded-lg border border-gray-200 bg-white"
 				>
-					<div
-						class="aspect-h-4 aspect-w-3 bg-gray-200 sm:aspect-none group-hover:opacity-75 sm:h-96"
-					>
+					<div class="aspect-h-3 aspect-w-3 bg-gray-200 sm:aspect-none group-hover:opacity-75">
 						<img
-							src="https://tailwindui.com/plus/img/ecommerce-images/category-page-02-image-card-03.jpg"
+							src={item.imageURL || '/images/card-flower.jpg'}
 							alt="Front of plain white t-shirt."
 							class="h-full w-full object-cover object-center sm:h-full sm:w-full"
 						/>

@@ -12,6 +12,15 @@
 	<div class="mx-auto mt-8 max-w-2xl px-4 sm:px-6 lg:max-w-7xl lg:px-8">
 		<div class="lg:grid lg:auto-rows-min lg:grid-cols-12 lg:gap-x-8">
 			<div class="lg:col-span-5 lg:col-start-8">
+				<div>
+					<div class="aspect-h-4 aspect-w-3 w-auto">
+						<img
+							src={data?.product.imageURL || '/images/card-flower.jpg'}
+							alt={data.product.name}
+							class="h-full w-full object-cover object-center sm:h-full sm:w-full"
+						/>
+					</div>
+				</div>
 				<div class="flex justify-between">
 					<h1 class="text-xl font-medium text-gray-900">{data?.product.name}</h1>
 					<p class="text-xl font-medium text-gray-900">{formatCurrency(data?.product.cost)}</p>

@@ -59,6 +59,13 @@
 					showLabel
 					class="col-span-2"
 				/>
+				<TextArea
+					bind:value={item.value.style}
+					label="Custom Styles"
+					id={`${groupName}%%${item.id}%%customStyle`}
+					showLabel
+					class="col-span-2"
+				/>
 				<Toggle
 					bind:checked={item.value.editaable}
 					class="flex items-end w-full pl-2 pb-2"

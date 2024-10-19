@@ -17,6 +17,14 @@
 		<TextInput value={data.product.name} label="Name" id="name" showLabel />
 		<TextInput value={data.product.sku} label="SKU" id="sku" showLabel />
 		<TextInput value={data.product.cost} type="number" min="0" label="Price" id="price" showLabel />
+		<TextInput
+			value={data.product.imageURL}
+			type="number"
+			min="0"
+			label="Price"
+			id="price"
+			showLabel
+		/>
 		<TextArea
 			value={data.product.description}
 			label="Description"

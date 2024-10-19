@@ -17,6 +17,8 @@
 	<p>Error loading {componentKey}</p>
 {:else if component.editComponentKey === 'text'}
 	<TextInput label={label || component.name} id="textInput" showLabel {value} />
+{:else if component.editComponentKey === 'colorInput'}
+	<TextInput label={label || component.name} id="textInput" type="color" showLabel {value} />
 {:else if component.editComponentKey === 'textArea'}
 	<TextArea label={label || component.name} id="textArea" showLabel class="col-span-2" {value} />
 {:else if component.editComponentKey === 'colorPicker'}

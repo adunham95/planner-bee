@@ -39,6 +39,7 @@ export const actions: Actions = {
 		const description = data.get('description');
 		const sku = data.get('sku');
 		const price = data.get('price');
+		const imageURL = data.get('imageURL');
 
 		console.log('dataEntries', [...data.entries()]);
 
@@ -50,6 +51,7 @@ export const actions: Actions = {
 				editable?: string;
 				id?: string;
 				action?: string;
+				customStyles?: string;
 				[key: string]: unknown;
 			};
 		} = {};
@@ -98,6 +100,12 @@ export const actions: Actions = {
 			});
 		}
 
+		if (typeof imageURL !== 'string') {
+			return fail(400, {
+				message: 'Invalid imageURL'
+			});
+		}
+
 		const ecard = await prisma.eCardTemplate.update({
 			where: {
 				id
@@ -106,7 +114,8 @@ export const actions: Actions = {
 				name,
 				description: description || '',
 				sku: sku.toUpperCase(),
-				cost: parseInt(price) || 0
+				cost: parseInt(price) || 0,
+				imageURL
 			}
 		});
 
@@ -135,7 +144,8 @@ export const actions: Actions = {
 					ecardComponentID: c.ecardComponentID,
 					label: c.label,
 					default: c.default,
-					editable: c.editable === 'on'
+					editable: c.editable === 'on',
+					customStyles: c.customStyles
 				}))
 		});
 
