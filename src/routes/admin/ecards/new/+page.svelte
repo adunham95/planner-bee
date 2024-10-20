@@ -10,6 +10,8 @@
 
 	let components: { id: string; value: any; action?: string }[] = [];
 	$: components;
+
+	$: console.log({ components });
 </script>
 
 <h1>New eCard Template</h1>

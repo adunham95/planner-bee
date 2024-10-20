@@ -7,9 +7,11 @@
 		style?: string;
 		value: string;
 	}[] = [];
+
+	console.log('eCard', { components });
 </script>
 
-<div class="w-full ecard rounded border border-solid border-gray-200">
+<div class="w-full ecard rounded border border-solid border-gray-200 bg-custom-100">
 	{#each components as component}
 		<EcardDisplayComponent {...component} />
 	{/each}

@@ -3,6 +3,6 @@
 	export let style: string = '';
 </script>
 
-<p {style} class="mt-1 text-sm text-gray-500">
+<p {style} class="mt-1 text-xl text-gray-500 px-2">
 	{value}
 </p>

@@ -107,6 +107,17 @@ export default {
 					800: '#562875',
 					900: '#3A1757',
 					950: '#200A38'
+				},
+				custom: {
+					100: 'rgb(var(--custom-color-100))',
+					200: 'rgb(var(--custom-color-200))',
+					300: 'rgb(var(--custom-color-300))',
+					400: 'rgb(var(--custom-color-400))',
+					500: 'rgb(var(--custom-color-500))',
+					600: 'rgb(var(--custom-color-600))',
+					700: 'rgb(var(--custom-color-700))',
+					800: 'rgb(var(--custom-color-800))',
+					900: 'rgb(var(--custom-color-900))'
 				}
 			}
 		}

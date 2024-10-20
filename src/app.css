@@ -2,6 +2,21 @@
 @tailwind components;
 @tailwind utilities;
 
+@layer base {
+	:root {
+		--custom-color-50: 247, 250, 252;
+		--custom-color-100: 242, 247, 252;
+		--custom-color-200: 220, 232, 247;
+		--custom-color-300: 201, 216, 245;
+		--custom-color-400: 162, 178, 235;
+		--custom-color-500: 124, 133, 227;
+		--custom-color-600: 102, 111, 204;
+		--custom-color-700: 70, 77, 171;
+		--custom-color-800: 45, 51, 135;
+		--custom-color-900: 26, 31, 102;
+	}
+}
+
 @layer components {
 	/* Buttons */
 	.btn {
