@@ -67,7 +67,7 @@
 					class="col-span-2"
 				/>
 				<Toggle
-					bind:checked={item.value.editaable}
+					bind:checked={item.value.editable}
 					class="flex items-end w-full pl-2 pb-2"
 					id="{groupName}%%{item.id}%%editable"
 					label="Editable"

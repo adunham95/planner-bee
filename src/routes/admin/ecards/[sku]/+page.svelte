@@ -74,8 +74,8 @@
 			value={data.product.imageURL}
 			type="number"
 			min="0"
-			label="Price"
-			id="price"
+			label="imageURL"
+			id="imageURL"
 			showLabel
 		/>
 		<TextArea
