@@ -1,8 +1,19 @@
 /** @type {import('tailwindcss').Config} */
+
+import containerQueries from '@tailwindcss/container-queries';
+import form from '@tailwindcss/forms';
+import aspectRatio from '@tailwindcss/aspect-ratio';
+
 export default {
 	content: ['./src/**/*.{html,js,svelte,ts}'],
 	theme: {
 		extend: {
+			containers: {
+				'screen-sm': '500px',
+				'screen-md': '1023px',
+				'screen-lg': '1429x',
+				'screen-ultra': '2549px'
+			},
 			colors: {
 				brand: {
 					50: '#f7fafc',
@@ -125,5 +136,5 @@ export default {
 	corePlugins: {
 		aspectRatio: false
 	},
-	plugins: ['@tailwindcss/forms', '@tailwindcss/container-queries', '@tailwindcss/aspect-ratio']
+	plugins: [containerQueries, form, aspectRatio]
 };

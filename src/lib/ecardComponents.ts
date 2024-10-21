@@ -27,5 +27,12 @@ export const eCardComponents = [
 		description: 'Write a custom message',
 		editComponentKey: 'textArea',
 		displayComponentKey: 'message'
+	},
+	{
+		id: 'banner',
+		name: 'Banner',
+		description: 'Add a banner image',
+		editComponentKey: 'text',
+		displayComponentKey: 'banner'
 	}
 ];
