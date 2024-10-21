@@ -20,6 +20,7 @@
 		<h2 class="text-base font-semibold leading-6 text-gray-900">eCard Preview</h2>
 		<div class="card p-0">
 			<ECard
+				style="min-height: 300px"
 				components={components.map((c) => {
 					return {
 						id: c?.id || '',
