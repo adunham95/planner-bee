@@ -2,6 +2,7 @@
 	import TextInput from '$lib/components/Inputs/TextInput.svelte';
 	import Toggle from '$lib/components/Inputs/Toggle.svelte';
 	import SidecarLayout from '$lib/components/layout/SidecarLayout.svelte';
+	import ProductSlice from '$lib/components/ProductSlice.svelte';
 	import { formatCurrency } from '$lib/utils/formatCurrency';
 
 	export let data;
@@ -48,20 +49,12 @@
 	<div class="flow-root" slot="sidecar">
 		<ul role="list" class="-my-6 divide-y divide-gray-200 mb-2">
 			{#if data.cart?.eCard}
-				<li class="flex space-x-6 py-6">
-					<img
-						src="https://tailwindui.com/plus/img/ecommerce-images/checkout-page-05-product-01.jpg"
-						alt="Front of women&#039;s basic tee in heather gray."
-						class="h-24 w-24 flex-none rounded-md bg-gray-100 object-cover object-center"
+				<li class="space-x-6">
+					<ProductSlice
+						src={data.cart.eCard?.imageURL}
+						title={data.cart.eCard.name}
+						price={data.cart.eCard.cost}
 					/>
-					<div class="flex-auto">
-						<div class="space-y-1 sm:flex sm:items-start sm:justify-between sm:space-x-6">
-							<div class="flex-auto space-y-1 text-sm font-medium">
-								<h3 class="text-gray-900">{data.cart.eCard.name}</h3>
-								<p class="text-gray-900">{formatCurrency(data.cart.eCard.cost)}</p>
-							</div>
-						</div>
-					</div>
 				</li>
 			{/if}
 			<!-- {#each data?.cart?.cartItems || [] as cartItem}

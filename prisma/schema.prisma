@@ -63,21 +63,19 @@ model ECardComponent {
 }
 
 model Order {
-  id                 String              @id @default(uuid())
-  orderNumber        String?             @default("")
-  createdAt          DateTime            @default(now())
-  updatedAt          DateTime            @updatedAt
-  ecardSku           String
-  eCard              ECardTemplate       @relation(references: [sku], fields: [ecardSku])
-  senderName         String?             @default("")
-  senderEmail        String?             @default("")
-  senderID           String?
-  sender             User?               @relation(references: [id], fields: [senderID])
-  eCardOptions       EcardOrderOptions[]
-  recipeintFirstName String?             @default("")
-  recipeintLastName  String?             @default("")
-  recipeintEmail     String?             @default("")
-  status             String?             @default("draft")
+  id           String              @id @default(uuid())
+  orderNumber  String?             @default("")
+  createdAt    DateTime            @default(now())
+  updatedAt    DateTime            @updatedAt
+  ecardSku     String
+  eCard        ECardTemplate       @relation(references: [sku], fields: [ecardSku])
+  senderName   String?             @default("")
+  senderEmail  String?             @default("")
+  senderID     String?
+  sender       User?               @relation(references: [id], fields: [senderID])
+  eCardOptions EcardOrderOptions[]
+  recipients   Recipient[]
+  status       String?             @default("draft")
 }
 
 model EcardOrderOptions {
@@ -88,4 +86,14 @@ model EcardOrderOptions {
   ecardComponentID String
   createdAt        DateTime @default(now())
   updatedAt        DateTime @updatedAt
+}
+
+model Recipient {
+  id        String  @id @default(uuid())
+  firstName String
+  lastName  String?
+  email     String?
+  phone     String?
+  orderID   String
+  order     Order   @relation(references: [id], fields: [orderID])
 }
