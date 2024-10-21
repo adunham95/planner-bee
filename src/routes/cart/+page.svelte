@@ -1,9 +1,7 @@
 <script>
 	import TextInput from '$lib/components/Inputs/TextInput.svelte';
-	import Toggle from '$lib/components/Inputs/Toggle.svelte';
 	import SidecarLayout from '$lib/components/layout/SidecarLayout.svelte';
 	import ProductSlice from '$lib/components/ProductSlice.svelte';
-	import { formatCurrency } from '$lib/utils/formatCurrency';
 
 	export let data;
 	console.log(data);
@@ -13,21 +11,29 @@
 	<div class="divide-y divide-gray-200">
 		<div class="pb-4">
 			<h2 class="w-full pb-2 text-left text-lg font-medium text-gray-500">Sender</h2>
-			<a href="login" class="btn btn-large w-full block text-center mb-2">Login</a>
-			<div class="relative">
-				<div class="absolute inset-0 flex items-center" aria-hidden="true">
-					<div class="w-full border-t border-gray-300"></div>
+			{#if !data.user}
+				<a href="login" class="btn btn-large w-full block text-center mb-2">Login</a>
+				<div class="relative">
+					<div class="absolute inset-0 flex items-center" aria-hidden="true">
+						<div class="w-full border-t border-gray-300"></div>
+					</div>
+					<div class="relative flex justify-center">
+						<span class="bg-white px-2 text-sm text-gray-500">Or continue as guest</span>
+					</div>
 				</div>
-				<div class="relative flex justify-center">
-					<span class="bg-white px-2 text-sm text-gray-500">Or continue as guest</span>
+				<div class="grid grid-cols-2 gap-2 pt-2">
+					<TextInput id="name" label="Name" showLabel />
+					<TextInput id="email" label="Email" showLabel />
 				</div>
-			</div>
-			<div class="grid grid-cols-2 gap-2 pt-2">
-				<TextInput id="name" label="Name" showLabel />
-				<TextInput id="email" label="Email" showLabel />
-			</div>
+			{:else}
+				<div class="grid grid-cols-2 gap-2 pt-2">
+					<TextInput id="name" label="Name" showLabel value={data.user?.firstName} />
+					<TextInput id="email" label="Email" showLabel value={data.user?.email} />
+				</div>
+			{/if}
 		</div>
 
+		<!-- Recipient -->
 		<div class="pb-4">
 			<h2 class="w-full pt-6 pb-2 text-left text-lg font-medium text-gray-500">Recipient</h2>
 			<div class="grid grid-cols-2 gap-2 pt-2">
@@ -36,7 +42,8 @@
 				<TextInput id="email" label="Email" showLabel class="col-span-2" />
 			</div>
 		</div>
-		<div class="pb-4">
+		<!-- Delivery -->
+		<!-- <div class="pb-4">
 			<h2
 				class="list-none w-full pt-6 pb-2 text-left text-lg font-medium text-gray-500 cursor-pointer"
 			>
@@ -44,7 +51,7 @@
 			</h2>
 			<Toggle id="imediate" label="Delivery is immediate" showLabel />
 			<TextInput id="deliveryTime" label="Delivery Time" showLabel type="datetime-local" />
-		</div>
+		</div> -->
 	</div>
 	<div class="flow-root" slot="sidecar">
 		<ul role="list" class="-my-6 divide-y divide-gray-200 mb-2">

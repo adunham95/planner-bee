@@ -93,7 +93,6 @@
 						</button>
 					</div>
 
-					<!-- Flyout menus -->
 					<div class="hidden lg:block lg:flex-1 lg:self-stretch">
 						<div class="flex h-full space-x-8">
 							{#each links as link}
