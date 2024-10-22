@@ -38,7 +38,7 @@
 		<div class="pb-4">
 			<h2 class="w-full pt-6 pb-2 text-left text-lg font-medium text-gray-500">Recipient</h2>
 			<div class="grid grid-cols-2 gap-2 pt-2">
-				<TextInput id="recipientLirstName" label="First Name" showLabel />
+				<TextInput id="recipientFirstName" label="First Name" showLabel />
 				<TextInput id="recipientLastName" label="Last Name" showLabel />
 				<TextInput id="recipientEmail" label="Email" showLabel class="col-span-2" />
 			</div>
