@@ -4,21 +4,11 @@ import type { PageServerLoad } from './$types';
 
 export const load: PageServerLoad = async (event) => {
 	if (!event.locals.user) redirect(302, '/login');
+	const { id } = event.params;
 
-	const orders = await prisma.order.findMany({
+	const order = await prisma.order.findFirst({
 		where: {
-			OR: [
-				{
-					senderID: {
-						equals: event.locals.user.id
-					}
-				},
-				{
-					senderEmail: {
-						equals: event.locals.user.email
-					}
-				}
-			]
+			orderNumber: id
 		},
 		include: {
 			eCard: true,
@@ -28,6 +18,6 @@ export const load: PageServerLoad = async (event) => {
 	});
 
 	return {
-		orders
+		order
 	};
 };
