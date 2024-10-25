@@ -3,6 +3,7 @@
 
 	export let src: string | undefined | null;
 	export let title = '';
+	export let descriptionList: string[] = [];
 	export let price = 0;
 </script>
 
@@ -15,8 +16,11 @@
 	<div class="flex-auto">
 		<div class="space-y-1 sm:flex sm:items-start sm:justify-between sm:space-x-6">
 			<div class="flex-auto space-y-1 text-sm font-medium">
-				<h3 class="text-gray-900">{title}</h3>
+				<h3 class="text-gray-900 text-base font-medium">{title}</h3>
 				<p class="text-gray-900">{formatCurrency(price)}</p>
+				{#each descriptionList as description}
+					<p class="text-gray-400">{description}</p>
+				{/each}
 			</div>
 		</div>
 	</div>

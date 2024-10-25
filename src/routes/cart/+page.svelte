@@ -2,6 +2,7 @@
 	import { enhance } from '$app/forms';
 	import TextInput from '$lib/components/Inputs/TextInput.svelte';
 	import SidecarLayout from '$lib/components/layout/SidecarLayout.svelte';
+	import ProductListSmall from '$lib/components/ProductListSmall.svelte';
 	import ProductSlice from '$lib/components/ProductSlice.svelte';
 
 	export let data;
@@ -53,31 +54,45 @@
 			<Toggle id="imediate" label="Delivery is immediate" showLabel />
 			<TextInput id="deliveryTime" label="Delivery Time" showLabel type="datetime-local" />
 		</div> -->
-		<div class="pt-6">
-			<h2 class="w-full pt-2 pb-2 text-left text-lg font-medium text-gray-500">Account Benefits</h2>
-			<p class="mt-2 text-sm text-gray-500">Create an account and explore</p>
 
-			<dl class="mt-6 grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 sm:gap-y-16 lg:gap-x-8">
-				<div class="border-t border-blue-200 pt-4">
-					<dt class="font-medium text-gray-900">Order History</dt>
-					<dd class="mt-2 text-sm text-gray-500">See your order history all in once place</dd>
-				</div>
-				<div class="border-t border-green-200 pt-4">
-					<dt class="font-medium text-gray-900">Purchase</dt>
-					<dd class="mt-2 text-sm text-gray-500">
-						Add a credit card to purchase more custom options
-					</dd>
-				</div>
-				<div class="border-t border-pink-200 pt-4">
-					<dt class="font-medium text-gray-900">Contacts</dt>
-					<dd class="mt-2 text-sm text-gray-500">Save contacts for easier checkout</dd>
-				</div>
-				<div class="border-t border-purple-200 pt-4">
-					<dt class="font-medium text-gray-900">Schedule</dt>
-					<dd class="mt-2 text-sm text-gray-500">Pre Schedule careCards for recipients</dd>
-				</div>
-			</dl>
-		</div>
+		<!-- Account Benefits -->
+		{#if !data.user}
+			<div class="pt-6">
+				<h2 class="w-full pt-2 pb-2 text-left text-lg font-medium text-gray-500">
+					Account Benefits
+				</h2>
+				<p class="mt-2 text-sm text-gray-500">Create an account and explore</p>
+
+				<dl class="mt-6 grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 sm:gap-y-16 lg:gap-x-8">
+					<div class="border-t border-blue-200 pt-4">
+						<dt class="font-medium text-gray-900">Order History</dt>
+						<dd class="mt-2 text-sm text-gray-500">See your order history all in once place</dd>
+					</div>
+					<div class="border-t border-green-200 pt-4">
+						<dt class="font-medium text-gray-900">Purchase</dt>
+						<dd class="mt-2 text-sm text-gray-500">
+							Add a credit card to purchase more custom options
+						</dd>
+					</div>
+					<div class="border-t border-pink-200 pt-4">
+						<dt class="font-medium text-gray-900">Contacts</dt>
+						<dd class="mt-2 text-sm text-gray-500">Save contacts for easier checkout</dd>
+					</div>
+					<div class="border-t border-purple-200 pt-4">
+						<dt class="font-medium text-gray-900">Schedule</dt>
+						<dd class="mt-2 text-sm text-gray-500">Pre Schedule careCards for recipients</dd>
+					</div>
+				</dl>
+			</div>
+		{/if}
+		<ProductListSmall
+			title="Add on features"
+			products={[
+				{ title: 'RSVP List', href: '/add-on/rsvp', price: 199 },
+				{ title: 'Invite List', href: '/add-on/invites', price: 299, img: '/images/balloons.jpg' },
+				{ title: 'Meal Train', href: '/add-on/meal-train', price: 199 }
+			]}
+		/>
 	</form>
 	<div class="flow-root" slot="sidecar">
 		<ul role="list" class="-my-6 divide-y divide-gray-200 mb-2">
@@ -90,25 +105,22 @@
 					/>
 				</li>
 			{/if}
-			<!-- {#each data?.cart?.cartItems || [] as cartItem}
-				<li class="flex space-x-6 py-6">
-					<img
-						src="https://tailwindui.com/plus/img/ecommerce-images/checkout-page-05-product-01.jpg"
-						alt="Front of women&#039;s basic tee in heather gray."
-						class="h-24 w-24 flex-none rounded-md bg-gray-100 object-cover object-center"
-					/>
-					<div class="flex-auto">
-						<div class="space-y-1 sm:flex sm:items-start sm:justify-between sm:space-x-6">
-							<div class="flex-auto space-y-1 text-sm font-medium">
-								<h3 class="text-gray-900">{cartItem.eCard.name}</h3>
-								<p class="text-gray-900">{formatCurrency(cartItem.eCard.cost)}</p>
-							</div>
-						</div>
-					</div>
-				</li>
-			{/each} -->
-
-			<!-- More products... -->
+			<li class="space-x-6">
+				<ProductSlice
+					src={'/images/balloons.jpg'}
+					title={'RSVP List'}
+					price={199}
+					descriptionList={['x10 RSVP']}
+				/>
+			</li>
+			<li class="space-x-6">
+				<ProductSlice
+					src={'/images/balloons.jpg'}
+					title={'Invite List'}
+					price={299}
+					descriptionList={['x10 Invites']}
+				/>
+			</li>
 		</ul>
 		<div class="flex justify-end">
 			<button form="cart-form" type="submit" class="btn">Send Card</button>
