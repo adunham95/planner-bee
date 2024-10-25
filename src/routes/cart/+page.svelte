@@ -88,15 +88,14 @@
 		<ProductListSmall
 			title="Add on features"
 			products={[
-				{ title: 'RSVP List', href: '/add-on/rsvp', price: 199 },
-				{ title: 'Invite List', href: '/add-on/invites', price: 199, img: '/images/balloons.jpg' },
 				{
-					title: 'Meal Sign Up',
-					href: '/add-on/meal-sign-up',
-					price: 199,
+					title: 'Remove Branding',
+					href: '/add-on/remove-branding',
+					price: 99,
 					img: '/images/balloons.jpg'
 				},
-				{ title: 'Meal Train', href: '/add-on/meal-train', price: 199 }
+				{ title: 'RSVP List', href: '/add-on/rsvp', price: 199, img: '/images/rsvp.jpg' },
+				{ title: 'Meal Train', href: '/add-on/meal-train', price: 199, img: '/images/meal.jpg' }
 			]}
 		/>
 	</form>
@@ -113,19 +112,22 @@
 			{/if}
 			<li class="space-x-6">
 				<ProductSlice
-					src={'/images/balloons.jpg'}
+					src={'/images/rsvp.jpg'}
 					title={'RSVP List'}
 					price={199}
-					descriptionList={['x10 RSVP']}
+					descriptionList={['x10 Invites']}
 				/>
 			</li>
 			<li class="space-x-6">
 				<ProductSlice
-					src={'/images/balloons.jpg'}
-					title={'Invite List'}
-					price={299}
-					descriptionList={['x10 Invites']}
+					src={'/images/meal.jpg'}
+					title={'Meal Train'}
+					price={199}
+					descriptionList={['x10 Meals']}
 				/>
+			</li>
+			<li class="space-x-6">
+				<ProductSlice src={'/images/rsvp.jpg'} title={'Remove Branding'} price={99} />
 			</li>
 		</ul>
 		<div class="flex justify-end">

@@ -22,7 +22,7 @@
 		<EcardDisplayComponent {...component} />
 	{/each}
 
-	<Rsvp />
+	<!-- <Rsvp /> -->
 
 	<PromoSlot />
 </div>
