@@ -1,5 +1,6 @@
 <script lang="ts">
 	import PromoSlot from './EcardComponents/PromoSlot.svelte';
+	import Rsvp from './EcardComponents/RSVP.svelte';
 	import EcardDisplayComponent from './EcardDisplayComponent.svelte';
 
 	export let style = '';
@@ -20,6 +21,8 @@
 	{#each components as component}
 		<EcardDisplayComponent {...component} />
 	{/each}
+
+	<Rsvp />
 
 	<PromoSlot />
 </div>
