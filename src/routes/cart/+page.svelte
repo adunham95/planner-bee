@@ -89,7 +89,13 @@
 			title="Add on features"
 			products={[
 				{ title: 'RSVP List', href: '/add-on/rsvp', price: 199 },
-				{ title: 'Invite List', href: '/add-on/invites', price: 299, img: '/images/balloons.jpg' },
+				{ title: 'Invite List', href: '/add-on/invites', price: 199, img: '/images/balloons.jpg' },
+				{
+					title: 'Meal Sign Up',
+					href: '/add-on/meal-sign-up',
+					price: 199,
+					img: '/images/balloons.jpg'
+				},
 				{ title: 'Meal Train', href: '/add-on/meal-train', price: 199 }
 			]}
 		/>
