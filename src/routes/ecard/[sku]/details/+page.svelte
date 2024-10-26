@@ -1,7 +1,10 @@
 <script lang="ts">
 	import { enhance } from '$app/forms';
+	import { enhancementItems } from '$lib/addOnItems.js';
 	import ECard from '$lib/components/ECard.svelte';
 	import EcardEditComponent from '$lib/components/EcardEditComponent.svelte';
+	import CheckCards from '$lib/components/Inputs/CheckCards.svelte';
+	import Label from '$lib/components/Inputs/Label.svelte';
 	import ProductSlice from '$lib/components/ProductSlice.svelte';
 	import { formatCurrency } from '$lib/utils/formatCurrency.js';
 
@@ -46,6 +49,12 @@
 							/>
 						</div>
 					{/each}
+
+					<fieldset class="pt-4">
+						<Label id="abc" label="Basic Enhancements" showLabel class="pb-2" />
+
+						<CheckCards options={enhancementItems} />
+					</fieldset>
 
 					<button
 						type="submit"
