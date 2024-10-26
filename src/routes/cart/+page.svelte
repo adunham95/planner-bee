@@ -1,5 +1,6 @@
 <script>
 	import { enhance } from '$app/forms';
+	import { addOnItems } from '$lib/addOnItems';
 	import TextInput from '$lib/components/Inputs/TextInput.svelte';
 	import SidecarLayout from '$lib/components/layout/SidecarLayout.svelte';
 	import ProductListSmall from '$lib/components/ProductListSmall.svelte';
@@ -85,19 +86,7 @@
 				</dl>
 			</div>
 		{/if}
-		<ProductListSmall
-			title="Add on features"
-			products={[
-				{
-					title: 'Remove Branding',
-					href: '/add-on/remove-branding',
-					price: 99,
-					img: '/images/balloons.jpg'
-				},
-				{ title: 'RSVP List', href: '/add-on/rsvp', price: 199, img: '/images/rsvp.jpg' },
-				{ title: 'Meal Train', href: '/add-on/meal-train', price: 199, img: '/images/meal.jpg' }
-			]}
-		/>
+		<ProductListSmall title="Add on features" products={addOnItems.slice(0, 4)} />
 	</form>
 	<div class="flow-root" slot="sidecar">
 		<ul role="list" class="-my-6 divide-y divide-gray-200 mb-2">

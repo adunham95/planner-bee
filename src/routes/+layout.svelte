@@ -4,10 +4,12 @@
 
 	let mobileMenuOpen = false;
 
-	const links = [{ name: 'eCards', href: '/ecard' }];
+	const links = [
+		{ name: 'eCards', href: '/ecard' },
+		{ name: 'Add Ons', href: '/add-ons' }
+	];
 
 	export let data;
-	console.log('data', data);
 </script>
 
 <div class="bg-white">
