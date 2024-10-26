@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { browser } from '$app/environment';
 	import { hexToTailwindPallette } from '$lib/utils/gererateColorValues';
 
 	export let color = '';
@@ -15,7 +16,7 @@
 	function generateColor(tailwindPallette: { [key: string]: string }) {
 		console.log('Running Colors');
 		console.log(tailwindPallette);
-		if (tailwindPallette) {
+		if (tailwindPallette && browser) {
 			Object.entries(tailwindPallette).map(([key, value]) => {
 				document.documentElement.style.setProperty(`--custom-color-${key}`, value);
 			});

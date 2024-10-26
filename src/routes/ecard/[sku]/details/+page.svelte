@@ -6,7 +6,6 @@
 	import CheckCards from '$lib/components/Inputs/CheckCards.svelte';
 	import Label from '$lib/components/Inputs/Label.svelte';
 	import ProductSlice from '$lib/components/ProductSlice.svelte';
-	import { formatCurrency } from '$lib/utils/formatCurrency.js';
 
 	export let data;
 

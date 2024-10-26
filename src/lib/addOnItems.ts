@@ -17,6 +17,12 @@ export const enhancementItems = [
 		description:
 			'Get notified when they view the eCard. If there are signatures, who has signed it',
 		price: 99
+	},
+	{
+		id: 'private',
+		title: 'Privacy',
+		description: 'Only let the people who have the access code sign view/sign the eCard',
+		price: 0
 	}
 ];
 
@@ -32,14 +38,21 @@ export const addOnItems = [
 		name: 'RSVP List',
 		description: '',
 		path: '/add-on/rsvp',
-		cost: 199,
+		cost: 99,
 		imageURL: '/images/rsvp.jpg'
 	},
 	{
 		name: 'Meal Train',
 		description: '',
 		path: '/add-on/meal-train',
-		cost: 199,
+		cost: 99,
+		imageURL: '/images/meal-packing.jpg'
+	},
+	{
+		name: 'Potluck Sign Up',
+		description: '',
+		path: '/add-on/meal-train',
+		cost: 99,
 		imageURL: '/images/meal.jpg'
 	}
 ];

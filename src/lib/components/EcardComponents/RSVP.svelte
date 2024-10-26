@@ -6,7 +6,7 @@
 <div class="p-6">
 	<form class="max-w-xl mx-auto">
 		<BasicUser />
-		<Toggle id="going" label="Going" class="py-2" />
-		<button class="btn btn-large w-full">Submit </button>
+		<Toggle id="going" label="Going" class="py-2 w-auto" checked />
+		<button class="btn btn-large w-full btn-custom">RSVP</button>
 	</form>
 </div>

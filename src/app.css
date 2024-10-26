@@ -101,6 +101,17 @@
 		@apply border-error-700 hover:border-error-900;
 	}
 
+	/* Custom */
+	.btn-custom {
+		@apply bg-custom-600 text-custom-100  hover:bg-custom-500 focus-visible:outline-custom-600;
+	}
+	.btn-custom + .btn-text {
+		@apply hover:bg-custom-100 text-custom-600 hover:text-custom-500;
+	}
+	.btn-custom + .btn-outline {
+		@apply border-custom-700 hover:border-custom-900;
+	}
+
 	.card {
 		@apply bg-white px-6 py-12 shadow sm:rounded-lg sm:px-12;
 	}

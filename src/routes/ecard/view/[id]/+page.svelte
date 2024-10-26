@@ -3,6 +3,12 @@
 
 	const components = [
 		{
+			id: '4',
+			ecardComponentID: 'custom-color',
+			style: ' ',
+			value: '#721422'
+		},
+		{
 			id: '3',
 			ecardComponentID: 'banner',
 			style: ' ',
