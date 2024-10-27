@@ -1,4 +1,7 @@
 <script lang="ts">
+	import { generateColorString, hexToTailwindPallette } from '$lib/utils/gererateColorValues';
+	import EmptyWrapper from './Containers/EmptyWrapper.svelte';
+	import PotluckSignUp from './EcardComponents/PotluckSignUp.svelte';
 	import PromoSlot from './EcardComponents/PromoSlot.svelte';
 	import Rsvp from './EcardComponents/RSVP.svelte';
 	import Signature from './EcardComponents/Signature.svelte';
@@ -21,11 +24,14 @@
 	{style}
 	class="w-full ecard rounded border border-solid border-gray-200 bg-custom-100 @container/ecard"
 >
+	<!-- <EmptyWrapper {...tailwindPallette}> -->
 	{#each components as component}
 		<EcardDisplayComponent {...component} />
 	{/each}
 
 	<Rsvp />
+
+	<PotluckSignUp />
 
 	<Signature
 		signatures={[
@@ -77,4 +83,5 @@
 	/>
 
 	<PromoSlot />
+	<!-- </EmptyWrapper> -->
 </div>

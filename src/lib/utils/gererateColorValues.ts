@@ -41,3 +41,17 @@ export function hexToTailwindPallette(hex: string, includeColorSpace = false) {
 	const { r, g, b } = hexToRgb(hex);
 	return rgbToTailwindPalette(r, g, b, includeColorSpace);
 }
+
+export function generateColorString(tailwindPallette: { [key: string]: string }) {
+	console.log('Running Colors');
+	console.log(tailwindPallette);
+	let colorString = '';
+	if (tailwindPallette) {
+		Object.entries(tailwindPallette).map(([key, value]) => {
+			colorString = colorString + `--custom-color-${key}: ${value};\n`;
+			// document.documentElement.style.setProperty(`--custom-color-${key}`, value);
+		});
+	}
+	console.log('colorString', colorString);
+	return '';
+}
