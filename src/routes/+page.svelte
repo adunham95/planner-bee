@@ -5,7 +5,7 @@
 	import ProductFeatureSlot from '$lib/components/Marketing/ProductFeatureSlot.svelte';
 	import PromoCard from '$lib/components/Marketing/PromoCard.svelte';
 
-	export let data;
+	let { data } = $props();
 	console.log({ data });
 </script>
 

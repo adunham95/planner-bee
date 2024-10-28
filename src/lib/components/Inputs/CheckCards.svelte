@@ -1,14 +1,18 @@
 <script lang="ts">
 	import { formatCurrency } from '$lib/utils/formatCurrency';
 
-	export let options: {
+	interface Props {
+		options?: {
 		id: string;
 		name?: string;
 		title: string;
 		description: string;
 		price?: number;
 		checked?: boolean;
-	}[] = [];
+	}[];
+	}
+
+	let { options = [] }: Props = $props();
 </script>
 
 <div class="gap-y-6 sm:gap-x-4">

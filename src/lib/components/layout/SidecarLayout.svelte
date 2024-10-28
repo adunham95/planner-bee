@@ -1,3 +1,14 @@
+<script>
+	/**
+	 * @typedef {Object} Props
+	 * @property {import('svelte').Snippet} [children]
+	 * @property {import('svelte').Snippet} [sidecar]
+	 */
+
+	/** @type {Props} */
+	let { children, sidecar } = $props();
+</script>
+
 <main class="pt-4 pb-8">
 	<div class="mx-auto max-w-3xl px-4 sm:px-6 lg:max-w-7xl lg:px-8">
 		<h1 class="sr-only">Page title</h1>
@@ -9,7 +20,7 @@
 					<h2 class="sr-only" id="section-1-title">Section title</h2>
 					<div class="overflow-hidden rounded-lg bg-white shadow">
 						<div class="p-6">
-							<slot />
+							{@render children?.()}
 						</div>
 					</div>
 				</section>
@@ -21,7 +32,7 @@
 					<h2 class="sr-only" id="section-2-title">Section title</h2>
 					<div class="overflow-hidden rounded-lg bg-white shadow">
 						<div class="p-6">
-							<slot name="sidecar" />
+							{@render sidecar?.()}
 						</div>
 					</div>
 				</section>

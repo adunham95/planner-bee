@@ -1,14 +1,18 @@
 <script lang="ts">
 	import { formatCurrency } from '$lib/utils/formatCurrency';
 
-	export let defaultImage = '/images/card-flower.jpg';
-	export let items: {
+	interface Props {
+		defaultImage?: string;
+		items?: {
 		imageURL?: string | null;
 		path: string;
 		description: string;
 		name: string;
 		cost: number;
-	}[] = [];
+	}[];
+	}
+
+	let { defaultImage = '/images/card-flower.jpg', items = [] }: Props = $props();
 </script>
 
 <div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-x-8 gap-y-10 pb-16">

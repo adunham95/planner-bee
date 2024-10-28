@@ -1,10 +1,19 @@
 <script lang="ts">
 	import { formatCurrency } from '$lib/utils/formatCurrency';
 
-	export let src: string | undefined | null;
-	export let title = '';
-	export let descriptionList: string[] = [];
-	export let price = 0;
+	interface Props {
+		src: string | undefined | null;
+		title?: string;
+		descriptionList?: string[];
+		price?: number;
+	}
+
+	let {
+		src,
+		title = '',
+		descriptionList = [],
+		price = 0
+	}: Props = $props();
 </script>
 
 <li class="flex space-x-6 py-6">

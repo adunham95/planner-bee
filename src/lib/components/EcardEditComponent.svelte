@@ -1,16 +1,24 @@
 <script lang="ts">
+	import { run } from 'svelte/legacy';
+
 	import { eCardComponents } from '$lib/ecardComponents';
 	import ColorInput from './Inputs/ColorInput.svelte';
 	import TextArea from './Inputs/TextArea.svelte';
 	import TextInput from './Inputs/TextInput.svelte';
 
-	export let componentKey: string;
-	export let label: string | null | undefined = undefined;
-	export let value: string | null | undefined = undefined;
+	interface Props {
+		componentKey: string;
+		label?: string | null | undefined;
+		value?: string | null | undefined;
+	}
 
-	$: component = eCardComponents.find((c) => c.id === componentKey);
+	let { componentKey, label = undefined, value = undefined }: Props = $props();
 
-	$: console.log({ component });
+	let component = $derived(eCardComponents.find((c) => c.id === componentKey));
+
+	run(() => {
+		console.log({ component });
+	});
 </script>
 
 {#if !component}

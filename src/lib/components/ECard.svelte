@@ -7,15 +7,19 @@
 	import Signature from './EcardComponents/Signature.svelte';
 	import EcardDisplayComponent from './EcardDisplayComponent.svelte';
 
-	export let style = '';
-	export let components: {
+
+	interface Props {
+		style?: string;
+		components?: {
 		id: string;
 		ecardComponentID: string;
 		style?: string;
 		value: string;
-	}[] = [];
+	}[];
+		signatures?: { name: string; message: string }[];
+	}
 
-	export let signatures: { name: string; message: string }[] = [];
+	let { style = '', components = [], signatures = [] }: Props = $props();
 
 	console.log('eCard', { components });
 </script>

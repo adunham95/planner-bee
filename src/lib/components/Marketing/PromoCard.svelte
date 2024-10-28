@@ -1,7 +1,11 @@
 <script lang="ts">
-	export let bgImage = '';
-	export let title = '';
-	export let description = '';
+	interface Props {
+		bgImage?: string;
+		title?: string;
+		description?: string;
+	}
+
+	let { bgImage = '', title = '', description = '' }: Props = $props();
 </script>
 
 <div class="bg-white">

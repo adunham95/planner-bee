@@ -2,14 +2,14 @@
 	import Footer from '$lib/components/Footer.svelte';
 	import '../app.css';
 
-	let mobileMenuOpen = false;
+	let mobileMenuOpen = $state(false);
 
 	const links = [
 		{ name: 'eCards', href: '/ecard' },
 		{ name: 'Add Ons', href: '/add-ons' }
 	];
 
-	export let data;
+	let { data, children } = $props();
 </script>
 
 <div class="bg-white">
@@ -24,7 +24,7 @@
 			<div class="relative flex w-full max-w-xs flex-col overflow-y-auto bg-white pb-12 shadow-xl">
 				<div class="flex px-4 pb-2 pt-5">
 					<button
-						on:click={() => (mobileMenuOpen = !mobileMenuOpen)}
+						onclick={() => (mobileMenuOpen = !mobileMenuOpen)}
 						type="button"
 						class="-m-2 inline-flex items-center justify-center rounded-md p-2 text-gray-400"
 					>
@@ -72,7 +72,7 @@
 					<div class="flex flex-1 items-center lg:hidden">
 						<!-- Mobile menu toggle, controls the 'mobileMenuOpen' state. -->
 						<button
-							on:click={() => (mobileMenuOpen = !mobileMenuOpen)}
+							onclick={() => (mobileMenuOpen = !mobileMenuOpen)}
 							type="button"
 							class="-ml-2 rounded-md bg-white p-2 text-gray-400"
 						>
@@ -175,6 +175,6 @@
 	</header>
 </div>
 
-<slot />
+{@render children?.()}
 
 <Footer />

@@ -1,12 +1,22 @@
 <script lang="ts">
 	import Label from './Label.svelte';
 
-	export let label: string;
-	export let id: string;
-	export let groupName: string;
-	export let showLabel = false;
 
-	export let options: { id: string; title: string; checked?: boolean }[] = [];
+	interface Props {
+		label: string;
+		id: string;
+		groupName: string;
+		showLabel?: boolean;
+		options?: { id: string; title: string; checked?: boolean }[];
+	}
+
+	let {
+		label,
+		id,
+		groupName,
+		showLabel = false,
+		options = []
+	}: Props = $props();
 </script>
 
 <Label {id} {label} {showLabel} />

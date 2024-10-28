@@ -5,7 +5,7 @@
 	import TextArea from '$lib/components/Inputs/TextArea.svelte';
 	import TextInput from '$lib/components/Inputs/TextInput.svelte';
 
-	export let data;
+	let { data } = $props();
 	console.log(data);
 </script>
 

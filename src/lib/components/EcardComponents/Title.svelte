@@ -1,6 +1,10 @@
 <script lang="ts">
-	export let title = '';
-	export let style = '';
+	interface Props {
+		title?: string;
+		style?: string;
+	}
+
+	let { title = '', style = '' }: Props = $props();
 </script>
 
 <h2

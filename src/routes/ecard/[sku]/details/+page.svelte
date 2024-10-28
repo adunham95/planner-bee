@@ -7,7 +7,7 @@
 	import Label from '$lib/components/Inputs/Label.svelte';
 	import ProductSlice from '$lib/components/ProductSlice.svelte';
 
-	export let data;
+	let { data } = $props();
 
 	console.log(data);
 </script>

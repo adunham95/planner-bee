@@ -1,9 +1,21 @@
 <script lang="ts">
-	export let title = '';
-	export let subtitle = '';
-	export let actionLink = '';
-	export let actionCTA = '';
-	export let headers: string[] = [];
+	interface Props {
+		title?: string;
+		subtitle?: string;
+		actionLink?: string;
+		actionCTA?: string;
+		headers?: string[];
+		children?: import('svelte').Snippet;
+	}
+
+	let {
+		title = '',
+		subtitle = '',
+		actionLink = '',
+		actionCTA = '',
+		headers = [],
+		children
+	}: Props = $props();
 </script>
 
 <div class="sm:flex sm:items-center">
@@ -34,7 +46,7 @@
 					</tr>
 				</thead>
 				<tbody class="divide-y divide-gray-200">
-					<slot />
+					{@render children?.()}
 				</tbody>
 			</table>
 		</div>

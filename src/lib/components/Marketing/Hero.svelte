@@ -1,6 +1,10 @@
 <script lang="ts">
-	export let title = '';
-	export let subTitle = '';
+	interface Props {
+		title?: string;
+		subTitle?: string;
+	}
+
+	let { title = '', subTitle = '' }: Props = $props();
 </script>
 
 <div class="relative isolate">

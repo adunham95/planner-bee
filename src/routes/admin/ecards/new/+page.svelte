@@ -1,17 +1,23 @@
 <script lang="ts">
+	import { run } from 'svelte/legacy';
+
 	import { enhance } from '$app/forms';
 	import ComponentList from '$lib/components/ComponentList.svelte';
 	import ECard from '$lib/components/ECard.svelte';
 	import TextArea from '$lib/components/Inputs/TextArea.svelte';
 	import TextInput from '$lib/components/Inputs/TextInput.svelte';
 
-	export let data;
+	let { data } = $props();
 	console.log(data);
 
-	let components: { id: string; value: any; action?: string }[] = [];
-	$: components;
+	let components: { id: string; value: any; action?: string }[] = $state([]);
+	run(() => {
+		components;
+	});
 
-	$: console.log({ components });
+	run(() => {
+		console.log({ components });
+	});
 </script>
 
 <h1>New eCard Template</h1>

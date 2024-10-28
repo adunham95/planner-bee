@@ -1,7 +1,11 @@
 <script lang="ts">
-	export let title = '';
-	export let description = '';
-	export let featureList: { title: string; description: string; comingSoon?: boolean }[] = [];
+	interface Props {
+		title?: string;
+		description?: string;
+		featureList?: { title: string; description: string; comingSoon?: boolean }[];
+	}
+
+	let { title = '', description = '', featureList = [] }: Props = $props();
 </script>
 
 <div class="bg-white py-24 sm:py-32">

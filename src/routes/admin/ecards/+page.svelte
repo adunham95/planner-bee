@@ -4,7 +4,7 @@
 	import TableCell from '$lib/components/Table/TableCell.svelte';
 	import TableRow from '$lib/components/Table/TableRow.svelte';
 
-	export let data;
+	let { data } = $props();
 	console.log(data);
 </script>
 

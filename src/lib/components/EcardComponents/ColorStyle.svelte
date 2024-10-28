@@ -1,17 +1,15 @@
 <script lang="ts">
+	import { run } from 'svelte/legacy';
+
 	import { browser } from '$app/environment';
 	import { hexToTailwindPallette } from '$lib/utils/gererateColorValues';
 
-	export let color = '';
-
-	$: {
-		if (color !== '') {
-			const tailwindPallette = hexToTailwindPallette(color.trim(), false);
-			if (tailwindPallette) {
-				generateColor(tailwindPallette);
-			}
-		}
+	interface Props {
+		color?: string;
 	}
+
+	let { color = '' }: Props = $props();
+
 
 	function generateColor(tailwindPallette: { [key: string]: string }) {
 		console.log('Running Colors');
@@ -22,6 +20,14 @@
 			});
 		}
 	}
+	run(() => {
+		if (color !== '') {
+			const tailwindPallette = hexToTailwindPallette(color.trim(), false);
+			if (tailwindPallette) {
+				generateColor(tailwindPallette);
+			}
+		}
+	});
 </script>
 
 <div class="flex gap-1 py-1 px-1">

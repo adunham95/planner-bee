@@ -1,6 +1,10 @@
 <script lang="ts">
-	export let value: string;
-	export let style: string = '';
+	interface Props {
+		value: string;
+		style?: string;
+	}
+
+	let { value, style = '' }: Props = $props();
 </script>
 
 <p

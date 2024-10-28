@@ -1,7 +1,7 @@
 <script>
 	import { formatCurrency } from '$lib/utils/formatCurrency';
 
-	export let data;
+	let { data } = $props();
 	console.log(data);
 </script>
 

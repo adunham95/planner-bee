@@ -1,14 +1,18 @@
 <script lang="ts">
 	import { formatCurrency } from '$lib/utils/formatCurrency';
 
-	export let title: string | undefined = undefined;
-	export let products: {
+	interface Props {
+		title?: string | undefined;
+		products?: {
 		imageURL?: string | null;
 		path: string;
 		description: string;
 		name: string;
 		cost: number;
-	}[] = [];
+	}[];
+	}
+
+	let { title = undefined, products = [] }: Props = $props();
 </script>
 
 <div class="mx-auto py-2">

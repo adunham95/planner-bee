@@ -2,7 +2,13 @@
 	import Heading from '$components/Text/Heading.svelte';
 	import TextInputList from './TextInputList.svelte';
 
-	export let hideHeading = true;
+	/**
+	 * @typedef {Object} Props
+	 * @property {boolean} [hideHeading]
+	 */
+
+	/** @type {Props} */
+	let { hideHeading = true } = $props();
 </script>
 
 <div>

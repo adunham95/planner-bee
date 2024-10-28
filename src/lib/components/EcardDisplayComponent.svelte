@@ -1,17 +1,25 @@
 <script lang="ts">
+	import { run } from 'svelte/legacy';
+
 	import { eCardComponents } from '$lib/ecardComponents';
 	import Banner from './EcardComponents/Banner.svelte';
 	import ColorStyle from './EcardComponents/ColorStyle.svelte';
 	import Message from './EcardComponents/Message.svelte';
 	import Title from './EcardComponents/Title.svelte';
 
-	export let ecardComponentID: string;
-	export let value: string;
-	export let style: string = '';
+	interface Props {
+		ecardComponentID: string;
+		value: string;
+		style?: string;
+	}
 
-	$: component = eCardComponents.find((c) => c.id === ecardComponentID);
+	let { ecardComponentID, value, style = '' }: Props = $props();
 
-	$: console.log('displayComponent', { component });
+	let component = $derived(eCardComponents.find((c) => c.id === ecardComponentID));
+
+	run(() => {
+		console.log('displayComponent', { component });
+	});
 </script>
 
 {#if !component}

@@ -6,7 +6,7 @@
 	import ProductListSmall from '$lib/components/ProductListSmall.svelte';
 	import ProductSlice from '$lib/components/ProductSlice.svelte';
 
-	export let data;
+	let { data } = $props();
 	console.log(data);
 </script>
 
@@ -88,39 +88,41 @@
 		{/if}
 		<ProductListSmall title="Add on features" products={addOnItems.slice(0, 4)} />
 	</form>
-	<div class="flow-root" slot="sidecar">
-		<ul role="list" class="-my-6 divide-y divide-gray-200 mb-2">
-			{#if data.cart?.eCard}
+	{#snippet sidecar()}
+		<div class="flow-root" >
+			<ul role="list" class="-my-6 divide-y divide-gray-200 mb-2">
+				{#if data.cart?.eCard}
+					<li class="space-x-6">
+						<ProductSlice
+							src={data.cart.eCard?.imageURL}
+							title={data.cart.eCard.name}
+							price={data.cart.eCard.cost}
+						/>
+					</li>
+				{/if}
 				<li class="space-x-6">
 					<ProductSlice
-						src={data.cart.eCard?.imageURL}
-						title={data.cart.eCard.name}
-						price={data.cart.eCard.cost}
+						src={'/images/rsvp.jpg'}
+						title={'RSVP List'}
+						price={199}
+						descriptionList={['x10 Invites']}
 					/>
 				</li>
-			{/if}
-			<li class="space-x-6">
-				<ProductSlice
-					src={'/images/rsvp.jpg'}
-					title={'RSVP List'}
-					price={199}
-					descriptionList={['x10 Invites']}
-				/>
-			</li>
-			<li class="space-x-6">
-				<ProductSlice
-					src={'/images/meal.jpg'}
-					title={'Meal Train'}
-					price={199}
-					descriptionList={['x10 Meals']}
-				/>
-			</li>
-			<li class="space-x-6">
-				<ProductSlice src={'/images/rsvp.jpg'} title={'Remove Branding'} price={99} />
-			</li>
-		</ul>
-		<div class="flex justify-end">
-			<button form="cart-form" type="submit" class="btn">Send Card</button>
+				<li class="space-x-6">
+					<ProductSlice
+						src={'/images/meal.jpg'}
+						title={'Meal Train'}
+						price={199}
+						descriptionList={['x10 Meals']}
+					/>
+				</li>
+				<li class="space-x-6">
+					<ProductSlice src={'/images/rsvp.jpg'} title={'Remove Branding'} price={99} />
+				</li>
+			</ul>
+			<div class="flex justify-end">
+				<button form="cart-form" type="submit" class="btn">Send Card</button>
+			</div>
 		</div>
-	</div>
+	{/snippet}
 </SidecarLayout>

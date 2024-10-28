@@ -2,7 +2,11 @@
 	import TextArea from '../Inputs/TextArea.svelte';
 	import TextInput from '../Inputs/TextInput.svelte';
 
-	export let signatures: { name: string; message: string }[] = [];
+	interface Props {
+		signatures?: { name: string; message: string }[];
+	}
+
+	let { signatures = [] }: Props = $props();
 </script>
 
 <div class="mx-auto flow-root max-w-2xl px-2 lg:mx-0 lg:max-w-none">

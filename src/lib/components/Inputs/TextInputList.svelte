@@ -2,11 +2,15 @@
 	import { generateID } from '../../utils/generateID';
 	import TextInput from './TextInput.svelte';
 
-	export let inputType = 'text';
-	export let placeholder = '';
-	export let groupName: string;
+	interface Props {
+		inputType?: string;
+		placeholder?: string;
+		groupName: string;
+	}
 
-	let array = [{ id: generateID(4), value: '' }];
+	let { inputType = 'text', placeholder = '', groupName }: Props = $props();
+
+	let array = $state([{ id: generateID(4), value: '' }]);
 
 	const addItem = () => {
 		array = [...array, { id: generateID(4), value: '' }];
@@ -30,7 +34,7 @@
 				bind:value={item.value}
 			/>
 			<button
-				on:click={() => removeItem(item.id)}
+				onclick={() => removeItem(item.id)}
 				type="button"
 				class="ml-6 rounded-md bg-white text-sm font-medium text-indigo-600 hover:text-indigo-500 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
 			>
@@ -40,7 +44,7 @@
 	{/each}
 	<li class="flex items-center justify-between py-2">
 		<button
-			on:click={addItem}
+			onclick={addItem}
 			type="button"
 			class="group -ml-1 flex w-full items-center rounded-md p-1 focus:outline-none focus:ring-2 focus:ring-indigo-500"
 		>

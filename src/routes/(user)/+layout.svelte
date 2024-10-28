@@ -1,4 +1,9 @@
 <script lang="ts">
+	interface Props {
+		children?: import('svelte').Snippet;
+	}
+
+	let { children }: Props = $props();
 	const links = [
 		{ name: 'Dashboard', href: '/dashboard' },
 		{ name: 'Profile', href: '/profile' },
@@ -20,4 +25,4 @@
 	</nav>
 </div>
 
-<slot />
+{@render children?.()}

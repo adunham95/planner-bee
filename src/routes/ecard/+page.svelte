@@ -2,7 +2,7 @@
 	import ItemGrid from '$lib/components/ItemGrid.svelte';
 	import OrderPageTitle from '$lib/components/OrderPageTitle.svelte';
 
-	export let data;
+	let { data } = $props();
 	console.log(data);
 </script>
 
