@@ -42,8 +42,8 @@
 					{#each data?.product.components.filter((c) => c.editable) as component}
 						<div>
 							<EcardEditComponent
-								label={component.label}
-								bind:value={component.default}
+								label={component.label || undefined}
+								value={component.default || ''}
 								componentKey={component.ecardComponentID}
 							/>
 						</div>
@@ -52,7 +52,7 @@
 					<fieldset class="pt-4">
 						<Label id="abc" label="Basic Enhancements" showLabel class="pb-2" />
 
-						<CheckCards options={enhancementItems} />
+						<!-- <CheckCards options={enhancementItems} /> -->
 					</fieldset>
 
 					<button
