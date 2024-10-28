@@ -1,21 +1,21 @@
 <script lang="ts">
 	import { generateColorString, hexToTailwindPallette } from '$lib/utils/gererateColorValues';
 	import EmptyWrapper from './Containers/EmptyWrapper.svelte';
+	import MealTrainSignUp from './EcardComponents/MealTrainSignUp.svelte';
 	import PotluckSignUp from './EcardComponents/PotluckSignUp.svelte';
 	import PromoSlot from './EcardComponents/PromoSlot.svelte';
 	import Rsvp from './EcardComponents/RSVP.svelte';
 	import Signature from './EcardComponents/Signature.svelte';
 	import EcardDisplayComponent from './EcardDisplayComponent.svelte';
 
-
 	interface Props {
 		style?: string;
 		components?: {
-		id: string;
-		ecardComponentID: string;
-		style?: string;
-		value: string;
-	}[];
+			id: string;
+			ecardComponentID: string;
+			style?: string;
+			value: string;
+		}[];
 		signatures?: { name: string; message: string }[];
 	}
 
@@ -36,6 +36,8 @@
 	<Rsvp />
 
 	<PotluckSignUp />
+
+	<MealTrainSignUp />
 
 	<Signature
 		signatures={[
