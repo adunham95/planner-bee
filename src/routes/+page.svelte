@@ -1,8 +1,7 @@
 <script>
 	import ActionSlot from '$lib/components/Marketing/ActionSlot.svelte';
 	import FeatureList from '$lib/components/Marketing/FeatureList.svelte';
-	import Hero from '$lib/components/Marketing/Hero.svelte';
-	import ProductFeatureSlot from '$lib/components/Marketing/ProductFeatureSlot.svelte';
+	import HeroImages from '$lib/components/Marketing/HeroImages.svelte';
 	import PromoCard from '$lib/components/Marketing/PromoCard.svelte';
 
 	let { data } = $props();
@@ -11,9 +10,16 @@
 
 <!-- Sending Smiles, One Click at a Time -->
 
-<Hero
+<HeroImages
 	title="Send Joy in an Instant"
 	subTitle="Beautiful, Personalized eCards for Every Occasion. Fast, and filled with heart. Whether it's a birthday, holiday, or just because, find the perfect eCard and send it in seconds."
+	images={[
+		'/images/meal.jpg',
+		'/images/meal-packing.jpg',
+		'/images/rsvp.jpg',
+		'/images/card-flower.jpg',
+		'/images/christmas-tree.jpg'
+	]}
 />
 
 <FeatureList
