@@ -1,18 +1,23 @@
 <script lang="ts">
-	import {
-		buildMonthArray,
-		generateCalendarCellsWithAdjacentDays
-	} from '$lib/utils/generateCalender';
+	import { generateCalendarCellsWithAdjacentDays } from '$lib/utils/generateCalender';
 	import CalenderDay from './CalenderDay.svelte';
 
 	interface Props {
+		disableSelectedDays?: boolean;
+		startDate?: { month: number; day: number; year: number };
 		selectedDays?: { month: number; day: number; year: number }[];
+		onSelectedDay?: (day: number, month: number, year: number) => void;
 	}
 
-	const { selectedDays = [] }: Props = $props();
+	let {
+		startDate = { month: 0, day: 0, year: 0 },
+		disableSelectedDays = false,
+		selectedDays = [],
+		onSelectedDay = () => {}
+	}: Props = $props();
 
-	let currentMonth = $state(0);
-	let currentYear = $state(2024);
+	let currentMonth = $state(new Date().getMonth());
+	let currentYear = $state(new Date().getFullYear());
 
 	const months = [
 		'January',
@@ -31,8 +36,6 @@
 
 	const dayArray = $derived(generateCalendarCellsWithAdjacentDays(currentMonth, currentYear));
 
-	$inspect(dayArray);
-
 	function goToMonth(type: 'up' | 'down') {
 		if (type === 'down') {
 			if (currentMonth === 0) {
@@ -50,6 +53,14 @@
 				currentMonth += 1;
 			}
 		}
+	}
+
+	function isDisabled(m: number, d: number, y: number) {
+		const { day: startDay, month: startMonth, year: startYear } = startDate;
+		if (y < startYear) return true;
+		if (m < startMonth) return true;
+		if (m === startMonth && d < startDay) return true;
+		return false;
 	}
 </script>
 
@@ -116,8 +127,11 @@
 		>
 			{#each dayArray as days}
 				<CalenderDay
+					disableIfSelected={disableSelectedDays}
+					onDayClick={onSelectedDay}
 					thisDay={days}
 					{currentMonth}
+					disabled={isDisabled(days.month, days.day, days.year)}
 					selectedDay={selectedDays.some((d) => {
 						if (d.day !== days.day) return false;
 						if (d.month !== days.month) return false;
