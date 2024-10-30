@@ -6,7 +6,7 @@
 			id: '4',
 			ecardComponentID: 'custom-color',
 			style: ' ',
-			value: '#721422'
+			value: '#388E3C'
 		},
 		{
 			id: '3',
