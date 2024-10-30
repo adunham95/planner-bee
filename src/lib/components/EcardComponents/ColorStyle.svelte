@@ -10,7 +10,6 @@
 
 	let { color = '' }: Props = $props();
 
-
 	function generateColor(tailwindPallette: { [key: string]: string }) {
 		console.log('Running Colors');
 		console.log(tailwindPallette);
@@ -18,6 +17,7 @@
 			Object.entries(tailwindPallette).map(([key, value]) => {
 				document.documentElement.style.setProperty(`--custom-color-${key}`, value);
 			});
+			return tailwindPallette;
 		}
 	}
 	run(() => {
@@ -30,7 +30,7 @@
 	});
 </script>
 
-<div class="flex gap-1 py-1 px-1">
+<!-- <div class="flex gap-1 py-1 px-1">
 	<div aria-hidden="true" class="h-8 w-8 rounded-full bg-custom-100"></div>
 	<div aria-hidden="true" class="h-8 w-8 rounded-full bg-custom-200"></div>
 	<div aria-hidden="true" class="h-8 w-8 rounded-full bg-custom-300"></div>
@@ -40,7 +40,7 @@
 	<div aria-hidden="true" class="h-8 w-8 rounded-full bg-custom-700"></div>
 	<div aria-hidden="true" class="h-8 w-8 rounded-full bg-custom-800"></div>
 	<div aria-hidden="true" class="h-8 w-8 rounded-full bg-custom-900"></div>
-</div>
+</div> -->
 
 <!-- <style>
 	.ecard {
