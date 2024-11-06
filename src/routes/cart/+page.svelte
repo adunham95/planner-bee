@@ -86,10 +86,10 @@
 				</dl>
 			</div>
 		{/if}
-		<ProductListSmall title="Add on features" products={addOnItems.slice(0, 4)} />
+		<!-- <ProductListSmall title="Add on features" products={addOnItems.slice(0, 4)} /> -->
 	</form>
 	{#snippet sidecar()}
-		<div class="flow-root" >
+		<div class="flow-root">
 			<ul role="list" class="-my-6 divide-y divide-gray-200 mb-2">
 				{#if data.cart?.eCard}
 					<li class="space-x-6">

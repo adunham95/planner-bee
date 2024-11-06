@@ -6,6 +6,7 @@
 
 	const links = [
 		{ name: 'eCards', href: '/ecard' },
+		{ name: 'eVents', href: '/event' },
 		{ name: 'Add Ons', href: '/add-ons' }
 	];
 

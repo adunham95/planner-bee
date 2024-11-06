@@ -2,7 +2,7 @@
 	import { formatCurrency } from '$lib/utils/formatCurrency';
 
 	interface Props {
-		src?: string;
+		src?: string | null;
 		title?: string;
 		descriptionList?: string[];
 		price?: number;
