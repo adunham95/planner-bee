@@ -166,22 +166,6 @@
 				{@render divider()}
 
 				<fieldset>
-					{@render title('Theme Color', 'The Preview will not update with the colors')}
-					<ColorInput
-						label="themeColor"
-						id="themeColor"
-						groupName="themeColor"
-						options={[
-							{ id: '1', title: '#fff' },
-							{ id: 'green', title: '#89AC76' },
-							{ id: 'blue', title: '#49678D' }
-						]}
-					/>
-				</fieldset>
-
-				{@render divider()}
-
-				<fieldset>
 					{@render title('Add Ons')}
 					<CheckCards
 						options={[

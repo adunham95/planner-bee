@@ -1,3 +1,9 @@
+<script lang="ts">
+	import { formatCurrency } from '$lib/utils/formatCurrency';
+
+	export let data;
+</script>
+
 <div class="flex flex-col border-b border-gray-200 lg:border-0">
 	<nav aria-label="Offers" class="order-last lg:order-first bg-white">
 		<div class="mx-auto max-w-7xl lg:px-8">
@@ -134,50 +140,26 @@
 				role="list"
 				class="mx-4 inline-flex space-x-8 sm:mx-6 lg:mx-0 lg:grid lg:grid-cols-4 lg:gap-x-8 lg:space-x-0"
 			>
-				<li class="inline-flex w-64 flex-col text-center lg:w-auto">
-					<div class="group relative">
-						<div class="aspect-h-1 aspect-w-1 w-full overflow-hidden rounded-md bg-gray-200">
-							<img
-								src="https://tailwindui.com/plus/img/ecommerce-images/home-page-02-product-01.jpg"
-								alt="Black machined steel pen with hexagonal grip and small white logo at top."
-								class="h-full w-full object-cover object-center group-hover:opacity-75"
-							/>
-						</div>
-						<div class="mt-6">
-							<p class="text-sm text-gray-500">Black</p>
-							<h3 class="mt-1 font-semibold text-gray-900">
-								<a href="#">
+				{#each data.products as product}
+					<li class="inline-flex w-64 flex-col text-center lg:w-auto">
+						<a href={`/event/${product.sku}`} class="group relative">
+							<div class="aspect-h-1 aspect-w-1 w-full overflow-hidden rounded-md bg-gray-200">
+								<img
+									src={product.imageURL || '/images/happy.jpg'}
+									alt="Black machined steel pen with hexagonal grip and small white logo at top."
+									class="h-full w-full object-cover object-center group-hover:opacity-75"
+								/>
+							</div>
+							<div class="mt-6">
+								<h3 class="mt-1 font-semibold text-gray-900">
 									<span class="absolute inset-0"></span>
-									Machined Pen
-								</a>
-							</h3>
-							<p class="mt-1 text-gray-900">$35</p>
-						</div>
-					</div>
-
-					<h4 class="sr-only">Available colors</h4>
-					<ul role="list" class="mt-auto flex items-center justify-center space-x-3 pt-6">
-						<li
-							class="h-4 w-4 rounded-full border border-black border-opacity-10"
-							style="background-color: #111827"
-						>
-							<span class="sr-only">Black</span>
-						</li>
-						<li
-							class="h-4 w-4 rounded-full border border-black border-opacity-10"
-							style="background-color: #fde68a"
-						>
-							<span class="sr-only">Brass</span>
-						</li>
-						<li
-							class="h-4 w-4 rounded-full border border-black border-opacity-10"
-							style="background-color: #e5e7eb"
-						>
-							<span class="sr-only">Chrome</span>
-						</li>
-					</ul>
-				</li>
-
+									{product.name}
+								</h3>
+								<p class="mt-1 text-gray-900">{formatCurrency(product.cost || 0)}</p>
+							</div>
+						</a>
+					</li>
+				{/each}
 				<!-- More products... -->
 			</ul>
 		</div>
