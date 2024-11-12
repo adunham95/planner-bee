@@ -1,7 +1,6 @@
 <script lang="ts">
 	import Label from './Label.svelte';
 
-
 	interface Props {
 		label: string;
 		id: string;
@@ -10,13 +9,7 @@
 		options?: { id: string; title: string; checked?: boolean }[];
 	}
 
-	let {
-		label,
-		id,
-		groupName,
-		showLabel = false,
-		options = []
-	}: Props = $props();
+	let { label, id, groupName, showLabel = false, options = [] }: Props = $props();
 </script>
 
 <Label {id} {label} {showLabel} />
@@ -36,7 +29,7 @@
 			/>
 			<span
 				aria-hidden="true"
-				class="h-8 w-8 rounded-full border border-gray-300 bg-current peer-[:checked]:border-black"
+				class="h-8 w-8 rounded-full border-2 border-gray-300 bg-current peer-[:checked]:border-gray-900"
 			></span>
 		</label>
 	{/each}

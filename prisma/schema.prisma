@@ -34,6 +34,30 @@ model Session {
   user User @relation(references: [id], fields: [userId], onDelete: Cascade)
 }
 
+model EventTheme {
+  id        String              @id @default(uuid())
+  name      String
+  description String
+  imageURL String
+  sku       String              @unique
+  cost      Int?
+  createdAt DateTime            @default(now())
+  updatedAt DateTime            @default(now()) @updatedAt
+  options   EventThemeOptions[]
+}
+
+model EventThemeOptions {
+  id           String     @id @default(uuid())
+  label        String?    @default("")
+  editable     Boolean?   @default(false)
+  default      String?    @default("")
+  options      String?    @default("")
+  customStyles     String?       @default("")
+  componentID  String
+  eventThemeID String
+  eventTheme   EventTheme @relation(fields: [eventThemeID], references: [id])
+}
+
 model ECardTemplate {
   id          String           @id @default(uuid())
   sku         String           @unique
@@ -58,6 +82,7 @@ model ECardComponent {
   editable         Boolean?      @default(false)
   default          String?       @default("")
   customStyles     String?       @default("")
+  options      String?    @default("")
   createdAt        DateTime      @default(now())
   updatedAt        DateTime      @default(now()) @updatedAt
 }

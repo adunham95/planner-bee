@@ -144,6 +144,48 @@ async function main() {
 		}
 	});
 
+	await prisma.eventTheme.upsert({
+		where: { sku: 'EVNT' },
+		update: {},
+		create: {
+			sku: 'EVNT',
+			name: 'Blank Event',
+			description: 'A blank canvas',
+			imageURL: '/images/mountains-banner.jpg',
+			cost: 0,
+			options: {
+				create: [
+					{
+						componentID: 'custom-color',
+						label: 'Color',
+						editable: true,
+						default: '#A7C7E7',
+						options:
+							'["#FF5733","#33FF57","#3357FF","#FF33A6","#FFD700","#00CED1","#4B0082","#FF4500","#8A2BE2","#20B2AA","#FF1493","#5F9EA0","#DC143C","#7FFF00","#9400D3","#00FF7F","#4682B4","#B22222","#FFFFE0","#9ACD32"]'
+					},
+					{
+						componentID: 'banner',
+						label: 'Banner',
+						editable: false,
+						default: '/images/mountains-banner-2.jpg'
+					},
+					{
+						componentID: 'title',
+						label: 'Title',
+						editable: true,
+						default: ''
+					},
+					{
+						componentID: 'message',
+						label: 'Descriptions',
+						editable: true,
+						default: 'Thinking of you and wishing you comfort, strength, and a swift recovery.'
+					}
+				]
+			}
+		}
+	});
+
 	console.log({ basicEcard, christmasEcard, tacoTuesdayEcard, getWellEcard });
 }
 main()

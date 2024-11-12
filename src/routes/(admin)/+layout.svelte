@@ -7,6 +7,8 @@
 	const links = [
 		{ name: 'eCard Products', href: '/admin/ecards' },
 		{ name: 'New eCard', href: '/admin/ecards/new' },
+		{ name: 'Event Themes', href: '/admin/eventThemes' },
+		{ name: 'New Event Themes', href: '/admin/eventThemes/new' },
 		{ name: 'Images', href: '/profile' },
 		{ name: 'Users', href: '/my-orders' }
 	];

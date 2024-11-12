@@ -1,12 +1,25 @@
-<div class="bg-white">
+<script lang="ts">
+	import EcardEditComponent from '$lib/components/EcardEditComponent.svelte';
+	import CheckCards from '$lib/components/Inputs/CheckCards.svelte';
+	import ColorInput from '$lib/components/Inputs/ColorInput.svelte';
+	import TextInput from '$lib/components/Inputs/TextInput.svelte';
+	import { formatCurrency } from '$lib/utils/formatCurrency.js';
+
+	export let data;
+	console.log({ data });
+</script>
+
+<div class="bg-white sticky top-0 z-40">
 	<div class="flex flex-col border-b border-gray-200 lg:border-0">
 		<div aria-label="Offers" class="order-last lg:order-first">
 			<div
 				class="mx-auto max-w-7xl md:px-8 py-6 flex flex-col md:flex-row justify-between items-center"
 			>
 				<div class="mb-2 md:mb-0">
-					<h1 class="text-2xl font-semibold text-gray-900">THEME NAME</h1>
-					<p class="text-sm font-semibold text-brand-600">$4.99</p>
+					<h1 class="text-2xl font-semibold text-gray-900">{data.product?.name}</h1>
+					<p class="text-sm font-semibold text-brand-600">
+						{formatCurrency(data.product?.cost || 0)}
+					</p>
 				</div>
 				<button class="btn btn-lg">Add To Cart</button>
 			</div>
@@ -14,7 +27,7 @@
 	</div>
 </div>
 
-<div
+<!-- <div
 	class="mx-auto grid max-w-2xl grid-cols-1 items-center gap-x-8 gap-y-16 px-4 py-24 sm:px-6 sm:py-32 lg:max-w-7xl lg:grid-cols-2 lg:px-8"
 >
 	<div>
@@ -80,4 +93,149 @@
 			class="rounded-lg bg-gray-100"
 		/>
 	</div>
+</div> -->
+
+<div class="mx-auto mt-8 max-w-2xl px-4 sm:px-6 lg:max-w-7xl lg:px-8 pb-4">
+	<div class="lg:grid lg:auto-rows-min lg:grid-cols-12 lg:gap-x-8">
+		<div class="mt-8 lg:col-span-7 lg:col-start-1 lg:row-span-3 lg:row-start-1 lg:mt-0">
+			<h2 class="sr-only">Images</h2>
+
+			<!-- <img
+				src="https://tailwindui.com/plus/img/ecommerce-images/product-page-01-featured-product-shot.jpg"
+				alt="Back of women&#039;s Basic Tee in black."
+				class="rounded-lg lg:col-span-2 lg:row-span-2 max-h-[400px] w-full sticky top-9"
+			/> -->
+
+			<img
+				src="https://tailwindui.com/plus/img/component-images/project-app-screenshot.png"
+				alt="App screenshot"
+				width="2432"
+				height="1442"
+				class="rounded-md shadow-2xl ring-1 ring-gray-900/10 sticky top-[120px]"
+			/>
+		</div>
+		<div class="lg:col-span-5">
+			<form>
+				{#each data.product?.options || [] as option}
+					<fieldset class="">
+						{@render title(option.label || '')}
+						<EcardEditComponent
+							showLabel={false}
+							label={option.label || undefined}
+							value={option.default || ''}
+							componentKey={option.componentID}
+							options={option.options || ''}
+						/>
+					</fieldset>
+
+					{@render divider()}
+				{/each}
+
+				<fieldset>
+					{@render title('Guest Count')}
+					<CheckCards
+						hideCheck
+						type="radio"
+						groupName="guestCount"
+						options={[
+							{
+								id: '10',
+								title: '0-10 Guests',
+								checked: true
+							},
+							{
+								id: '25',
+								title: '10-25 Guests'
+							},
+							{
+								id: '50',
+								title: '25-50 Guests'
+							},
+							{
+								id: '100',
+								title: '50-100 Guests'
+							},
+							{
+								id: 'all',
+								title: '100+ Guests'
+							}
+						]}
+					/>
+				</fieldset>
+
+				{@render divider()}
+
+				<fieldset>
+					{@render title('Theme Color', 'The Preview will not update with the colors')}
+					<ColorInput
+						label="themeColor"
+						id="themeColor"
+						groupName="themeColor"
+						options={[
+							{ id: '1', title: '#fff' },
+							{ id: 'green', title: '#89AC76' },
+							{ id: 'blue', title: '#49678D' }
+						]}
+					/>
+				</fieldset>
+
+				{@render divider()}
+
+				<fieldset>
+					{@render title('Add Ons')}
+					<CheckCards
+						options={[
+							{
+								id: 'eCard',
+								title: 'eCard',
+								description: 'Send an eCard with your event',
+								price: 199
+							},
+							{
+								id: 'rsvp',
+								title: 'RSVP List',
+								description: 'Add an RSVP box with your event',
+								price: 199
+							}
+						]}
+					/>
+				</fieldset>
+
+				{@render divider()}
+
+				<fieldset>
+					{@render title('Enhancements')}
+					<CheckCards
+						options={[
+							{
+								id: 'removeBranding',
+								title: 'Remove Branding',
+								description: 'Remove the planner bee branding',
+								price: 199
+							},
+							{
+								id: 'rsvp',
+								title: 'RSVP List',
+								description: 'Add an RSVP box with your event',
+								price: 199
+							}
+						]}
+					/>
+				</fieldset>
+
+				{@render divider()}
+			</form>
+		</div>
+	</div>
 </div>
+
+{#snippet title(title: string, subTitle?: string)}
+	<h2 class="text-xl font-medium text-gray-900 pb-2">{title}</h2>
+	{#if subTitle}
+		<p class="text-sm text-brand-500 pb-2">{subTitle}</p>
+	{/if}
+{/snippet}
+
+{#snippet divider()}
+	<hr class="border-t border-gray-200 my-10" />
+{/snippet}

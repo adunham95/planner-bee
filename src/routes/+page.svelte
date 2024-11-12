@@ -11,7 +11,7 @@
 <!-- Sending Smiles, One Click at a Time -->
 
 <HeroImages
-	title="Send Joy in an Instant"
+	title="Build Joy in an Instant"
 	subTitle="Beautiful, Personalized eCards for Every Occasion. Fast, and filled with heart. Whether it's a birthday, holiday, or just because, find the perfect eCard and send it in seconds."
 	images={[
 		'/images/meal.jpg',
@@ -23,8 +23,8 @@
 />
 
 <FeatureList
-	title="All In One eCards"
-	description="Automation, Invitation, Collaboration and Customization. Send and celebrate with our eCards"
+	title="All In One events"
+	description="Automation, Invitation, Collaboration and Customization. Send and celebrate with our events"
 	featureList={[
 		{
 			title: 'Automation',
@@ -55,6 +55,11 @@
 		{
 			title: 'Schedule',
 			description: 'PreSchedule cards to out on when you want',
+			comingSoon: true
+		},
+		{
+			title: 'Adaption',
+			description: 'Use our library of add ons to customize your event',
 			comingSoon: true
 		}
 	]}

@@ -1,6 +1,4 @@
 <script lang="ts">
-	import { run } from 'svelte/legacy';
-
 	import { enhance } from '$app/forms';
 	import ComponentList from '$lib/components/ComponentList.svelte';
 	import ECard from '$lib/components/ECard.svelte';
@@ -12,13 +10,6 @@
 	console.log(data);
 
 	let components: { id: string; value: any; action?: string }[] = $state([]);
-	run(() => {
-		components;
-	});
-
-	run(() => {
-		console.log({ components });
-	});
 </script>
 
 <PageHeaderShell title="New eCard">

@@ -67,6 +67,13 @@
 					showLabel
 					class="col-span-2"
 				/>
+				<TextArea
+					bind:value={item.value.options}
+					label="Options"
+					id={`${groupName}%%${item.id}%%options`}
+					showLabel
+					class="col-span-2"
+				/>
 				<Toggle
 					bind:checked={item.value.editable}
 					class="flex items-end w-full pl-2 pb-2"
