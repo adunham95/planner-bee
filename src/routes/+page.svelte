@@ -1,4 +1,5 @@
 <script>
+	import BentoBox from '$lib/components/BentoBox.svelte';
 	import ActionSlot from '$lib/components/Marketing/ActionSlot.svelte';
 	import FeatureList from '$lib/components/Marketing/FeatureList.svelte';
 	import HeroImages from '$lib/components/Marketing/HeroImages.svelte';
@@ -72,3 +73,36 @@
 />
 
 <ActionSlot />
+
+<BentoBox
+	boxes={[
+		{
+			title: 'Box 1',
+			imgUrl: 'https://tailwindui.com/plus/img/component-images/bento-01-performance.png',
+			width: 4,
+			header: 'Power the world!',
+			description: 'Something is a long'
+		},
+		{
+			title: 'Box 2',
+			imgUrl: 'https://tailwindui.com/plus/img/component-images/bento-01-performance.png',
+			width: 2,
+			header: 'ULTRA POWER!',
+			description: 'Something is a long'
+		},
+		{
+			title: 'Box 2',
+			imgUrl: 'https://tailwindui.com/plus/img/component-images/bento-01-network.png',
+			width: 2,
+			header: 'ULTRA POWER!',
+			description: 'Something is a long'
+		},
+		{
+			title: 'Box 1',
+			imgUrl: 'https://tailwindui.com/plus/img/component-images/bento-01-performance.png',
+			width: 4,
+			header: 'Power the world!',
+			description: 'Something is a long'
+		}
+	]}
+/>
