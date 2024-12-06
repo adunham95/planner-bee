@@ -46,11 +46,11 @@
 					bind:value={item.value.label}
 				/>
 				<Select
-					id={`${groupName}%%${item.id}%%ecardComponentID`}
+					id={`${groupName}%%${item.id}%%componentID`}
 					label="Component"
 					showLabel
 					class="col-span-1"
-					bind:value={item.value.component}
+					bind:value={item.value.componentID}
 					options={components}
 				/>
 				<TextArea

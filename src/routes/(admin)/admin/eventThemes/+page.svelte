@@ -15,7 +15,7 @@
 				<TableCell>{event.sku}</TableCell>
 				<TableCell>{event.name}</TableCell>
 				<TableCell>{event.options.length}</TableCell>
-				<TableCell><a href="/admin/events/{event.sku}">Edit</a></TableCell>
+				<TableCell><a href="/admin/eventThemes/{event.sku}">Edit</a></TableCell>
 			</TableRow>
 		{/each}
 	</Table>
