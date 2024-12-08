@@ -10,7 +10,7 @@ generator client {
 
 generator typescriptInterfaces {
   provider = "prisma-generator-typescript-interfaces"
-    output = "../src/models/interfaces.d.ts"
+  output   = "../src/models/interfaces.d.ts"
   prettier = true
 }
 
@@ -41,15 +41,16 @@ model Session {
 }
 
 model EventTheme {
-  id        String              @id @default(uuid())
-  name      String
+  id          String              @id @default(uuid())
+  name        String
   description String
-  imageURL String
-  sku       String              @unique
-  cost      Int?
-  createdAt DateTime            @default(now())
-  updatedAt DateTime            @default(now()) @updatedAt
-  options   EventThemeOptions[]
+  imageURL    String
+  sku         String              @unique
+  cost        Int?
+  createdAt   DateTime            @default(now())
+  updatedAt   DateTime            @default(now()) @updatedAt
+  options     EventThemeOptions[]
+  orderProduct OrderProduct[]
 }
 
 model EventThemeOptions {
@@ -58,7 +59,8 @@ model EventThemeOptions {
   editable     Boolean?   @default(false)
   default      String?    @default("")
   options      String?    @default("")
-  customStyles     String?       @default("")
+  customStyles String?    @default("")
+  displayOrder Int        @default(0)
   componentID  String
   eventThemeID String
   eventTheme   EventTheme @relation(fields: [eventThemeID], references: [id])
@@ -75,6 +77,7 @@ model ECardTemplate {
   components  ECardComponent[]
   order       Order[]
   imageURL    String?
+  orderProducts OrderProduct[]
 
   @@index([sku])
 }
@@ -88,7 +91,7 @@ model ECardComponent {
   editable         Boolean?      @default(false)
   default          String?       @default("")
   customStyles     String?       @default("")
-  options      String?    @default("")
+  options          String?       @default("")
   createdAt        DateTime      @default(now())
   updatedAt        DateTime      @default(now()) @updatedAt
 }
@@ -98,8 +101,8 @@ model Order {
   orderNumber  String?             @default("")
   createdAt    DateTime            @default(now())
   updatedAt    DateTime            @updatedAt
-  ecardSku     String
-  eCard        ECardTemplate       @relation(references: [sku], fields: [ecardSku])
+  ecardSku     String?
+  eCard        ECardTemplate?       @relation(references: [sku], fields: [ecardSku])
   senderName   String?             @default("")
   senderEmail  String?             @default("")
   senderID     String?
@@ -107,6 +110,28 @@ model Order {
   eCardOptions EcardOrderOptions[]
   recipients   Recipient[]
   status       String?             @default("draft")
+  products     OrderProduct[]
+}
+
+model OrderProduct {
+  id      String               @id @default(uuid())
+  ecardSku String?
+  eventThemeSku String?
+  ecard ECardTemplate? @relation(references: [sku], fields: [ecardSku],  map: "OrderProduct_ecard")
+  eventTheme EventTheme? @relation(references: [sku], fields: [eventThemeSku], map: "OrderProduct_eventTheme")
+  orderID String
+  order   Order                @relation(references: [id], fields: [orderID])
+  options OrderProductOption[]
+}
+
+model OrderProductOption {
+  id             String       @id @default(uuid())
+  orderProductID String
+  orderProduct   OrderProduct @relation(references: [id], fields: [orderProductID])
+  value          String
+  key            String
+  createdAt      DateTime     @default(now())
+  updatedAt      DateTime     @updatedAt
 }
 
 model EcardOrderOptions {

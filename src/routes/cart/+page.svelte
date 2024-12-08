@@ -1,13 +1,16 @@
-<script>
+<script lang="ts">
 	import { enhance } from '$app/forms';
-	import { addOnItems } from '$lib/addOnItems';
 	import TextInput from '$lib/components/Inputs/TextInput.svelte';
 	import SidecarLayout from '$lib/components/layout/SidecarLayout.svelte';
-	import ProductListSmall from '$lib/components/ProductListSmall.svelte';
 	import ProductSlice from '$lib/components/ProductSlice.svelte';
+	import UpsellRow from '$lib/components/UpsellRow.svelte';
+	import type { PageData } from '../$types';
+	import type { ActionData } from './$types';
 
-	let { data } = $props();
-	console.log(data);
+	let { data, form }: { data: PageData; form: ActionData } = $props();
+
+	$inspect(form);
+	$inspect(data);
 </script>
 
 <SidecarLayout>
@@ -37,14 +40,15 @@
 		</div>
 
 		<!-- Recipient -->
-		<div class="pb-4">
+		<!-- <div class="pb-4">
 			<h2 class="w-full pt-6 pb-2 text-left text-lg font-medium text-gray-500">Recipient</h2>
 			<div class="grid grid-cols-2 gap-2 pt-2">
 				<TextInput id="recipientFirstName" label="First Name" showLabel />
 				<TextInput id="recipientLastName" label="Last Name" showLabel />
 				<TextInput id="recipientEmail" label="Email" showLabel class="col-span-2" />
 			</div>
-		</div>
+		</div> -->
+
 		<!-- Delivery -->
 		<!-- <div class="pb-4">
 			<h2
@@ -55,6 +59,15 @@
 			<Toggle id="imediate" label="Delivery is immediate" showLabel />
 			<TextInput id="deliveryTime" label="Delivery Time" showLabel type="datetime-local" />
 		</div> -->
+
+		<div class="pb-4">
+			<h2
+				class="list-none w-full pt-6 pb-2 text-left text-lg font-medium text-gray-500 cursor-pointer"
+			>
+				Add On Products
+			</h2>
+			<UpsellRow options={[{ title: 'ECard', url: '/ecard' }]} />
+		</div>
 
 		<!-- Account Benefits -->
 		{#if !data.user}
@@ -91,37 +104,31 @@
 	{#snippet sidecar()}
 		<div class="flow-root">
 			<ul role="list" class="-my-6 divide-y divide-gray-200 mb-2">
-				{#if data.cart?.eCard}
-					<li class="space-x-6">
-						<ProductSlice
-							src={data.cart.eCard?.imageURL}
-							title={data.cart.eCard.name}
-							price={data.cart.eCard.cost}
-						/>
-					</li>
+				{#if data?.cart}
+					{#each data?.cart.products as product}
+						{#if product.ecard}
+							<li class="space-x-6">
+								<ProductSlice
+									src={product.ecard.imageURL}
+									title={product.ecard.name}
+									price={product.ecard.cost}
+								/>
+							</li>
+						{/if}
+						{#if product.eventTheme}
+							<li class="space-x-6">
+								<ProductSlice
+									src={product.eventTheme.imageURL}
+									title={product.eventTheme.name}
+									price={product.eventTheme.cost || 0}
+								/>
+							</li>
+						{/if}
+					{/each}
 				{/if}
-				<li class="space-x-6">
-					<ProductSlice
-						src={'/images/rsvp.jpg'}
-						title={'RSVP List'}
-						price={199}
-						descriptionList={['x10 Invites']}
-					/>
-				</li>
-				<li class="space-x-6">
-					<ProductSlice
-						src={'/images/meal.jpg'}
-						title={'Meal Train'}
-						price={199}
-						descriptionList={['x10 Meals']}
-					/>
-				</li>
-				<li class="space-x-6">
-					<ProductSlice src={'/images/rsvp.jpg'} title={'Remove Branding'} price={99} />
-				</li>
 			</ul>
 			<div class="flex justify-end">
-				<button form="cart-form" type="submit" class="btn">Send Card</button>
+				<button form="cart-form" type="submit" class="btn">Checkout</button>
 			</div>
 		</div>
 	{/snippet}

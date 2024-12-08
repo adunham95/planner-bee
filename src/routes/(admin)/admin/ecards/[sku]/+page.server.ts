@@ -176,6 +176,5 @@ export const actions: Actions = {
 		}
 
 		return { success: true };
-		return { ecard };
 	}
 };

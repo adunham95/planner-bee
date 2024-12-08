@@ -17,7 +17,13 @@ export const load: PageServerLoad = async ({ cookies }) => {
 			id: cartID
 		},
 		include: {
-			eCard: true
+			products: {
+				include: {
+					ecard: true,
+					eventTheme: true,
+					options: true
+				}
+			}
 		}
 	});
 
@@ -63,19 +69,19 @@ export const actions: Actions = {
 			});
 		}
 
-		if (!recipientEmail || typeof recipientEmail !== 'string') {
+		if (recipientEmail && typeof recipientEmail !== 'string') {
 			return fail(400, {
 				message: 'Invalid Recipient Email'
 			});
 		}
 
-		if (!recipientFirstName || typeof recipientFirstName !== 'string') {
+		if (recipientFirstName && typeof recipientFirstName !== 'string') {
 			return fail(400, {
 				message: 'Invalid Recipient First Name'
 			});
 		}
 
-		if (!recipientLastName || typeof recipientLastName !== 'string') {
+		if (recipientLastName && typeof recipientLastName !== 'string') {
 			return fail(400, {
 				message: 'Invalid Recipient Last Name'
 			});
@@ -91,16 +97,18 @@ export const actions: Actions = {
 			orderNumber
 		});
 
-		const recipient = await prisma.recipient.create({
-			data: {
-				orderID: cartID,
-				firstName: recipientFirstName,
-				lastName: recipientLastName,
-				email: recipientEmail
-			}
-		});
+		if (recipientEmail && recipientFirstName && recipientLastName) {
+			const recipient = await prisma.recipient.create({
+				data: {
+					orderID: cartID,
+					firstName: recipientFirstName,
+					lastName: recipientLastName,
+					email: recipientEmail
+				}
+			});
 
-		console.log('recipient', recipient);
+			console.log('recipient', recipient);
+		}
 
 		await prisma.order.update({
 			where: {

@@ -1,4 +1,4 @@
-<script>
+<script lang="ts">
 	import { formatCurrency } from '$lib/utils/formatCurrency';
 
 	let { data } = $props();
@@ -24,36 +24,28 @@
 		<h2 id="order-heading" class="sr-only">Your order</h2>
 
 		<h3 class="sr-only">Items</h3>
-		{#if data.order?.eCard}
-			<div class="flex space-x-6 border-b border-gray-200 py-10">
-				<img
-					src={data.order.eCard?.imageURL || '/images/card-flower.jpg'}
-					alt="Glass bottle with black plastic pour top and mesh insert."
-					class="h-20 w-20 flex-none rounded-lg bg-gray-100 object-cover object-center sm:h-40 sm:w-40"
-				/>
-				<div class="flex flex-auto flex-col">
-					<div>
-						<h4 class="font-medium text-gray-900">
-							{data.order.eCard.name}
-						</h4>
-						<p class="mt-2 text-sm text-gray-600">
-							{data.order.eCard.description}
-						</p>
-					</div>
-					<div class="mt-6 flex flex-1 items-end">
-						<dl class="flex space-x-4 divide-x divide-gray-200 text-sm sm:space-x-6">
-							<div class="flex">
-								<dt class="font-medium text-gray-900">Elements</dt>
-								<dd class="ml-2 text-gray-700">x{data.order.eCardOptions.length || 0}</dd>
-							</div>
-							<div class="flex pl-4 sm:pl-6">
-								<dt class="font-medium text-gray-900">Price</dt>
-								<dd class="ml-2 text-gray-700">{formatCurrency(data.order.eCard.cost)}</dd>
-							</div>
-						</dl>
-					</div>
-				</div>
-			</div>
+
+		{#if data.order}
+			{#each data?.order?.products as product}
+				{#if product.ecard}
+					{@render orderCard(
+						product.ecard.imageURL || undefined,
+						product.ecard.name,
+						product.ecard.description,
+						product.ecard.cost,
+						product.options.length
+					)}
+				{/if}
+				{#if product.eventTheme}
+					{@render orderCard(
+						product.eventTheme.imageURL || undefined,
+						product.eventTheme.name,
+						product.eventTheme.description,
+						product.eventTheme.cost || 0,
+						product.options.length
+					)}
+				{/if}
+			{/each}
 		{/if}
 
 		<div class="sm:ml-40 sm:pl-6">
@@ -116,3 +108,41 @@
 		</div>
 	</section>
 </main>
+
+{#snippet orderCard(
+	imageURL: string | undefined,
+	name: string,
+	description: string,
+	cost: number | null,
+	elementsLength = 0
+)}
+	<div class="flex space-x-6 border-b border-gray-200 py-10">
+		<img
+			src={imageURL || '/images/card-flower.jpg'}
+			alt="Glass bottle with black plastic pour top and mesh insert."
+			class="h-20 w-20 flex-none rounded-lg bg-gray-100 object-cover object-center sm:h-40 sm:w-40"
+		/>
+		<div class="flex flex-auto flex-col">
+			<div>
+				<h4 class="font-medium text-gray-900">
+					{name}
+				</h4>
+				<p class="mt-2 text-sm text-gray-600">
+					{description}
+				</p>
+			</div>
+			<div class="mt-6 flex flex-1 items-end">
+				<dl class="flex space-x-4 divide-x divide-gray-200 text-sm sm:space-x-6">
+					<div class="flex">
+						<dt class="font-medium text-gray-900">Elements</dt>
+						<dd class="ml-2 text-gray-700">x{elementsLength || 0}</dd>
+					</div>
+					<div class="flex pl-4 sm:pl-6">
+						<dt class="font-medium text-gray-900">Price</dt>
+						<dd class="ml-2 text-gray-700">{formatCurrency(cost || 0)}</dd>
+					</div>
+				</dl>
+			</div>
+		</div>
+	</div>
+{/snippet}

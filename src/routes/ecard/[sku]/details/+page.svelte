@@ -1,6 +1,5 @@
 <script lang="ts">
 	import { enhance } from '$app/forms';
-	import { enhancementItems } from '$lib/addOnItems.js';
 	import ECard from '$lib/components/ECard.svelte';
 	import EcardEditComponent from '$lib/components/EcardEditComponent.svelte';
 	import CheckCards from '$lib/components/Inputs/CheckCards.svelte';

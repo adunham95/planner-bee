@@ -29,6 +29,7 @@ export interface EventTheme {
   createdAt: Date;
   updatedAt: Date;
   options?: EventThemeOptions[];
+  orderProduct?: OrderProduct[];
 }
 
 export interface EventThemeOptions {
@@ -38,6 +39,7 @@ export interface EventThemeOptions {
   default: string | null;
   options: string | null;
   customStyles: string | null;
+  displayOrder: number;
   componentID: string;
   eventThemeID: string;
   eventTheme?: EventTheme;
@@ -54,6 +56,7 @@ export interface ECardTemplate {
   components?: ECardComponent[];
   order?: Order[];
   imageURL: string | null;
+  orderProducts?: OrderProduct[];
 }
 
 export interface ECardComponent {
@@ -75,8 +78,8 @@ export interface Order {
   orderNumber: string | null;
   createdAt: Date;
   updatedAt: Date;
-  ecardSku: string;
-  eCard?: ECardTemplate;
+  ecardSku: string | null;
+  eCard?: ECardTemplate | null;
   senderName: string | null;
   senderEmail: string | null;
   senderID: string | null;
@@ -84,6 +87,28 @@ export interface Order {
   eCardOptions?: EcardOrderOptions[];
   recipients?: Recipient[];
   status: string | null;
+  products?: OrderProduct[];
+}
+
+export interface OrderProduct {
+  id: string;
+  ecardSku: string | null;
+  eventThemeSku: string | null;
+  ecard?: ECardTemplate | null;
+  eventTheme?: EventTheme | null;
+  orderID: string;
+  order?: Order;
+  options?: OrderProductOption[];
+}
+
+export interface OrderProductOption {
+  id: string;
+  orderProductID: string;
+  orderProduct?: OrderProduct;
+  value: string;
+  key: string;
+  createdAt: Date;
+  updatedAt: Date;
 }
 
 export interface EcardOrderOptions {

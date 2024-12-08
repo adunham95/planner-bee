@@ -62,6 +62,7 @@ export const actions: Actions = {
 			...sessionCookie.attributes
 		});
 
+		//TODO convert to progressive enhancement
 		redirect(302, '/');
 	}
 };

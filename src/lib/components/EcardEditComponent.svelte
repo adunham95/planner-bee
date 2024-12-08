@@ -17,16 +17,12 @@
 		label = undefined,
 		value = $bindable(),
 		showLabel = true,
-		options = ''
+		options
 	}: Props = $props();
 
 	let component = $derived(eCardComponents.find((c) => c.id === componentKey));
 
-	let customOptions = $derived(JSON.parse(options));
-
-	$effect(() => {
-		console.log({ component, customOptions });
-	});
+	let customOptions = $derived(options ? JSON.parse(options) : []);
 </script>
 
 {#if !component}

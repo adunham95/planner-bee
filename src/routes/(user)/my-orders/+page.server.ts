@@ -21,9 +21,13 @@ export const load: PageServerLoad = async (event) => {
 			]
 		},
 		include: {
-			eCard: true,
-			eCardOptions: true,
-			recipients: true
+			recipients: true,
+			products: {
+				include: {
+					ecard: true,
+					eventTheme: true
+				}
+			}
 		}
 	});
 

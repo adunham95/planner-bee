@@ -1,11 +1,4 @@
 <script>
-	/**
-	 * @typedef {Object} Props
-	 * @property {import('svelte').Snippet} [children]
-	 * @property {import('svelte').Snippet} [sidecar]
-	 */
-
-	/** @type {Props} */
 	let { children, sidecar } = $props();
 </script>
 
@@ -20,23 +13,26 @@
 					<h2 class="sr-only" id="section-1-title">Section title</h2>
 					<div class="overflow-hidden rounded-lg bg-white shadow">
 						<div class="p-6">
-							{@render children?.()}
+							{@render children()}
 						</div>
 					</div>
 				</section>
 			</div>
 
 			<!-- Right column -->
-			<div class="grid grid-cols-1 gap-4">
-				<section aria-labelledby="section-2-title">
-					<h2 class="sr-only" id="section-2-title">Section title</h2>
-					<div class="overflow-hidden rounded-lg bg-white shadow">
-						<div class="p-6">
-							{@render sidecar?.()}
+			{#if sidecar}
+				<div class="grid grid-cols-1 gap-4">
+					<section aria-labelledby="section-2-title">
+						<h2 class="sr-only" id="section-2-title">Section title</h2>
+						<div class="overflow-hidden rounded-lg bg-white shadow">
+							<div class="p-6">
+								{@render sidecar()}
+							</div>
 						</div>
-					</div>
-				</section>
-			</div>
+					</section>
+				</div>
+			{/if}
 		</div>
 	</div>
 </main>
+.

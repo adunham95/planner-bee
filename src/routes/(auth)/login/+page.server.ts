@@ -11,6 +11,8 @@ export const actions: Actions = {
 		const email = formData.get('email');
 		const password = formData.get('password');
 
+		console.log('auth', { email, password });
+
 		if (typeof email !== 'string' || email.length < 3 || email.length > 31) {
 			return fail(400, {
 				message: 'Invalid email'
@@ -22,17 +24,8 @@ export const actions: Actions = {
 			});
 		}
 
-		const existingUser = await prisma.User.findUnique({ where: { email } });
+		const existingUser = await prisma.user.findUnique({ where: { email } });
 		if (!existingUser) {
-			// NOTE:
-			// Returning immediately allows malicious actors to figure out valid emails from response times,
-			// allowing them to only focus on guessing passwords in brute-force attacks.
-			// As a preventive measure, you may want to hash passwords even for invalid emails.
-			// However, valid emails can be already be revealed with the signup page among other methods.
-			// It will also be much more resource intensive.
-			// Since protecting against this is non-trivial,
-			// it is crucial your implementation is protected against brute-force attacks with login throttling etc.
-			// If emails are public, you may outright tell the user that the email is invalid.
 			return fail(400, {
 				message: 'Incorrect email or password'
 			});
@@ -57,6 +50,7 @@ export const actions: Actions = {
 			...sessionCookie.attributes
 		});
 
+		//TODO convert to progressive enhancement
 		redirect(302, '/');
 	}
 };

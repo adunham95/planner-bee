@@ -1,8 +1,6 @@
 <script lang="ts">
 	import EcardEditComponent from '$lib/components/EcardEditComponent.svelte';
 	import CheckCards from '$lib/components/Inputs/CheckCards.svelte';
-	import ColorInput from '$lib/components/Inputs/ColorInput.svelte';
-	import TextInput from '$lib/components/Inputs/TextInput.svelte';
 	import { formatCurrency } from '$lib/utils/formatCurrency.js';
 
 	export let data;
@@ -21,7 +19,7 @@
 						{formatCurrency(data.product?.cost || 0)}
 					</p>
 				</div>
-				<button class="btn btn-lg">Add To Cart</button>
+				<button class="btn btn-lg" form="add-to-cart">Add To Cart</button>
 			</div>
 		</div>
 	</div>
@@ -115,8 +113,8 @@
 			/>
 		</div>
 		<div class="lg:col-span-5">
-			<form>
-				{#each data.product?.options || [] as option}
+			<form id="add-to-cart" method="post" action="?/addToCart">
+				{#each data.product?.options.sort((a, b) => a.displayOrder - b.displayOrder) || [] as option}
 					<fieldset class="">
 						{@render title(option.label || '')}
 						<EcardEditComponent
@@ -158,28 +156,6 @@
 							{
 								id: 'all',
 								title: '100+ Guests'
-							}
-						]}
-					/>
-				</fieldset>
-
-				{@render divider()}
-
-				<fieldset>
-					{@render title('Add Ons')}
-					<CheckCards
-						options={[
-							{
-								id: 'eCard',
-								title: 'eCard',
-								description: 'Send an eCard with your event',
-								price: 199
-							},
-							{
-								id: 'rsvp',
-								title: 'RSVP List',
-								description: 'Add an RSVP box with your event',
-								price: 199
 							}
 						]}
 					/>

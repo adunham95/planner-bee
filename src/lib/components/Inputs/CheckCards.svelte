@@ -26,6 +26,7 @@
 			<input
 				{type}
 				name={groupName || option.name || option.id}
+				value={type === 'radio' ? option.name || option.id : undefined}
 				checked={option.checked}
 				class="peer sr-only"
 			/>

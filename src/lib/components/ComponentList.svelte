@@ -40,10 +40,19 @@
 				<TextInput
 					label="Label"
 					showLabel
-					class="col-span-1"
+					class="col-span-2"
 					id={`${groupName}%%${item.id}%%label`}
 					{placeholder}
 					bind:value={item.value.label}
+				/>
+				<TextInput
+					label="Order"
+					showLabel
+					class="col-span-1"
+					type="number"
+					id={`${groupName}%%${item.id}%%displayOrder`}
+					{placeholder}
+					bind:value={item.value.displayOrder}
 				/>
 				<Select
 					id={`${groupName}%%${item.id}%%componentID`}

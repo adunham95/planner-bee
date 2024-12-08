@@ -35,6 +35,7 @@ export const load: PageServerLoad = async (event) => {
 export const actions: Actions = {
 	default: async ({ request }) => {
 		const data = await request.formData();
+		const id = data.get('id');
 		const name = data.get('name');
 		const description = data.get('description');
 		const sku = data.get('sku');
@@ -43,12 +44,15 @@ export const actions: Actions = {
 
 		const components: {
 			[key: string]: {
+				id?: string;
 				label?: string;
 				componentID: string;
 				default?: string;
 				editable?: string;
 				customStyles?: string;
 				options?: string;
+				action?: string;
+				displayOrder?: string;
 				[key: string]: unknown;
 			};
 		} = {};
@@ -67,6 +71,12 @@ export const actions: Actions = {
 		console.log({ components });
 
 		// return { success: true };
+
+		if (!id || typeof id !== 'string') {
+			return fail(400, {
+				message: 'Invalid id'
+			});
+		}
 
 		if (!name || typeof name !== 'string' || name.length < 2) {
 			return fail(400, {
@@ -98,30 +108,114 @@ export const actions: Actions = {
 			});
 		}
 
-		const ecard = await prisma.eventTheme.upsert({
-			data: {
-				name,
-				description: description || '',
-				sku: sku.toUpperCase(),
-				cost: parseInt(price) || 0,
-				imageURL,
-				options: {
-					createMany: {
-						data: Object.values(components).map((element) => {
-							return {
-								componentID: element.componentID,
-								label: element.label,
-								default: element.default,
-								editable: element.editable === 'on' || true,
-								customStyles: element.customStyles,
-								options: element.options
-							};
-						})
+		try {
+			await prisma.eventTheme.update({
+				where: {
+					id
+				},
+				data: {
+					name,
+					description: description || '',
+					sku: sku.toUpperCase(),
+					cost: parseInt(price) || 0,
+					imageURL
+				}
+			});
+		} catch (error: unknown) {
+			console.log(error);
+			return fail(400, {
+				message: 'Error saving event',
+				error: error
+			});
+		}
+
+		try {
+			const slotsToDelete = Object.values(components)
+				.filter((c) => c.id !== undefined && c.action === 'remove')
+				.map((c) => c.id || '') as string[];
+
+			//Delete all the ones we have removed
+			await prisma.eventThemeOptions.deleteMany({
+				where: {
+					eventThemeID: {
+						equals: id
+					},
+					componentID: {
+						in: slotsToDelete
 					}
 				}
-			}
-		});
+			});
+		} catch (error: unknown) {
+			console.log('error deleting element', error);
+			return fail(400, {
+				message: 'Error deleting elements',
+				error: error
+			});
+		}
 
-		return { ecard };
+		try {
+			await prisma.eventThemeOptions.createMany({
+				data: Object.values(components)
+					.filter((c) => c.action === 'add')
+					.map((c) => ({
+						eventThemeID: id,
+						componentID: c.componentID,
+						label: c.label,
+						default: c.default,
+						editable: c.editable === 'on' || true,
+						customStyles: c.customStyles,
+						options: c.options,
+						displayOrder: parseInt(c.displayOrder || '0')
+					}))
+			});
+		} catch (error: unknown) {
+			console.log('error creating new events', error);
+			return fail(400, {
+				message: 'Error creating new elements',
+				error: error
+			});
+		}
+
+		try {
+			const valuesToUpdate = Object.values(components)
+				.filter((c) => c.action === 'undefined' || c.action === 'edit')
+				.map((c) => ({
+					id: c.id as string,
+					eventThemeID: id,
+					componentID: c.componentID,
+					label: c.label,
+					default: c.default,
+					editable: c.editable === 'on',
+					options: c.options,
+					customStyles: c.customStyles,
+					displayOrder: parseInt(c.displayOrder || '0')
+				}));
+
+			for (let index = 0; index < valuesToUpdate.length; index++) {
+				const element = valuesToUpdate[index];
+				await prisma.eventThemeOptions.update({
+					where: {
+						id: element.id
+					},
+					data: {
+						componentID: element.componentID,
+						label: element.label,
+						default: element.default,
+						editable: element.editable,
+						customStyles: element.customStyles,
+						options: element.options,
+						displayOrder: element.displayOrder
+					}
+				});
+			}
+		} catch (error: unknown) {
+			console.log('error updating elements', error);
+			return fail(400, {
+				message: 'Error updating elements',
+				error: error
+			});
+		}
+
+		return { success: true };
 	}
 };

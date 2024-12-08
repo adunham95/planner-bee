@@ -14,7 +14,7 @@
 	</div>
 </PageHeaderShell>
 
-{#snippet orderCard({ createdAt, orderNumber = '', recipients = [], eCard }: Order)}
+{#snippet orderCard({ createdAt, orderNumber = '', recipients = [], products = [] }: Order)}
 	<div class="mx-auto max-w-7xl sm:px-2 lg:px-8">
 		<div class="mx-auto max-w-2xl space-y-8 sm:px-4 lg:max-w-4xl lg:px-0">
 			<div class="border-b border-t border-gray-200 bg-white shadow-sm sm:rounded-lg sm:border">
@@ -44,29 +44,24 @@
 				<!-- Products -->
 				<h4 class="sr-only">Items</h4>
 				<ul role="list" class="divide-y divide-gray-200">
-					{#if eCard}
-						<li class="p-4 sm:p-6">
-							<div class="flex items-center sm:items-start">
-								<div class="size-20 shrink-0 overflow-hidden rounded-lg bg-gray-200 sm:size-40">
-									<img
-										src={eCard.imageURL || '/images/balloons.jpg'}
-										alt=""
-										class="size-full object-cover object-center"
-									/>
-								</div>
-								<div class="ml-6 flex-1 text-sm">
-									<div class="font-medium text-gray-900 sm:flex sm:justify-between">
-										<h5>{eCard.name}</h5>
-										<p class="mt-2 sm:mt-0">{formatCurrency(eCard.cost || 0)}</p>
-									</div>
-									<p class="hidden text-gray-500 sm:mt-2 sm:block">
-										{eCard.description}
-									</p>
-									<div></div>
-								</div>
-							</div>
-						</li>
-					{/if}
+					{#each products as product}
+						{#if product.ecard}
+							{@render productCart(
+								product.ecard.name,
+								product.ecard.cost,
+								product.ecard.description,
+								product.ecard.imageURL || undefined
+							)}
+						{/if}
+						{#if product.eventTheme}
+							{@render productCart(
+								product.eventTheme.name,
+								product.eventTheme.cost || 0,
+								product.eventTheme.description,
+								product.eventTheme.imageURL || undefined
+							)}
+						{/if}
+					{/each}
 				</ul>
 				<div class="p-4 flex justify-end">
 					<div
@@ -87,4 +82,28 @@
 			<!-- More orders... -->
 		</div>
 	</div>
+{/snippet}
+
+{#snippet productCart(name: string, cost: number, description: string, imageURL?: string)}
+	<li class="p-4 sm:p-6">
+		<div class="flex items-center sm:items-start">
+			<div class="size-20 shrink-0 overflow-hidden rounded-lg bg-gray-200 sm:size-40">
+				<img
+					src={imageURL || '/images/balloons.jpg'}
+					alt=""
+					class="size-full object-cover object-center"
+				/>
+			</div>
+			<div class="ml-6 flex-1 text-sm">
+				<div class="font-medium text-gray-900 sm:flex sm:justify-between">
+					<h5>{name}</h5>
+					<p class="mt-2 sm:mt-0">{formatCurrency(cost || 0)}</p>
+				</div>
+				<p class="hidden text-gray-500 sm:mt-2 sm:block">
+					{description}
+				</p>
+				<div></div>
+			</div>
+		</div>
+	</li>
 {/snippet}

@@ -36,7 +36,7 @@ export const actions: Actions = {
 
 		const cartOptions = [...data.entries()].map(([key, value]) => {
 			return {
-				ecardComponentID: key,
+				key,
 				value: value.toString()
 			};
 		});
@@ -47,18 +47,36 @@ export const actions: Actions = {
 
 		console.log('cartID', cartID);
 
-		const cart = await prisma.order.create({
-			data: {
-				ecardSku: sku,
-				eCardOptions: {
-					createMany: { data: cartOptions }
+		if (cartID) {
+			await prisma.orderProduct.create({
+				data: {
+					orderID: cartID,
+					ecardSku: sku,
+					options: {
+						createMany: {
+							data: cartOptions
+						}
+					}
 				}
-			}
-		});
-
-		console.log({ cart });
-
-		cookies.set('cart', cart.id || '', { path: '/', maxAge: 86400 });
+			});
+		} else {
+			const cart = await prisma.order.create({
+				data: {
+					products: {
+						create: {
+							ecardSku: sku,
+							options: {
+								createMany: {
+									data: cartOptions
+								}
+							}
+						}
+					}
+				}
+			});
+			cookies.set('cart', cart.id || '', { path: '/', maxAge: 86400 });
+			console.log({ cart });
+		}
 
 		redirect(303, '/cart');
 	}

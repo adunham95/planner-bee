@@ -11,7 +11,7 @@
 	let { src, title = '', descriptionList = [], price = 0 }: Props = $props();
 </script>
 
-<li class="flex space-x-6 py-6">
+<div class="flex space-x-6 py-6">
 	<img
 		src={src || '/images/card-flower.jpg'}
 		alt="Product Show"
@@ -28,4 +28,4 @@
 			</div>
 		</div>
 	</div>
-</li>
+</div>

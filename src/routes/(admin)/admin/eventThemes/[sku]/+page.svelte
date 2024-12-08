@@ -9,8 +9,10 @@
 
 <PageHeaderShell title={`Edit Theme: ${data?.theme?.name || 'New Theme'}`}>
 	<form method="POST" use:enhance class="w-full">
+		<input type="hidden" name="id" value={data.theme?.id} />
 		<EditTheme
 			{...data.theme}
+			price={data.theme?.cost || 0}
 			components={data.theme?.options.map((c) => ({
 				id: c.id,
 				action: 'edit',
