@@ -35,38 +35,77 @@ export const actions: Actions = {
 		const { sku } = params;
 		const data = await request.formData();
 
-		const cartOptions = [...data.entries()].map(([key, value]) => {
-			return {
-				key,
-				value: value.toString()
-			};
-		});
+		const addedSKUs: string[] = [];
+
+		const cartOptions: { key: string; value: string }[] = [];
+
+		for (const pair of data.entries()) {
+			const [key, value] = pair;
+			if (key.startsWith('sku')) {
+				const [, sku] = key.split('-');
+				addedSKUs.push(sku);
+			} else {
+				cartOptions.push({
+					key,
+					value: value.toString()
+				});
+			}
+			console.log(pair[0], pair[1]);
+		}
 
 		console.log('dataEntries', [...data.entries()]);
 		console.log('cartOptions', cartOptions);
+		console.log('addedSKUs', addedSKUs);
 
 		const cartID = cookies.get('cart');
 
 		console.log('cartID', cartID);
 
-		const cart = await prisma.order.create({
-			data: {
-				products: {
-					create: {
-						eventThemeSku: sku,
-						options: {
-							createMany: {
-								data: cartOptions
+		if (cartID) {
+			await prisma.orderProduct.create({
+				data: {
+					orderID: cartID,
+					eventThemeSku: sku,
+					options: {
+						createMany: {
+							data: cartOptions
+						}
+					}
+				}
+			});
+			await prisma.orderProduct.createMany({
+				data: addedSKUs.map((s) => ({
+					orderID: cartID,
+					sku: s
+				}))
+			});
+		} else {
+			const cart = await prisma.order.create({
+				data: {
+					products: {
+						create: {
+							eventThemeSku: sku,
+							options: {
+								createMany: {
+									data: cartOptions
+								}
 							}
 						}
 					}
 				}
-			}
-		});
+			});
 
-		console.log({ cart });
+			await prisma.orderProduct.createMany({
+				data: addedSKUs.map((s) => ({
+					orderID: cart.id,
+					addOnSku: s
+				}))
+			});
 
-		cookies.set('cart', cart.id || '', { path: '/', maxAge: 86400 });
+			console.log({ cart });
+
+			cookies.set('cart', cart.id || '', { path: '/', maxAge: 86400 });
+		}
 
 		redirect(303, '/cart');
 	}

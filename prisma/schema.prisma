@@ -41,15 +41,15 @@ model Session {
 }
 
 model EventTheme {
-  id          String              @id @default(uuid())
-  name        String
-  description String
-  imageURL    String
-  sku         String              @unique
-  cost        Int?
-  createdAt   DateTime            @default(now())
-  updatedAt   DateTime            @default(now()) @updatedAt
-  options     EventThemeOptions[]
+  id           String              @id @default(uuid())
+  name         String
+  description  String
+  imageURL     String
+  sku          String              @unique
+  cost         Int?
+  createdAt    DateTime            @default(now())
+  updatedAt    DateTime            @default(now()) @updatedAt
+  options      EventThemeOptions[]
   orderProduct OrderProduct[]
 }
 
@@ -67,16 +67,16 @@ model EventThemeOptions {
 }
 
 model ECardTemplate {
-  id          String           @id @default(uuid())
-  sku         String           @unique
-  name        String
-  description String
-  cost        Int
-  createdAt   DateTime         @default(now())
-  updatedAt   DateTime         @default(now()) @updatedAt
-  components  ECardComponent[]
-  order       Order[]
-  imageURL    String?
+  id            String           @id @default(uuid())
+  sku           String           @unique
+  name          String
+  description   String
+  cost          Int
+  createdAt     DateTime         @default(now())
+  updatedAt     DateTime         @default(now()) @updatedAt
+  components    ECardComponent[]
+  order         Order[]
+  imageURL      String?
   orderProducts OrderProduct[]
 
   @@index([sku])
@@ -102,7 +102,7 @@ model Order {
   createdAt    DateTime            @default(now())
   updatedAt    DateTime            @updatedAt
   ecardSku     String?
-  eCard        ECardTemplate?       @relation(references: [sku], fields: [ecardSku])
+  eCard        ECardTemplate?      @relation(references: [sku], fields: [ecardSku])
   senderName   String?             @default("")
   senderEmail  String?             @default("")
   senderID     String?
@@ -114,14 +114,15 @@ model Order {
 }
 
 model OrderProduct {
-  id      String               @id @default(uuid())
-  ecardSku String?
+  id            String               @id @default(uuid())
+  ecardSku      String?
   eventThemeSku String?
-  ecard ECardTemplate? @relation(references: [sku], fields: [ecardSku],  map: "OrderProduct_ecard")
-  eventTheme EventTheme? @relation(references: [sku], fields: [eventThemeSku], map: "OrderProduct_eventTheme")
-  orderID String
-  order   Order                @relation(references: [id], fields: [orderID])
-  options OrderProductOption[]
+  addOnSku      String?
+  ecard         ECardTemplate?       @relation(references: [sku], fields: [ecardSku], map: "OrderProduct_ecard")
+  eventTheme    EventTheme?          @relation(references: [sku], fields: [eventThemeSku], map: "OrderProduct_eventTheme")
+  orderID       String
+  order         Order                @relation(references: [id], fields: [orderID])
+  options       OrderProductOption[]
 }
 
 model OrderProductOption {

@@ -94,6 +94,7 @@ export interface OrderProduct {
   id: string;
   ecardSku: string | null;
   eventThemeSku: string | null;
+  addOnSku: string | null;
   ecard?: ECardTemplate | null;
   eventTheme?: EventTheme | null;
   orderID: string;

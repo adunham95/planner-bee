@@ -29,6 +29,7 @@ export const enhancementItems = [
 export const addOnItems = [
 	{
 		name: 'Collaboration',
+		sku: 'COLL',
 		description: 'Pre send a list of users',
 		path: '/add-on/collaboration',
 		cost: 99,
@@ -36,23 +37,34 @@ export const addOnItems = [
 	},
 	{
 		name: 'RSVP List',
-		description: '',
+		sku: 'RSVP',
+		description: 'Add an RSVP box',
 		path: '/add-on/rsvp',
 		cost: 99,
 		imageURL: '/images/rsvp.jpg'
 	},
 	{
 		name: 'Meal Train',
-		description: '',
+		sku: 'MLTR',
+		description: 'Add meal train sign up',
 		path: '/add-on/meal-train',
 		cost: 99,
 		imageURL: '/images/meal-packing.jpg'
 	},
 	{
 		name: 'Potluck Sign Up',
-		description: '',
+		sku: 'POTS',
+		description: 'Add a sign up for ',
 		path: '/add-on/meal-train',
 		cost: 99,
+		imageURL: '/images/meal.jpg'
+	},
+	{
+		name: 'Remove Branding',
+		sku: 'RMBD',
+		description: 'Remove the planner bee branding',
+		path: '/add-on/meal-train',
+		cost: 299,
 		imageURL: '/images/meal.jpg'
 	}
 ];

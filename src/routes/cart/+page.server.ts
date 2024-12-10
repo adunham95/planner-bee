@@ -1,3 +1,4 @@
+import { addOnItems } from '$lib/addOnItems';
 import prisma from '$lib/prisma';
 import { generateOrderNumber } from '$lib/utils/generateOrderNumber';
 import type { Actions, PageServerLoad } from './$types';
@@ -11,6 +12,8 @@ export const load: PageServerLoad = async ({ cookies }) => {
 	if (!cartID) {
 		return {};
 	}
+
+	let subTotal = 0;
 
 	const cart = await prisma.order.findFirst({
 		where: {
@@ -27,13 +30,42 @@ export const load: PageServerLoad = async ({ cookies }) => {
 		}
 	});
 
+	const cartData = {
+		...cart,
+		products: cart?.products.map((p) => {
+			const addOn = addOnItems.find((i) => i.sku === p.addOnSku);
+			if (p.ecard?.cost) {
+				subTotal += p.ecard?.cost;
+			}
+			if (p.eventTheme?.cost) {
+				subTotal += p.eventTheme?.cost;
+			}
+			if (addOn?.cost) {
+				subTotal += addOn.cost;
+			}
+			return {
+				...p,
+				addOn
+			};
+		})
+	};
+
+	const taxes = subTotal * 0.1;
+
 	return {
-		cart
+		cart: cartData,
+		orderEstimate: {
+			total: subTotal + taxes,
+			lineItems: [
+				{ title: 'Subtotal', value: subTotal },
+				{ title: 'Taxes', value: taxes }
+			]
+		}
 	};
 };
 
 export const actions: Actions = {
-	default: async ({ request, locals, cookies }) => {
+	checkout: async ({ request, locals, cookies }) => {
 		const cartID = cookies.get('cart');
 
 		console.log('cartID', cartID);
@@ -126,5 +158,23 @@ export const actions: Actions = {
 		cookies.set('cart', '', { path: '/', maxAge: 1 });
 
 		console.log({ orderNumber });
+	},
+	remove: async ({ request, locals, cookies }) => {
+		const data = await request.formData();
+		const productID = data.get('productID');
+
+		console.log({ productID });
+
+		if (!productID || typeof productID !== 'string') {
+			return fail(400, {
+				message: 'Missing Product'
+			});
+		}
+
+		await prisma.orderProduct.delete({
+			where: {
+				id: productID
+			}
+		});
 	}
 };

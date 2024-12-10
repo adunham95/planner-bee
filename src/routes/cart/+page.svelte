@@ -4,6 +4,7 @@
 	import SidecarLayout from '$lib/components/layout/SidecarLayout.svelte';
 	import ProductSlice from '$lib/components/ProductSlice.svelte';
 	import UpsellRow from '$lib/components/UpsellRow.svelte';
+	import { formatCurrency } from '$lib/utils/formatCurrency';
 	import type { PageData } from '../$types';
 	import type { ActionData } from './$types';
 
@@ -14,7 +15,13 @@
 </script>
 
 <SidecarLayout>
-	<form id="cart-form" method="POST" use:enhance class="divide-y divide-gray-200">
+	<form
+		id="cart-form"
+		method="POST"
+		action="?/checkout"
+		use:enhance
+		class="divide-y divide-gray-200"
+	>
 		<div class="pb-4">
 			<h2 class="w-full pb-2 text-left text-lg font-medium text-gray-500">Sender</h2>
 			{#if !data.user}
@@ -109,8 +116,9 @@
 						{#if product.ecard}
 							<li class="space-x-6">
 								<ProductSlice
+									id={product.id}
 									src={product.ecard.imageURL}
-									title={product.ecard.name}
+									title={`${product.ecard.name} ECard`}
 									price={product.ecard.cost}
 								/>
 							</li>
@@ -118,17 +126,41 @@
 						{#if product.eventTheme}
 							<li class="space-x-6">
 								<ProductSlice
+									id={product.id}
 									src={product.eventTheme.imageURL}
 									title={product.eventTheme.name}
 									price={product.eventTheme.cost || 0}
 								/>
 							</li>
 						{/if}
+						{#if product.addOn}
+							<li class="space-x-6">
+								<ProductSlice
+									id={product.id}
+									src={product.addOn.imageURL}
+									title={product.addOn.name}
+									price={product.addOn.cost || 0}
+								/>
+							</li>
+						{/if}
 					{/each}
 				{/if}
 			</ul>
-			<div class="flex justify-end">
-				<button form="cart-form" type="submit" class="btn">Checkout</button>
+			<dl class="space-y-6 text-sm font-medium text-gray-500 border-t border-gray-200 pt-6">
+				{#each data?.orderEstimate.lineItems as lineItems}
+					<div class="flex justify-between">
+						<dt>{lineItems.title}</dt>
+						<dd class="text-gray-900">{formatCurrency(lineItems.value)}</dd>
+					</div>
+				{/each}
+
+				<div class="flex justify-between border-t border-gray-200 pt-6 text-gray-900">
+					<dt class="text-base">Total</dt>
+					<dd class="text-base">{formatCurrency(data?.orderEstimate.total)}</dd>
+				</div>
+			</dl>
+			<div class="flex justify-end pt-4">
+				<button form="cart-form" type="submit" class="btn w-full btn-large">Checkout</button>
 			</div>
 		</div>
 	{/snippet}

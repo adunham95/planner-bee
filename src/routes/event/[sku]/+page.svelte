@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { addOnItems } from '$lib/addOnItems.js';
 	import EcardEditComponent from '$lib/components/EcardEditComponent.svelte';
 	import CheckCards from '$lib/components/Inputs/CheckCards.svelte';
 	import { formatCurrency } from '$lib/utils/formatCurrency.js';
@@ -166,20 +167,12 @@
 				<fieldset>
 					{@render title('Enhancements')}
 					<CheckCards
-						options={[
-							{
-								id: 'removeBranding',
-								title: 'Remove Branding',
-								description: 'Remove the planner bee branding',
-								price: 199
-							},
-							{
-								id: 'rsvp',
-								title: 'RSVP List',
-								description: 'Add an RSVP box with your event',
-								price: 199
-							}
-						]}
+						options={addOnItems.map((item) => ({
+							id: `sku-${item.sku}`,
+							title: item.name,
+							description: item.description,
+							price: item.cost
+						}))}
 					/>
 				</fieldset>
 

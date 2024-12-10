@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { enhance } from '$app/forms';
 	import { formatCurrency } from '$lib/utils/formatCurrency';
 
 	interface Props {
@@ -6,9 +7,10 @@
 		title?: string;
 		descriptionList?: string[];
 		price?: number;
+		id: string;
 	}
 
-	let { src, title = '', descriptionList = [], price = 0 }: Props = $props();
+	let { id, src, title = '', descriptionList = [], price = 0 }: Props = $props();
 </script>
 
 <div class="flex space-x-6 py-6">
@@ -20,7 +22,14 @@
 	<div class="flex-auto">
 		<div class="space-y-1 sm:flex sm:items-start sm:justify-between sm:space-x-6">
 			<div class="flex-auto space-y-1 text-sm font-medium">
-				<h3 class="text-gray-900 text-base font-medium">{title}</h3>
+				<h3 class="text-gray-900 text-base font-medium flex items-center">
+					{title}
+					<form class="ml-2 inline-flex items-center" method="post" action="?/remove" use:enhance>
+						<input class="hidden" name="productID" value={id} />
+						<button class="text-xs font-medium text-indigo-600 hover:text-indigo-500">Remove</button
+						>
+					</form>
+				</h3>
 				<p class="text-gray-900">{formatCurrency(price)}</p>
 				{#each descriptionList as description}
 					<p class="text-gray-400">{description}</p>
