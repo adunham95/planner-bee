@@ -156,6 +156,7 @@ async function main() {
 			options: {
 				create: [
 					{
+						displayOrder: 3,
 						componentID: 'custom-color',
 						label: 'Color',
 						editable: true,
@@ -164,18 +165,14 @@ async function main() {
 							'["#FF5733","#33FF57","#3357FF","#FF33A6","#FFD700","#00CED1","#4B0082","#FF4500","#8A2BE2","#20B2AA","#FF1493","#5F9EA0","#DC143C","#7FFF00","#9400D3","#00FF7F","#4682B4","#B22222","#FFFFE0","#9ACD32"]'
 					},
 					{
-						componentID: 'banner',
-						label: 'Banner',
-						editable: false,
-						default: '/images/mountains-banner-2.jpg'
-					},
-					{
+						displayOrder: 1,
 						componentID: 'title',
 						label: 'Title',
 						editable: true,
 						default: ''
 					},
 					{
+						displayOrder: 2,
 						componentID: 'message',
 						label: 'Descriptions',
 						editable: true,

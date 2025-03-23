@@ -1,4 +1,7 @@
 <script lang="ts">
+	import { enhance } from '$app/forms';
+	import TextInput from '$lib/components/Inputs/TextInput.svelte';
+	import InviteStatus from '$lib/components/InviteStatus.svelte';
 	import { formatCurrency } from '$lib/utils/formatCurrency';
 
 	let { data } = $props();
@@ -45,22 +48,62 @@
 						product.options.length
 					)}
 				{/if}
+				{#if product.addOn}
+					{@render orderCard(
+						product.addOn.imageURL || undefined,
+						product.addOn.name,
+						product.addOn.description,
+						product.addOn.cost || 0,
+						product.options.length
+					)}
+				{/if}
 			{/each}
 		{/if}
 
 		<div class="sm:ml-40 sm:pl-6">
-			<h4 class="font-medium text-gray-90 pt-10">Recipients</h4>
-			<dl class="grid grid-cols-2 gap-x-6 pb-10 text-sm">
+			<h4 class="font-medium text-gray-90 pt-10">Recipients/Attendees</h4>
+
+			<ul role="list" class="divide-y divide-gray-300">
 				{#each data.order?.recipients || [] as recipient}
-					<div class="mt-2 text-gray-700">
-						<address class="not-italic">
-							<span class="block">{recipient.firstName} {recipient.lastName || ''}</span>
-							<span class="block">{recipient.email || ' '}</span>
-							<span class="block">{recipient.phone || ''}</span>
-						</address>
-					</div>
+					<li class="flex justify-between gap-x-6 py-5">
+						<div class="flex min-w-0 gap-x-4">
+							<div class="min-w-0 flex-auto">
+								<div class="inline-flex">
+									<p class="text-sm/6 font-semibold text-gray-900">
+										{recipient.firstName}
+										{recipient.lastName}
+									</p>
+									<InviteStatus status={recipient.rsvpStatus} />
+								</div>
+								<p class="mt-1 truncate text-xs/5 text-gray-500">{recipient.email}</p>
+								<p class="mt-1 truncate text-xs/5 text-gray-500">{recipient.phone}</p>
+							</div>
+						</div>
+						<div class="hidden shrink-0 sm:flex sm:flex-col sm:items-end"></div>
+						<div class="flex flex-col">
+							<button class="btn btn-small btn-text">Send Email</button>
+							<button class="btn btn-small btn-text">Send Text</button>
+						</div>
+					</li>
 				{/each}
-			</dl>
+				<li>
+					<form
+						use:enhance
+						method="post"
+						action="?/addRecipient"
+						class="mt-2 text-gray-700 grid grid-cols-2 gap-x-6 gap-y-4"
+					>
+						<input class="hidden" value={data.order?.id} name="orderID" />
+						<TextInput showLabel label="First name" id="firstName" />
+						<TextInput showLabel label="Last name" id="lastName" />
+						<TextInput showLabel label="Email" id="email" type="email" />
+						<TextInput showLabel label="Phone" id="phone" type="tel" />
+						<div class="flex justify-end col-span-2">
+							<button class="btn">Add recipient</button>
+						</div>
+					</form>
+				</li>
+			</ul>
 
 			<!-- <h4 class="sr-only">Payment</h4>
 			<dl class="grid grid-cols-2 gap-x-6 border-t border-gray-200 py-10 text-sm">

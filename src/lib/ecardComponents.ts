@@ -1,15 +1,15 @@
 export const eCardComponents = [
 	{
-		id: 'color-editor',
-		name: 'Color',
+		id: 'color-picker',
+		name: 'Color List',
 		description: 'Pick a color',
 		editComponentKey: 'colorPicker',
 		displayComponentKey: 'color',
 		options: [{ id: '#ff0000', title: 'Red' }]
 	},
 	{
-		id: 'custom-color',
-		name: 'Custom Color',
+		id: 'custom-input',
+		name: 'Color Input',
 		description: 'Pick a color',
 		editComponentKey: 'colorInput',
 		displayComponentKey: 'color'

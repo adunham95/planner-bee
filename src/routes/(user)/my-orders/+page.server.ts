@@ -1,6 +1,7 @@
 import prisma from '$lib/prisma';
 import { redirect } from '@sveltejs/kit';
 import type { PageServerLoad } from './$types';
+import { addOnItems } from '$lib/addOnItems';
 
 export const load: PageServerLoad = async (event) => {
 	if (!event.locals.user) redirect(302, '/login');
@@ -31,7 +32,20 @@ export const load: PageServerLoad = async (event) => {
 		}
 	});
 
+	const data = orders.map((order) => {
+		return {
+			...order,
+			products: order.products.map((p) => {
+				const addOn = addOnItems.find((i) => i.sku === p.addOnSku);
+				return {
+					...p,
+					addOn
+				};
+			})
+		};
+	});
+
 	return {
-		orders
+		orders: data
 	};
 };

@@ -5,7 +5,10 @@
 
 	let mobileMenuOpen = $state(false);
 
-	const links = [{ name: 'Events', href: '/event' }];
+	const links = [
+		{ name: 'Events', href: '/event' },
+		{ name: 'ECards', href: '/ecard' }
+	];
 
 	let { data, children } = $props();
 </script>

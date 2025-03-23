@@ -61,6 +61,14 @@
 								product.eventTheme.imageURL || undefined
 							)}
 						{/if}
+						{#if product.addOn}
+							{@render productCart(
+								product.addOn.name,
+								product.addOn.cost || 0,
+								product.addOn.description,
+								product.addOn.imageURL || undefined
+							)}
+						{/if}
 					{/each}
 				</ul>
 				<div class="p-4 flex justify-end">

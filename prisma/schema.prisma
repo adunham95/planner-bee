@@ -146,11 +146,12 @@ model EcardOrderOptions {
 }
 
 model Recipient {
-  id        String  @id @default(uuid())
-  firstName String
-  lastName  String?
-  email     String?
-  phone     String?
-  orderID   String
-  order     Order   @relation(references: [id], fields: [orderID])
+  id         String  @id @default(uuid())
+  firstName  String
+  lastName   String?
+  email      String?
+  phone      String?
+  orderID    String
+  order      Order   @relation(references: [id], fields: [orderID])
+  rsvpStatus String?
 }

@@ -130,4 +130,5 @@ export interface Recipient {
   phone: string | null;
   orderID: string;
   order?: Order;
+  rsvpStatus: string | null;
 }

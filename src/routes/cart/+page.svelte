@@ -147,7 +147,7 @@
 				{/if}
 			</ul>
 			<dl class="space-y-6 text-sm font-medium text-gray-500 border-t border-gray-200 pt-6">
-				{#each data?.orderEstimate.lineItems as lineItems}
+				{#each data?.orderEstimate?.lineItems as lineItems}
 					<div class="flex justify-between">
 						<dt>{lineItems.title}</dt>
 						<dd class="text-gray-900">{formatCurrency(lineItems.value)}</dd>
@@ -156,7 +156,7 @@
 
 				<div class="flex justify-between border-t border-gray-200 pt-6 text-gray-900">
 					<dt class="text-base">Total</dt>
-					<dd class="text-base">{formatCurrency(data?.orderEstimate.total)}</dd>
+					<dd class="text-base">{formatCurrency(data?.orderEstimate?.total || 0)}</dd>
 				</div>
 			</dl>
 			<div class="flex justify-end pt-4">
