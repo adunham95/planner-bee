@@ -106,7 +106,7 @@
 			/> -->
 
 			<img
-				src="https://tailwindui.com/plus/img/component-images/project-app-screenshot.png"
+				src={data.product?.imageURL}
 				alt="App screenshot"
 				width="2432"
 				height="1442"
@@ -177,6 +177,10 @@
 				</fieldset>
 
 				{@render divider()}
+
+				<div class="flex justify-end">
+					<button class="btn btn-lg" form="add-to-cart">Add to cart</button>
+				</div>
 			</form>
 		</div>
 	</div>
