@@ -14,20 +14,17 @@
 				<li
 					class="relative flex flex-1 flex-col justify-center bg-white px-4 py-6 text-center focus:z-10"
 				>
-					<p class="text-sm text-gray-500">Automation</p>
-					<p class="font-semibold text-gray-900">Get an exclusive $5 off code</p>
+					<p class="font-semibold text-gray-900">Automate the event</p>
 				</li>
 				<li
 					class="relative flex flex-1 flex-col justify-center bg-white px-4 py-6 text-center focus:z-10"
 				>
-					<p class="text-sm text-gray-500">Collaboration</p>
-					<p class="font-semibold text-gray-900">60 days of free returns</p>
+					<p class="font-semibold text-gray-900">Collaborate with Guests</p>
 				</li>
 				<li
 					class="relative flex flex-1 flex-col justify-center bg-white px-4 py-6 text-center focus:z-10"
 				>
-					<p class="text-sm text-gray-500">Customization</p>
-					<p class="font-semibold text-gray-900">15% off your first order</p>
+					<p class="font-semibold text-gray-900">Customize your event</p>
 				</li>
 			</ul>
 		</div>
@@ -42,10 +39,7 @@
 						<h1 class="text-4xl font-bold tracking-tight text-gray-900 sm:text-5xl xl:text-6xl">
 							Focus on what matters
 						</h1>
-						<p class="mt-4 text-xl text-gray-600">
-							All the charts, datepickers, and notifications in the world can't beat checking off
-							some items on a paper card.
-						</p>
+						<p class="mt-4 text-xl text-gray-600">Spending time with your guests</p>
 					</div>
 				</div>
 			</div>
@@ -62,20 +56,20 @@
 	<div>
 		<h2 class="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">Event Features</h2>
 		<p class="mt-4 text-gray-500">
-			The walnut wood card tray is precision milled to perfectly fit a stack of Focus cards. The
-			powder coated steel divider separates active cards from new ones, or can be used to archive
-			important task lists.
+			The event platform can handel as much or as little as you want.
 		</p>
 
 		<dl class="mt-16 grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 sm:gap-y-16 lg:gap-x-8">
 			<div class="border-t border-gray-200 pt-4">
-				<dt class="font-medium text-gray-900">Origin</dt>
-				<dd class="mt-2 text-sm text-gray-500">Designed by Good Goods, Inc.</dd>
+				<dt class="font-medium text-gray-900">ECard Invitations</dt>
+				<dd class="mt-2 text-sm text-gray-500">
+					Use ECard Invitations to digitally send invitations to your guests
+				</dd>
 			</div>
 			<div class="border-t border-gray-200 pt-4">
-				<dt class="font-medium text-gray-900">Material</dt>
+				<dt class="font-medium text-gray-900">Enhancements</dt>
 				<dd class="mt-2 text-sm text-gray-500">
-					Solid walnut base with rare earth magnets and powder coated steel card cover
+					A list of enhancements can be added to event to make the event even better
 				</dd>
 			</div>
 			<div class="border-t border-gray-200 pt-4">

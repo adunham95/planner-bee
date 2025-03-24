@@ -128,7 +128,7 @@ model OrderProduct {
 model OrderProductOption {
   id             String       @id @default(uuid())
   orderProductID String
-  orderProduct   OrderProduct @relation(references: [id], fields: [orderProductID])
+  orderProduct   OrderProduct @relation(references: [id], fields: [orderProductID], onDelete: Cascade)
   value          String
   key            String
   createdAt      DateTime     @default(now())
