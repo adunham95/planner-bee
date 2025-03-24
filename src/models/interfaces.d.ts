@@ -132,3 +132,9 @@ export interface Recipient {
   order?: Order;
   rsvpStatus: string | null;
 }
+
+export interface NewsletterSignUp {
+  id: string;
+  email: string | null;
+  createdAt: Date;
+}

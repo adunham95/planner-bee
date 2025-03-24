@@ -155,3 +155,9 @@ model Recipient {
   order      Order   @relation(references: [id], fields: [orderID])
   rsvpStatus String?
 }
+
+model NewsletterSignUp {
+  id        String   @id @default(uuid())
+  email     String?
+  createdAt DateTime @default(now())
+}
