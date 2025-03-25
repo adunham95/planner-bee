@@ -5,7 +5,7 @@ export const eCardComponents = [
 		description: 'Pick a color',
 		editComponentKey: 'colorPicker',
 		displayComponentKey: 'color',
-		options: [{ id: '#ff0000', title: 'Red' }]
+		options: []
 	},
 	{
 		id: 'custom-input',

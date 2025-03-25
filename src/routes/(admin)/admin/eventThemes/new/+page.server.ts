@@ -4,7 +4,9 @@ import { fail } from '@sveltejs/kit';
 import type { Actions } from '../$types';
 
 export const load = async () => {
-	return { eCardComponents };
+	const eCards = await prisma.eCardTemplate.findMany();
+
+	return { eCardComponents, eCards };
 };
 
 export const actions: Actions = {
@@ -15,6 +17,7 @@ export const actions: Actions = {
 		const sku = data.get('sku');
 		const price = data.get('price');
 		const imageURL = data.get('imageURL');
+		const eCardSku = data.get('eCardSku');
 
 		const components: {
 			[key: string]: {
@@ -73,6 +76,12 @@ export const actions: Actions = {
 			});
 		}
 
+		if (typeof eCardSku !== 'string') {
+			return fail(400, {
+				message: 'Invalid ECard Invitation'
+			});
+		}
+
 		const ecard = await prisma.eventTheme.create({
 			data: {
 				name,
@@ -80,6 +89,7 @@ export const actions: Actions = {
 				sku: sku.toUpperCase(),
 				cost: parseInt(price) || 0,
 				imageURL,
+				eCardSku,
 				options: {
 					createMany: {
 						data: Object.values(components).map((element) => {

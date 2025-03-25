@@ -2,6 +2,7 @@ import prisma from '$lib/prisma';
 import { error } from 'console';
 import type { Actions, PageServerLoad } from './$types';
 import { redirect } from '@sveltejs/kit';
+import { logAllFormData } from '$lib/utils/logAllFormData';
 
 export const load: PageServerLoad = async (event) => {
 	// console.log({ user: event.locals });
@@ -13,7 +14,8 @@ export const load: PageServerLoad = async (event) => {
 			sku
 		},
 		include: {
-			options: true
+			options: true,
+			invitation: { include: { components: true } }
 		}
 	});
 
@@ -34,16 +36,27 @@ export const actions: Actions = {
 	addToCart: async ({ request, cookies, params }) => {
 		const { sku } = params;
 		const data = await request.formData();
+		logAllFormData(data);
 
 		const addedSKUs: string[] = [];
+		let inviteSku: string | undefined = undefined;
 
 		const cartOptions: { key: string; value: string }[] = [];
+		const inviteOptions: { key: string; value: string }[] = [];
 
 		for (const pair of data.entries()) {
 			const [key, value] = pair;
 			if (key.startsWith('sku')) {
 				const [, sku] = key.split('-');
 				addedSKUs.push(sku);
+			} else if (key.startsWith('invite')) {
+				const [, k] = key.split('-');
+				// addedSKUs.push(sku);
+				if (k == 'sku') {
+					inviteSku = value.toString();
+				} else {
+					inviteOptions.push({ key: k, value: value.toString() });
+				}
 			} else {
 				cartOptions.push({
 					key,
@@ -56,10 +69,12 @@ export const actions: Actions = {
 		console.log('dataEntries', [...data.entries()]);
 		console.log('cartOptions', cartOptions);
 		console.log('addedSKUs', addedSKUs);
+		console.log('inviteSku', inviteSku);
+		console.log('inviteOptions', inviteOptions);
 
 		const cartID = cookies.get('cart');
 
-		console.log('cartID', cartID);
+		console.log('cartID', { cartID, addedSKUs });
 
 		if (cartID) {
 			await prisma.orderProduct.create({
@@ -76,9 +91,22 @@ export const actions: Actions = {
 			await prisma.orderProduct.createMany({
 				data: addedSKUs.map((s) => ({
 					orderID: cartID,
-					sku: s
+					addOnSku: s
 				}))
 			});
+			if (inviteSku) {
+				await prisma.orderProduct.create({
+					data: {
+						orderID: cartID,
+						ecardSku: inviteSku,
+						options: {
+							createMany: {
+								data: inviteOptions
+							}
+						}
+					}
+				});
+			}
 		} else {
 			const cart = await prisma.order.create({
 				data: {
@@ -101,6 +129,20 @@ export const actions: Actions = {
 					addOnSku: s
 				}))
 			});
+
+			if (inviteSku) {
+				await prisma.orderProduct.create({
+					data: {
+						orderID: cart.id,
+						ecardSku: inviteSku,
+						options: {
+							createMany: {
+								data: inviteOptions
+							}
+						}
+					}
+				});
+			}
 
 			console.log({ cart });
 

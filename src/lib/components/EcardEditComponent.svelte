@@ -5,6 +5,7 @@
 	import TextInput from './Inputs/TextInput.svelte';
 
 	interface Props {
+		idPrefix?: string;
 		showLabel?: boolean;
 		componentKey: string;
 		label?: string;
@@ -13,6 +14,7 @@
 	}
 
 	let {
+		idPrefix,
 		componentKey,
 		label = undefined,
 		value = $bindable(),
@@ -20,7 +22,11 @@
 		options
 	}: Props = $props();
 
-	let component = $derived(eCardComponents.find((c) => c.id === componentKey));
+	let component = $derived(
+		(eCardComponents || []).find((c) => {
+			return c.id === componentKey;
+		})
+	);
 
 	let customOptions = $derived(options ? JSON.parse(options) : []);
 </script>
@@ -28,13 +34,24 @@
 {#if !component}
 	<p>Error loading {componentKey}</p>
 {:else if component.editComponentKey === 'text'}
-	<TextInput label={label || component.name} id="textInput" {showLabel} bind:value />
+	<TextInput
+		label={label || component.name}
+		id={`${idPrefix ? idPrefix + '-' : ''}textInput"`}
+		{showLabel}
+		bind:value
+	/>
 {:else if component.editComponentKey === 'colorInput'}
-	<TextInput label={label || component.name} id="textInput" type="color" {showLabel} bind:value />
+	<TextInput
+		label={label || component.name}
+		id={`${idPrefix ? idPrefix + '-' : ''}textInput`}
+		type="color"
+		{showLabel}
+		bind:value
+	/>
 {:else if component.editComponentKey === 'textArea'}
 	<TextArea
 		label={label || component.name}
-		id="textArea"
+		id={`${idPrefix ? idPrefix + '-' : ''}textArea`}
 		{showLabel}
 		class="col-span-2"
 		bind:value
@@ -43,7 +60,7 @@
 	<ColorInput
 		groupName={component.id}
 		label={label || component.name}
-		id="colorPicker"
+		id={`${idPrefix ? idPrefix + '-' : ''}colorPicker`}
 		options={customOptions || component.options}
 		{showLabel}
 	/>

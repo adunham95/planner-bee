@@ -30,6 +30,8 @@ export interface EventTheme {
   updatedAt: Date;
   options?: EventThemeOptions[];
   orderProduct?: OrderProduct[];
+  eCardSku: string | null;
+  invitation?: ECardTemplate | null;
 }
 
 export interface EventThemeOptions {
@@ -57,6 +59,8 @@ export interface ECardTemplate {
   order?: Order[];
   imageURL: string | null;
   orderProducts?: OrderProduct[];
+  eventTheme?: EventTheme[];
+  visible: boolean;
 }
 
 export interface ECardComponent {

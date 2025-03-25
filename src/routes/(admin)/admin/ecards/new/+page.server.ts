@@ -23,6 +23,7 @@ export const actions: Actions = {
 				default?: string;
 				editable?: string;
 				customStyles?: string;
+				componentID?: string;
 				[key: string]: unknown;
 			};
 		} = {};
@@ -83,7 +84,7 @@ export const actions: Actions = {
 					createMany: {
 						data: Object.values(eCardComponents).map((element) => {
 							return {
-								ecardComponentID: element.ecardComponentID,
+								ecardComponentID: element.componentID || element.ecardComponentID,
 								label: element.label,
 								default: element.default,
 								editable: element.editable === 'on' || true,

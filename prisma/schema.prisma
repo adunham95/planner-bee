@@ -51,6 +51,8 @@ model EventTheme {
   updatedAt    DateTime            @default(now()) @updatedAt
   options      EventThemeOptions[]
   orderProduct OrderProduct[]
+  eCardSku     String?
+  invitation   ECardTemplate?      @relation(fields: [eCardSku], references: [sku])
 }
 
 model EventThemeOptions {
@@ -78,6 +80,8 @@ model ECardTemplate {
   order         Order[]
   imageURL      String?
   orderProducts OrderProduct[]
+  eventTheme    EventTheme[]
+  visible       Boolean          @default(true)
 
   @@index([sku])
 }
@@ -111,6 +115,7 @@ model Order {
   recipients   Recipient[]
   status       String?             @default("draft")
   products     OrderProduct[]
+  orderType String @default("event")
 }
 
 model OrderProduct {

@@ -52,6 +52,7 @@ export const actions: Actions = {
 				id?: string;
 				action?: string;
 				customStyles?: string;
+				componentID?: string;
 				[key: string]: unknown;
 			};
 		} = {};
@@ -106,7 +107,7 @@ export const actions: Actions = {
 			});
 		}
 
-		const ecard = await prisma.eCardTemplate.update({
+		await prisma.eCardTemplate.update({
 			where: {
 				id
 			},
@@ -141,7 +142,7 @@ export const actions: Actions = {
 				.filter((c) => c.action === 'add')
 				.map((c) => ({
 					ecardID: id,
-					ecardComponentID: c.ecardComponentID,
+					ecardComponentID: c.componentID || c.ecardComponentID,
 					label: c.label,
 					default: c.default,
 					editable: c.editable === 'on',

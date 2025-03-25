@@ -1,14 +1,13 @@
 <script lang="ts">
 	import { enhance } from '$app/forms';
 	import TextInput from '$lib/components/Inputs/TextInput.svelte';
+	import Toggle from '$lib/components/Inputs/Toggle.svelte';
 	import SidecarLayout from '$lib/components/layout/SidecarLayout.svelte';
 	import ProductSlice from '$lib/components/ProductSlice.svelte';
 	import UpsellRow from '$lib/components/UpsellRow.svelte';
 	import { formatCurrency } from '$lib/utils/formatCurrency';
-	import type { PageData } from '../$types';
-	import type { ActionData } from './$types';
 
-	let { data, form }: { data: PageData; form: ActionData } = $props();
+	let { data, form } = $props();
 
 	$inspect(form);
 	$inspect(data);
@@ -67,14 +66,14 @@
 			<TextInput id="deliveryTime" label="Delivery Time" showLabel type="datetime-local" />
 		</div> -->
 
-		<div class="pb-4">
+		<!-- <div class="pb-4">
 			<h2
 				class="list-none w-full pt-6 pb-2 text-left text-lg font-medium text-gray-500 cursor-pointer"
 			>
 				Add On Products
 			</h2>
 			<UpsellRow options={[{ title: 'ECard', url: '/ecard' }]} />
-		</div>
+		</div> -->
 
 		<!-- Account Benefits -->
 		{#if !data.user}
@@ -106,13 +105,12 @@
 				</dl>
 			</div>
 		{/if}
-		<!-- <ProductListSmall title="Add on features" products={addOnItems.slice(0, 4)} /> -->
 	</form>
 	{#snippet sidecar()}
 		<div class="flow-root">
 			<ul role="list" class="-my-6 divide-y divide-gray-200 mb-2">
 				{#if data?.cart}
-					{#each data?.cart.products as product}
+					{#each data?.cart.products || [] as product}
 						{#if product.ecard}
 							<li class="space-x-6">
 								<ProductSlice
@@ -147,7 +145,7 @@
 				{/if}
 			</ul>
 			<dl class="space-y-6 text-sm font-medium text-gray-500 border-t border-gray-200 pt-6">
-				{#each data?.orderEstimate?.lineItems as lineItems}
+				{#each data?.orderEstimate?.lineItems || [] as lineItems}
 					<div class="flex justify-between">
 						<dt>{lineItems.title}</dt>
 						<dd class="text-gray-900">{formatCurrency(lineItems.value)}</dd>

@@ -10,10 +10,12 @@
 	}
 
 	let { label, id, groupName, showLabel = false, options = [] }: Props = $props();
+
+	console.log(options);
 </script>
 
 <Label {id} {label} {showLabel} />
-<div class="flex justify-start">
+<div class="flex justify-start max-w-[450px] overflow-x-auto">
 	{#each options as option}
 		<label
 			aria-label={option.title}

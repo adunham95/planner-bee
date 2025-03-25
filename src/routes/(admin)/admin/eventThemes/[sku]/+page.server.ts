@@ -9,6 +9,8 @@ export const load: PageServerLoad = async (event) => {
 	const { sku } = event.params;
 	// if (!event.locals.user) redirect(302, '/login');
 
+	const eCards = await prisma.eCardTemplate.findMany();
+
 	const theme = await prisma.eventTheme.findFirst({
 		where: {
 			sku
@@ -22,13 +24,15 @@ export const load: PageServerLoad = async (event) => {
 
 	if (!theme) {
 		return {
-			eCardComponents
+			eCardComponents,
+			eCards
 		};
 	}
 
 	return {
 		theme,
-		eCardComponents
+		eCardComponents,
+		eCards
 	};
 };
 
@@ -41,6 +45,7 @@ export const actions: Actions = {
 		const sku = data.get('sku');
 		const price = data.get('price');
 		const imageURL = data.get('imageURL');
+		const eCardSku = data.get('eCardSku');
 
 		const components: {
 			[key: string]: {
@@ -102,6 +107,12 @@ export const actions: Actions = {
 			});
 		}
 
+		if (typeof eCardSku !== 'string') {
+			return fail(400, {
+				message: 'Invalid ECard Invitation'
+			});
+		}
+
 		if (typeof imageURL !== 'string') {
 			return fail(400, {
 				message: 'Invalid imageURL'
@@ -118,7 +129,8 @@ export const actions: Actions = {
 					description: description || '',
 					sku: sku.toUpperCase(),
 					cost: parseInt(price) || 0,
-					imageURL
+					imageURL,
+					eCardSku
 				}
 			});
 		} catch (error: unknown) {

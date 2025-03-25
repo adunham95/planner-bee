@@ -93,16 +93,39 @@
 				<fieldset>
 					{@render title('Enhancements')}
 					<CheckCards
-						options={addOnItems.map((item) => ({
-							id: `sku-${item.sku}`,
-							title: item.name,
-							description: item.description,
-							price: item.cost
-						}))}
+						options={addOnItems
+							.filter((item) => item.type.includes('event'))
+							.map((item) => ({
+								id: `sku-${item.sku}`,
+								title: item.name,
+								description: item.description,
+								price: item.cost
+							}))}
 					/>
 				</fieldset>
 
 				{@render divider()}
+
+				<fieldset class="pb-4">
+					{@render title('Invitation')}
+					<input
+						hidden
+						class="hidden"
+						id="invite-sku"
+						name="invite-sku"
+						value={data.product?.invitation?.sku}
+					/>
+					{#each data.product?.invitation?.components || [] as option}
+						<EcardEditComponent
+							idPrefix="invite"
+							showLabel={true}
+							label={option.label || undefined}
+							value={option.default || ''}
+							componentKey={option.ecardComponentID}
+							options={option.options || ''}
+						/>
+					{/each}
+				</fieldset>
 
 				<div class="flex justify-end">
 					<button class="btn btn-lg" form="add-to-cart">Add to cart</button>

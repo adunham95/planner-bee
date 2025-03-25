@@ -12,6 +12,10 @@
 		<input type="hidden" name="id" value={data.theme?.id} />
 		<EditTheme
 			{...data.theme}
+			availableCards={data.eCards.map((c) => ({
+				id: c.sku,
+				label: c.name
+			}))}
 			price={data.theme?.cost || 0}
 			components={data.theme?.options.map((c) => ({
 				id: c.id,

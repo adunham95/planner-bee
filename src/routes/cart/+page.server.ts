@@ -159,7 +159,7 @@ export const actions: Actions = {
 
 		console.log({ orderNumber });
 	},
-	remove: async ({ request, locals, cookies }) => {
+	remove: async ({ request }) => {
 		const data = await request.formData();
 		const productID = data.get('productID');
 
