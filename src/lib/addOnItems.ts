@@ -31,7 +31,7 @@ export const addOnItems = [
 		name: 'Collaboration',
 		sku: 'COLL',
 		description: 'Pre send a list of users',
-		path: '/add-on/collaboration',
+		path: '/collaboration',
 		cost: 199,
 		imageURL: '/images/coffee-table.jpg',
 		type: ['eCard']
@@ -40,7 +40,7 @@ export const addOnItems = [
 		name: 'RSVP & Tracking',
 		sku: 'RSVP',
 		description: 'Let users RSVP and track analytics',
-		path: '/add-on/rsvp',
+		path: '/rsvp',
 		cost: 199,
 		imageURL: '/images/rsvp.jpg',
 		type: ['event']
@@ -49,16 +49,16 @@ export const addOnItems = [
 		name: 'Meal Train',
 		sku: 'MLTR',
 		description: 'Add meal train sign up',
-		path: '/add-on/meal-train',
+		path: '/meal-train',
 		cost: 199,
 		imageURL: '/images/meal-packing.jpg',
-		type: ['eCard', 'event']
+		type: ['eCard']
 	},
 	{
 		name: 'Potluck Sign Up',
 		sku: 'POTS',
 		description: 'Add a sign up for ',
-		path: '/add-on/meal-train',
+		path: '/potluck',
 		cost: 199,
 		imageURL: '/images/meal.jpg',
 		type: ['event']
@@ -67,7 +67,6 @@ export const addOnItems = [
 		name: 'Privacy',
 		sku: 'PRCY',
 		description: 'Only let the people who have the access code sign view',
-		path: '/add-on/meal-train',
 		cost: 199,
 		imageURL: '/images/lock.jpg',
 		type: ['eCard', 'event']
@@ -76,7 +75,6 @@ export const addOnItems = [
 		name: 'Remove Branding',
 		sku: 'RMBD',
 		description: 'Remove the planner bee branding',
-		path: '/add-on/meal-train',
 		cost: 599,
 		imageURL: '/images/meal.jpg',
 		type: ['eCard', 'event']
@@ -85,7 +83,6 @@ export const addOnItems = [
 		name: 'Disposable Camera',
 		sku: 'DCAM',
 		description: 'Allow Users to take photos and upload them to a slideshow',
-		path: '/add-on/meal-train',
 		cost: 999,
 		imageURL: '/images/camera.jpg',
 		type: ['event']

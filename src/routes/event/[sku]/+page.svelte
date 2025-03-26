@@ -1,11 +1,24 @@
 <script lang="ts">
 	import { addOnItems } from '$lib/addOnItems.js';
+	import ECard from '$lib/components/ECard.svelte';
 	import EcardEditComponent from '$lib/components/EcardEditComponent.svelte';
 	import CheckCards from '$lib/components/Inputs/CheckCards.svelte';
+	import DateInput from '$lib/components/Inputs/DateInput.svelte';
 	import { formatCurrency } from '$lib/utils/formatCurrency.js';
+	import { toCamelCase } from '$lib/utils/toCamelCase.js';
 
-	export let data;
+	let { data } = $props();
 	console.log({ data });
+
+	let checkedOptions: string[] = $state([]);
+	$inspect(checkedOptions);
+
+	const placeholderPotluckOptions = [
+		{ id: '1', title: 'Placeholder 1' },
+		{ id: '2', title: 'Placeholder 2' },
+		{ id: '3', title: 'Placeholder 3' },
+		{ id: '4', title: 'Placeholder 4' }
+	];
 </script>
 
 <div class="bg-white sticky top-0 z-40">
@@ -27,9 +40,15 @@
 </div>
 
 <div class="mx-auto mt-8 max-w-2xl px-4 sm:px-6 lg:max-w-7xl lg:px-8 pb-4">
-	<div class="lg:grid lg:auto-rows-min lg:grid-cols-12 lg:gap-x-8">
-		<div class="mt-8 lg:col-span-7 lg:col-start-1 lg:row-span-3 lg:row-start-1 lg:mt-0">
-			<h2 class="sr-only">Images</h2>
+	<form
+		id="add-to-cart"
+		method="post"
+		action="?/addToCart"
+		class="lg:grid lg:auto-rows-min lg:grid-cols-12 lg:gap-x-8 relative"
+	>
+		<!-- Event Details Section -->
+		<div class="mt-8 relative lg:col-span-7 lg:col-start-1 lg:row-span-3 lg:row-start-1 lg:mt-0">
+			<h2 class="sr-only">Event Details</h2>
 
 			<img
 				src={data.product?.imageURL}
@@ -40,99 +59,138 @@
 			/>
 		</div>
 		<div class="lg:col-span-5">
-			<form id="add-to-cart" method="post" action="?/addToCart">
-				{#each data.product?.options.sort((a, b) => a.displayOrder - b.displayOrder) || [] as option}
-					<fieldset class="">
-						{@render title(option.label || '')}
-						<EcardEditComponent
-							showLabel={false}
-							label={option.label || undefined}
-							value={option.default || ''}
-							componentKey={option.componentID}
-							options={option.options || ''}
-						/>
-					</fieldset>
+			{#each data.product?.options.sort((a, b) => a.displayOrder - b.displayOrder) || [] as option}
+				{console.log('option', { option })}
+				<fieldset class="">
+					{@render title(option.label || '')}
+					<EcardEditComponent
+						showLabel={false}
+						name={toCamelCase(option.label)}
+						label={option.label || undefined}
+						value={option.default || ''}
+						componentKey={option.componentID}
+						options={option.options || ''}
+					/>
+				</fieldset>
 
-					{@render divider()}
+				{@render divider()}
+			{/each}
+
+			<fieldset>
+				{@render title('Guest Count')}
+				<CheckCards
+					hideCheck
+					type="radio"
+					groupName="guestCount"
+					options={[
+						{
+							id: '10',
+							title: '0-10 Guests',
+							checked: true
+						},
+						{
+							id: '25',
+							title: '10-25 Guests'
+						},
+						{
+							id: '50',
+							title: '25-50 Guests'
+						},
+						{
+							id: '100',
+							title: '50-100 Guests'
+						},
+						{
+							id: 'all',
+							title: '100+ Guests'
+						}
+					]}
+				/>
+			</fieldset>
+
+			{@render divider()}
+
+			<fieldset>
+				{@render title('Event Date')}
+				<DateInput id="eventDate" label="Event Date" />
+			</fieldset>
+
+			{@render divider()}
+
+			<fieldset>
+				{@render title('Enhancements')}
+				<CheckCards
+					bind:checkedOptions
+					options={addOnItems
+						.filter((item) => item.type.includes('event'))
+						.map((item) => ({
+							id: `sku-${item.sku}`,
+							title: item.name,
+							description: item.description,
+							price: item.cost
+						}))}
+				/>
+			</fieldset>
+		</div>
+
+		<!-- Invitation Details -->
+		<div class="mt-8 lg:col-span-7 lg:col-start-1 lg:row-span-3">
+			<h2 class="sr-only">Event Details</h2>
+			<div class="sticky">
+				<ECard
+					rsvpEnabled={checkedOptions.includes('sku-RSVP')}
+					mealTrainEnabled={checkedOptions.includes('sku-MLTR')}
+					brandingEnabled={!checkedOptions.includes('sku-RMBD')}
+					potluckOptions={checkedOptions.includes('sku-POTS') ? placeholderPotluckOptions : []}
+					components={data.product?.invitation?.components.map((c) => {
+						return {
+							id: c.id,
+							ecardComponentID: c.ecardComponentID,
+							style: c.customStyles || undefined,
+							value: c.default || ''
+						};
+					})}
+				/>
+			</div>
+		</div>
+		<div class="lg:col-span-5">
+			{@render divider()}
+			<fieldset class="pb-4">
+				{@render title('Invitation')}
+				<input
+					hidden
+					class="hidden"
+					id="invite-sku"
+					name="invite-sku"
+					value={data.product?.invitation?.sku}
+				/>
+				{#each data.product?.invitation?.components || [] as option}
+					<EcardEditComponent
+						idPrefix="invite"
+						showLabel={true}
+						name={toCamelCase(option.label)}
+						label={option.label || undefined}
+						value={option.default || ''}
+						componentKey={option.ecardComponentID}
+						options={option.options || ''}
+					/>
 				{/each}
+			</fieldset>
+		</div>
 
-				<fieldset>
-					{@render title('Guest Count')}
-					<CheckCards
-						hideCheck
-						type="radio"
-						groupName="guestCount"
-						options={[
-							{
-								id: '10',
-								title: '0-10 Guests',
-								checked: true
-							},
-							{
-								id: '25',
-								title: '10-25 Guests'
-							},
-							{
-								id: '50',
-								title: '25-50 Guests'
-							},
-							{
-								id: '100',
-								title: '50-100 Guests'
-							},
-							{
-								id: 'all',
-								title: '100+ Guests'
-							}
-						]}
-					/>
-				</fieldset>
-
-				{@render divider()}
-
-				<fieldset>
-					{@render title('Enhancements')}
-					<CheckCards
-						options={addOnItems
-							.filter((item) => item.type.includes('event'))
-							.map((item) => ({
-								id: `sku-${item.sku}`,
-								title: item.name,
-								description: item.description,
-								price: item.cost
-							}))}
-					/>
-				</fieldset>
-
-				{@render divider()}
-
-				<fieldset class="pb-4">
-					{@render title('Invitation')}
-					<input
-						hidden
-						class="hidden"
-						id="invite-sku"
-						name="invite-sku"
-						value={data.product?.invitation?.sku}
-					/>
-					{#each data.product?.invitation?.components || [] as option}
-						<EcardEditComponent
-							idPrefix="invite"
-							showLabel={true}
-							label={option.label || undefined}
-							value={option.default || ''}
-							componentKey={option.ecardComponentID}
-							options={option.options || ''}
-						/>
-					{/each}
-				</fieldset>
-
+		<!-- Checkout Section -->
+		<div class="mt-8 lg:col-span-7 lg:col-start-1 lg:row-span-3">
+			<h2 class="sr-only">Checkout</h2>
+		</div>
+		<div class="lg:col-span-5">
+			{@render divider()}
+			<fieldset class="pb-4">
 				<div class="flex justify-end">
 					<button class="btn btn-lg" form="add-to-cart">Add to cart</button>
 				</div>
-			</form>
+			</fieldset>
 		</div>
-	</div>
+	</form>
 </div>
 
 {#snippet title(title: string, subTitle?: string)}

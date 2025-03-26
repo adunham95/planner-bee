@@ -3,6 +3,7 @@ import { error } from 'console';
 import type { Actions, PageServerLoad } from './$types';
 import { redirect } from '@sveltejs/kit';
 import { logAllFormData } from '$lib/utils/logAllFormData';
+import { EOrderType } from '$lib/utils/types';
 
 export const load: PageServerLoad = async (event) => {
 	// console.log({ user: event.locals });
@@ -110,6 +111,7 @@ export const actions: Actions = {
 		} else {
 			const cart = await prisma.order.create({
 				data: {
+					orderType: EOrderType.event,
 					products: {
 						create: {
 							eventThemeSku: sku,

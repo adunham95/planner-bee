@@ -6,6 +6,7 @@
 
 	interface Props {
 		idPrefix?: string;
+		name?: string;
 		showLabel?: boolean;
 		componentKey: string;
 		label?: string;
@@ -15,6 +16,7 @@
 
 	let {
 		idPrefix,
+		name = 'textInput',
 		componentKey,
 		label = undefined,
 		value = $bindable(),
@@ -36,14 +38,14 @@
 {:else if component.editComponentKey === 'text'}
 	<TextInput
 		label={label || component.name}
-		id={`${idPrefix ? idPrefix + '-' : ''}textInput"`}
+		id={`${idPrefix ? idPrefix + '-' : ''}${name}`}
 		{showLabel}
 		bind:value
 	/>
 {:else if component.editComponentKey === 'colorInput'}
 	<TextInput
 		label={label || component.name}
-		id={`${idPrefix ? idPrefix + '-' : ''}textInput`}
+		id={`${idPrefix ? idPrefix + '-' : ''}${name}`}
 		type="color"
 		{showLabel}
 		bind:value
@@ -51,7 +53,7 @@
 {:else if component.editComponentKey === 'textArea'}
 	<TextArea
 		label={label || component.name}
-		id={`${idPrefix ? idPrefix + '-' : ''}textArea`}
+		id={`${idPrefix ? idPrefix + '-' : ''}${name}`}
 		{showLabel}
 		class="col-span-2"
 		bind:value
@@ -60,7 +62,7 @@
 	<ColorInput
 		groupName={component.id}
 		label={label || component.name}
-		id={`${idPrefix ? idPrefix + '-' : ''}colorPicker`}
+		id={`${idPrefix ? idPrefix + '-' : ''}${name}`}
 		options={customOptions || component.options}
 		{showLabel}
 	/>

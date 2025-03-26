@@ -13,7 +13,6 @@ generator typescriptInterfaces {
   output   = "../src/models/interfaces.d.ts"
   prettier = true
 }
-
 datasource db {
   provider  = "postgresql"
   url       = env("POSTGRES_PRISMA_URL") // uses connection pooling
@@ -30,6 +29,7 @@ model User {
   lastName      String?
   sessions      Session[]
   orders        Order[]
+  events        Event[]
 }
 
 model Session {
@@ -41,22 +41,25 @@ model Session {
 }
 
 model EventTheme {
-  id           String              @id @default(uuid())
-  name         String
-  description  String
-  imageURL     String
-  sku          String              @unique
-  cost         Int?
-  createdAt    DateTime            @default(now())
-  updatedAt    DateTime            @default(now()) @updatedAt
-  options      EventThemeOptions[]
-  orderProduct OrderProduct[]
-  eCardSku     String?
-  invitation   ECardTemplate?      @relation(fields: [eCardSku], references: [sku])
+  id          String              @id @default(uuid())
+  name        String
+  description String
+  imageURL    String
+  sku         String              @unique
+  cost        Int?
+  createdAt   DateTime            @default(now())
+  updatedAt   DateTime            @default(now()) @updatedAt
+  options     EventThemeOptions[]
+  eCardSku    String?
+  invitation  ECardTemplate?      @relation(fields: [eCardSku], references: [sku])
+  events      Event[]
+
+  @@index([sku])
 }
 
 model EventThemeOptions {
   id           String     @id @default(uuid())
+  key          String?     @default(uuid())
   label        String?    @default("")
   editable     Boolean?   @default(false)
   default      String?    @default("")
@@ -66,28 +69,31 @@ model EventThemeOptions {
   componentID  String
   eventThemeID String
   eventTheme   EventTheme @relation(fields: [eventThemeID], references: [id])
+
+  @@index([key])
 }
 
 model ECardTemplate {
-  id            String           @id @default(uuid())
-  sku           String           @unique
-  name          String
-  description   String
-  cost          Int
-  createdAt     DateTime         @default(now())
-  updatedAt     DateTime         @default(now()) @updatedAt
-  components    ECardComponent[]
-  order         Order[]
-  imageURL      String?
-  orderProducts OrderProduct[]
-  eventTheme    EventTheme[]
-  visible       Boolean          @default(true)
+  id          String           @id @default(uuid())
+  sku         String           @unique
+  name        String
+  description String
+  cost        Int
+  createdAt   DateTime         @default(now())
+  updatedAt   DateTime         @default(now()) @updatedAt
+  components  ECardComponent[]
+  order       Order[]
+  imageURL    String?
+  eventTheme  EventTheme[]
+  visible     Boolean          @default(true)
+  invitation  Event[]
 
   @@index([sku])
 }
 
 model ECardComponent {
   id               String        @id @default(uuid())
+  key              String?        @default(uuid())
   ecardComponentID String
   ecardID          String
   ecard            ECardTemplate @relation(references: [id], fields: [ecardID])
@@ -98,52 +104,54 @@ model ECardComponent {
   options          String?       @default("")
   createdAt        DateTime      @default(now())
   updatedAt        DateTime      @default(now()) @updatedAt
+
+  @@index([key])
 }
 
 model Order {
-  id           String              @id @default(uuid())
-  orderNumber  String?             @default("")
-  createdAt    DateTime            @default(now())
-  updatedAt    DateTime            @updatedAt
-  ecardSku     String?
-  eCard        ECardTemplate?      @relation(references: [sku], fields: [ecardSku])
-  senderName   String?             @default("")
-  senderEmail  String?             @default("")
-  senderID     String?
-  sender       User?               @relation(references: [id], fields: [senderID])
-  eCardOptions EcardOrderOptions[]
-  recipients   Recipient[]
-  status       String?             @default("draft")
-  products     OrderProduct[]
-  orderType String @default("event")
-}
-
-model OrderProduct {
-  id            String               @id @default(uuid())
+  id            String         @id @default(uuid())
+  orderNumber   String?        @default("")
+  createdAt     DateTime       @default(now())
+  updatedAt     DateTime       @updatedAt
   ecardSku      String?
-  eventThemeSku String?
-  addOnSku      String?
-  ecard         ECardTemplate?       @relation(references: [sku], fields: [ecardSku], map: "OrderProduct_ecard")
-  eventTheme    EventTheme?          @relation(references: [sku], fields: [eventThemeSku], map: "OrderProduct_eventTheme")
-  orderID       String
-  order         Order                @relation(references: [id], fields: [orderID])
-  options       OrderProductOption[]
+  eCard         ECardTemplate? @relation(references: [sku], fields: [ecardSku])
+  status        String?        @default("draft")
+  eventDate     DateTime?
+  event         Event[]
+  customerName  String?        @default("")
+  customerEmail String?        @default("")
+  customerID    String?
+  customer      User?          @relation(references: [id], fields: [customerID])
 }
 
-model OrderProductOption {
-  id             String       @id @default(uuid())
-  orderProductID String
-  orderProduct   OrderProduct @relation(references: [id], fields: [orderProductID], onDelete: Cascade)
-  value          String
-  key            String
-  createdAt      DateTime     @default(now())
-  updatedAt      DateTime     @updatedAt
+model Event {
+  id               String         @id @default(uuid())
+  orderID          String
+  order            Order          @relation(references: [id], fields: [orderID])
+  senderEmail      String?        @default("")
+  senderID         String?
+  sender           User?          @relation(references: [id], fields: [senderID])
+  eventNumber      String?        @default("")
+  eventDate        DateTime?
+  eventTemplateSku String
+  eventTemplate    EventTheme?    @relation(references: [sku], fields: [eventTemplateSku])
+  invitationSku    String?
+  invitation       ECardTemplate? @relation(references: [sku], fields: [invitationSku])
+  addOns           String[]
+  recipients       Recipient[]
+}
+
+model EventOption {
+  id        String   @id @default(uuid())
+  eventId   String
+  value     String
+  key       String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }
 
 model EcardOrderOptions {
   id               String   @id @default(uuid())
-  orderID          String
-  order            Order    @relation(references: [id], fields: [orderID])
   value            String
   ecardComponentID String
   createdAt        DateTime @default(now())
@@ -156,8 +164,8 @@ model Recipient {
   lastName   String?
   email      String?
   phone      String?
-  orderID    String
-  order      Order   @relation(references: [id], fields: [orderID])
+  eventID    String?
+  event      Event?   @relation(references: [id], fields: [eventID])
   rsvpStatus String?
 }
 

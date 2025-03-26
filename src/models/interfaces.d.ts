@@ -10,6 +10,7 @@ export interface User {
   lastName: string | null;
   sessions?: Session[];
   orders?: Order[];
+  events?: Event[];
 }
 
 export interface Session {
@@ -29,13 +30,14 @@ export interface EventTheme {
   createdAt: Date;
   updatedAt: Date;
   options?: EventThemeOptions[];
-  orderProduct?: OrderProduct[];
   eCardSku: string | null;
   invitation?: ECardTemplate | null;
+  events?: Event[];
 }
 
 export interface EventThemeOptions {
   id: string;
+  key: string | null;
   label: string | null;
   editable: boolean | null;
   default: string | null;
@@ -58,13 +60,14 @@ export interface ECardTemplate {
   components?: ECardComponent[];
   order?: Order[];
   imageURL: string | null;
-  orderProducts?: OrderProduct[];
   eventTheme?: EventTheme[];
   visible: boolean;
+  invitation?: Event[];
 }
 
 export interface ECardComponent {
   id: string;
+  key: string | null;
   ecardComponentID: string;
   ecardID: string;
   ecard?: ECardTemplate;
@@ -84,32 +87,35 @@ export interface Order {
   updatedAt: Date;
   ecardSku: string | null;
   eCard?: ECardTemplate | null;
-  senderName: string | null;
+  status: string | null;
+  eventDate: Date | null;
+  event?: Event[];
+  customerName: string | null;
+  customerEmail: string | null;
+  customerID: string | null;
+  customer?: User | null;
+}
+
+export interface Event {
+  id: string;
+  orderID: string;
+  order?: Order;
   senderEmail: string | null;
   senderID: string | null;
   sender?: User | null;
-  eCardOptions?: EcardOrderOptions[];
+  eventNumber: string | null;
+  eventDate: Date | null;
+  eventTemplateSku: string;
+  eventTemplate?: EventTheme | null;
+  invitationSku: string | null;
+  invitation?: ECardTemplate | null;
+  addOns: string[];
   recipients?: Recipient[];
-  status: string | null;
-  products?: OrderProduct[];
 }
 
-export interface OrderProduct {
+export interface EventOption {
   id: string;
-  ecardSku: string | null;
-  eventThemeSku: string | null;
-  addOnSku: string | null;
-  ecard?: ECardTemplate | null;
-  eventTheme?: EventTheme | null;
-  orderID: string;
-  order?: Order;
-  options?: OrderProductOption[];
-}
-
-export interface OrderProductOption {
-  id: string;
-  orderProductID: string;
-  orderProduct?: OrderProduct;
+  eventId: string;
   value: string;
   key: string;
   createdAt: Date;
@@ -118,8 +124,6 @@ export interface OrderProductOption {
 
 export interface EcardOrderOptions {
   id: string;
-  orderID: string;
-  order?: Order;
   value: string;
   ecardComponentID: string;
   createdAt: Date;
@@ -132,8 +136,8 @@ export interface Recipient {
   lastName: string | null;
   email: string | null;
   phone: string | null;
-  orderID: string;
-  order?: Order;
+  eventID: string | null;
+  event?: Event | null;
   rsvpStatus: string | null;
 }
 

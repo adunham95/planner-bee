@@ -20,6 +20,7 @@
 		mealTrainEnabled?: boolean;
 		rsvpEnabled?: boolean;
 		potluckOptions?: { id: string; title: string }[];
+		brandingEnabled?: boolean;
 	}
 
 	let {
@@ -28,7 +29,8 @@
 		signatures = [],
 		mealTrainEnabled = false,
 		rsvpEnabled = false,
-		potluckOptions = []
+		potluckOptions = [],
+		brandingEnabled = true
 	}: Props = $props();
 
 	console.log('eCard', { components });
@@ -59,6 +61,9 @@
 		<Signature {signatures} />
 	{/if}
 
-	<PromoSlot />
+	{#if brandingEnabled}
+		<PromoSlot />
+	{/if}
+
 	<!-- </EmptyWrapper> -->
 </div>

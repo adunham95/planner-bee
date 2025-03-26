@@ -8,6 +8,6 @@
 	let { ...props } = $props();
 </script>
 
-<div class={`container mx-auto px-4 sm:px-6 lg:px-8 ${props.class}`}>
+<div class={`container mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 ${props.class}`}>
 	{@render props.children?.()}
 </div>
