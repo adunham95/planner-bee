@@ -122,6 +122,8 @@ model Order {
   customerEmail String?        @default("")
   customerID    String?
   customer      User?          @relation(references: [id], fields: [customerID])
+
+  @@index([orderNumber, customerID])
 }
 
 model Event {
@@ -139,15 +141,21 @@ model Event {
   invitation       ECardTemplate? @relation(references: [sku], fields: [invitationSku])
   addOns           String[]
   recipients       Recipient[]
+  options EventOption[]
+
+  @@index([orderID, senderID, eventNumber])
 }
 
 model EventOption {
   id        String   @id @default(uuid())
   eventId   String
+  event Event @relation(references: [id], fields: [eventId])
   value     String
   key       String
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+
+  @@index([eventId])
 }
 
 model EcardOrderOptions {

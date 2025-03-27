@@ -29,6 +29,7 @@ export const enhancementItems = [
 export const addOnItems = [
 	{
 		name: 'Collaboration',
+		id: 'signatures',
 		sku: 'COLL',
 		description: 'Pre send a list of users',
 		path: '/collaboration',
@@ -37,6 +38,7 @@ export const addOnItems = [
 		type: ['eCard']
 	},
 	{
+		id: 'rsvpEnabled',
 		name: 'RSVP & Tracking',
 		sku: 'RSVP',
 		description: 'Let users RSVP and track analytics',
@@ -46,6 +48,7 @@ export const addOnItems = [
 		type: ['event']
 	},
 	{
+		id: 'mealTrainEnabled',
 		name: 'Meal Train',
 		sku: 'MLTR',
 		description: 'Add meal train sign up',
@@ -55,6 +58,7 @@ export const addOnItems = [
 		type: ['eCard']
 	},
 	{
+		id: 'potluckEnabled',
 		name: 'Potluck Sign Up',
 		sku: 'POTS',
 		description: 'Add a sign up for ',
@@ -64,6 +68,7 @@ export const addOnItems = [
 		type: ['event']
 	},
 	{
+		id: 'privacyEnabled',
 		name: 'Privacy',
 		sku: 'PRCY',
 		description: 'Only let the people who have the access code sign view',
@@ -72,6 +77,7 @@ export const addOnItems = [
 		type: ['eCard', 'event']
 	},
 	{
+		id: 'brandingDisabled',
 		name: 'Remove Branding',
 		sku: 'RMBD',
 		description: 'Remove the planner bee branding',
@@ -80,6 +86,7 @@ export const addOnItems = [
 		type: ['eCard', 'event']
 	},
 	{
+		id: 'disposableCameraEnabled',
 		name: 'Disposable Camera',
 		sku: 'DCAM',
 		description: 'Allow Users to take photos and upload them to a slideshow',

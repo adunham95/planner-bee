@@ -111,11 +111,13 @@ export interface Event {
   invitation?: ECardTemplate | null;
   addOns: string[];
   recipients?: Recipient[];
+  options?: EventOption[];
 }
 
 export interface EventOption {
   id: string;
   eventId: string;
+  event?: Event;
   value: string;
   key: string;
   createdAt: Date;

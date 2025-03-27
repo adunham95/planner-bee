@@ -18,7 +18,7 @@
 	let component = $derived(eCardComponents.find((c) => c.id === ecardComponentID));
 
 	run(() => {
-		console.log('displayComponent', { component });
+		// console.log('displayComponent', { component });
 	});
 </script>
 

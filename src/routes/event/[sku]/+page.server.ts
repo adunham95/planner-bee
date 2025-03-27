@@ -39,31 +39,25 @@ export const actions: Actions = {
 		const data = await request.formData();
 		logAllFormData(data);
 
+		const themeData = await prisma.eventTheme.findFirst({ where: { sku } });
+		console.log({ themeData });
+
 		const addedSKUs: string[] = [];
-		let inviteSku: string | undefined = undefined;
+		const inviteSku: string | undefined = undefined;
 
 		const cartOptions: { key: string; value: string }[] = [];
 		const inviteOptions: { key: string; value: string }[] = [];
 
 		for (const pair of data.entries()) {
 			const [key, value] = pair;
-			if (key.startsWith('sku')) {
+			if (key.startsWith('addon')) {
 				const [, sku] = key.split('-');
 				addedSKUs.push(sku);
-			} else if (key.startsWith('invite')) {
-				const [, k] = key.split('-');
-				// addedSKUs.push(sku);
-				if (k == 'sku') {
-					inviteSku = value.toString();
-				} else {
-					inviteOptions.push({ key: k, value: value.toString() });
-				}
-			} else {
-				cartOptions.push({
-					key,
-					value: value.toString()
-				});
 			}
+			cartOptions.push({
+				key,
+				value: value.toString()
+			});
 			console.log(pair[0], pair[1]);
 		}
 
@@ -73,84 +67,43 @@ export const actions: Actions = {
 		console.log('inviteSku', inviteSku);
 		console.log('inviteOptions', inviteOptions);
 
-		const cartID = cookies.get('cart');
+		let cartID = cookies.get('cart');
 
 		console.log('cartID', { cartID, addedSKUs });
 
-		if (cartID) {
-			await prisma.orderProduct.create({
-				data: {
-					orderID: cartID,
-					eventThemeSku: sku,
-					options: {
-						createMany: {
-							data: cartOptions
-						}
-					}
-				}
-			});
-			await prisma.orderProduct.createMany({
-				data: addedSKUs.map((s) => ({
-					orderID: cartID,
-					addOnSku: s
-				}))
-			});
-			if (inviteSku) {
-				await prisma.orderProduct.create({
-					data: {
-						orderID: cartID,
-						ecardSku: inviteSku,
-						options: {
-							createMany: {
-								data: inviteOptions
-							}
-						}
-					}
-				});
-			}
-		} else {
+		const eventDateData = cartOptions.find((c) => c.key === 'event-date')?.value;
+		const eventDate = eventDateData ? new Date(eventDateData) : null;
+
+		console.log({ eventDateData, eventDate });
+
+		if (!cartID) {
 			const cart = await prisma.order.create({
-				data: {
-					orderType: EOrderType.event,
-					products: {
-						create: {
-							eventThemeSku: sku,
-							options: {
-								createMany: {
-									data: cartOptions
-								}
-							}
-						}
-					}
-				}
+				data: {}
 			});
 
-			await prisma.orderProduct.createMany({
-				data: addedSKUs.map((s) => ({
-					orderID: cart.id,
-					addOnSku: s
-				}))
-			});
-
-			if (inviteSku) {
-				await prisma.orderProduct.create({
-					data: {
-						orderID: cart.id,
-						ecardSku: inviteSku,
-						options: {
-							createMany: {
-								data: inviteOptions
-							}
-						}
-					}
-				});
-			}
-
-			console.log({ cart });
-
-			cookies.set('cart', cart.id || '', { path: '/', maxAge: 86400 });
+			cartID = cart.id;
+			cookies.set('cart', cartID || '', { path: '/', maxAge: 86400 });
 		}
 
-		redirect(303, '/cart');
+		const event = await prisma.event.create({
+			data: {
+				orderID: cartID,
+				eventTemplateSku: sku,
+				invitationSku: themeData?.eCardSku,
+				eventDate,
+				addOns: addedSKUs
+			}
+		});
+
+		const eventOptions = await prisma.eventOption.createMany({
+			data: cartOptions.map((opt) => ({
+				eventId: event.id,
+				...opt
+			}))
+		});
+
+		console.log({ event, eventOptions });
+
+		// redirect(303, '/cart');
 	}
 };

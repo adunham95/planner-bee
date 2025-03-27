@@ -60,12 +60,11 @@
 		</div>
 		<div class="lg:col-span-5">
 			{#each data.product?.options.sort((a, b) => a.displayOrder - b.displayOrder) || [] as option}
-				{console.log('option', { option })}
 				<fieldset class="">
 					{@render title(option.label || '')}
 					<EcardEditComponent
 						showLabel={false}
-						name={toCamelCase(option.label)}
+						name={option.key || toCamelCase(option.label)}
 						label={option.label || undefined}
 						value={option.default || ''}
 						componentKey={option.componentID}
@@ -81,7 +80,7 @@
 				<CheckCards
 					hideCheck
 					type="radio"
-					groupName="guestCount"
+					groupName="event-guestCount"
 					options={[
 						{
 							id: '10',
@@ -112,7 +111,7 @@
 
 			<fieldset>
 				{@render title('Event Date')}
-				<DateInput id="eventDate" label="Event Date" />
+				<DateInput id="event-date" label="Event Date" />
 			</fieldset>
 
 			{@render divider()}
@@ -124,7 +123,7 @@
 					options={addOnItems
 						.filter((item) => item.type.includes('event'))
 						.map((item) => ({
-							id: `sku-${item.sku}`,
+							id: `addon-${item.sku}`,
 							title: item.name,
 							description: item.description,
 							price: item.cost
@@ -138,10 +137,10 @@
 			<h2 class="sr-only">Event Details</h2>
 			<div class="sticky">
 				<ECard
-					rsvpEnabled={checkedOptions.includes('sku-RSVP')}
-					mealTrainEnabled={checkedOptions.includes('sku-MLTR')}
-					brandingEnabled={!checkedOptions.includes('sku-RMBD')}
-					potluckOptions={checkedOptions.includes('sku-POTS') ? placeholderPotluckOptions : []}
+					rsvpEnabled={checkedOptions.includes('addon-RSVP')}
+					mealTrainEnabled={checkedOptions.includes('addon-MLTR')}
+					brandingEnabled={!checkedOptions.includes('addon-RMBD')}
+					potluckOptions={checkedOptions.includes('addon-POTS') ? placeholderPotluckOptions : []}
 					components={data.product?.invitation?.components.map((c) => {
 						return {
 							id: c.id,
@@ -157,18 +156,10 @@
 			{@render divider()}
 			<fieldset class="pb-4">
 				{@render title('Invitation')}
-				<input
-					hidden
-					class="hidden"
-					id="invite-sku"
-					name="invite-sku"
-					value={data.product?.invitation?.sku}
-				/>
 				{#each data.product?.invitation?.components || [] as option}
 					<EcardEditComponent
-						idPrefix="invite"
 						showLabel={true}
-						name={toCamelCase(option.label)}
+						name={option.key || toCamelCase(option.label)}
 						label={option.label || undefined}
 						value={option.default || ''}
 						componentKey={option.ecardComponentID}
