@@ -13,6 +13,7 @@ generator typescriptInterfaces {
   output   = "../src/models/interfaces.d.ts"
   prettier = true
 }
+
 datasource db {
   provider  = "postgresql"
   url       = env("POSTGRES_PRISMA_URL") // uses connection pooling
@@ -30,6 +31,7 @@ model User {
   sessions      Session[]
   orders        Order[]
   events        Event[]
+  eCards        ECard[]
 }
 
 model Session {
@@ -59,7 +61,7 @@ model EventTheme {
 
 model EventThemeOptions {
   id           String     @id @default(uuid())
-  key          String?     @default(uuid())
+  key          String?    @default(uuid())
   label        String?    @default("")
   editable     Boolean?   @default(false)
   default      String?    @default("")
@@ -82,18 +84,18 @@ model ECardTemplate {
   createdAt   DateTime         @default(now())
   updatedAt   DateTime         @default(now()) @updatedAt
   components  ECardComponent[]
-  order       Order[]
   imageURL    String?
   eventTheme  EventTheme[]
   visible     Boolean          @default(true)
   invitation  Event[]
+  eCards      ECard[]
 
   @@index([sku])
 }
 
 model ECardComponent {
   id               String        @id @default(uuid())
-  key              String?        @default(uuid())
+  key              String?       @default(uuid())
   ecardComponentID String
   ecardID          String
   ecard            ECardTemplate @relation(references: [id], fields: [ecardID])
@@ -109,19 +111,17 @@ model ECardComponent {
 }
 
 model Order {
-  id            String         @id @default(uuid())
-  orderNumber   String?        @default("")
-  createdAt     DateTime       @default(now())
-  updatedAt     DateTime       @updatedAt
-  ecardSku      String?
-  eCard         ECardTemplate? @relation(references: [sku], fields: [ecardSku])
-  status        String?        @default("draft")
-  eventDate     DateTime?
+  id            String   @id @default(uuid())
+  orderNumber   String?  @default("")
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+  status        String?  @default("draft")
   event         Event[]
-  customerName  String?        @default("")
-  customerEmail String?        @default("")
+  eCard         ECard[]
+  customerName  String?  @default("")
+  customerEmail String?  @default("")
   customerID    String?
-  customer      User?          @relation(references: [id], fields: [customerID])
+  customer      User?    @relation(references: [id], fields: [customerID])
 
   @@index([orderNumber, customerID])
 }
@@ -141,29 +141,41 @@ model Event {
   invitation       ECardTemplate? @relation(references: [sku], fields: [invitationSku])
   addOns           String[]
   recipients       Recipient[]
-  options EventOption[]
+  options          OptionItem[]
 
   @@index([orderID, senderID, eventNumber])
 }
 
-model EventOption {
+model ECard {
+  id               String        @id @default(uuid())
+  orderID          String
+  order            Order         @relation(references: [id], fields: [orderID])
+  senderEmail      String?       @default("")
+  senderID         String?
+  sender           User?         @relation(references: [id], fields: [senderID])
+  deliveryDate     DateTime
+  eCardNumber      String?       @default("")
+  eCardTemplateSku String
+  eCardTemplate    ECardTemplate @relation(references: [sku], fields: [eCardTemplateSku])
+  addOns           String[]
+  recipients       Recipient[]
+  options          OptionItem[]
+
+  @@index([orderID, senderID, eCardNumber])
+}
+
+model OptionItem {
   id        String   @id @default(uuid())
-  eventId   String
-  event Event @relation(references: [id], fields: [eventId])
+  eCardId   String?
+  eCard     ECard?   @relation(references: [id], fields: [eCardId])
+  eventId   String?
+  event     Event?   @relation(references: [id], fields: [eventId])
   value     String
   key       String
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  @@index([eventId])
-}
-
-model EcardOrderOptions {
-  id               String   @id @default(uuid())
-  value            String
-  ecardComponentID String
-  createdAt        DateTime @default(now())
-  updatedAt        DateTime @updatedAt
+  @@index([eCardId, eventId])
 }
 
 model Recipient {
@@ -173,7 +185,9 @@ model Recipient {
   email      String?
   phone      String?
   eventID    String?
-  event      Event?   @relation(references: [id], fields: [eventID])
+  event      Event?  @relation(references: [id], fields: [eventID])
+  eCardID    String?
+  eCard      ECard?  @relation(references: [id], fields: [eCardID])
   rsvpStatus String?
 }
 

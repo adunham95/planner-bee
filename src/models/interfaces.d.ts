@@ -11,6 +11,7 @@ export interface User {
   sessions?: Session[];
   orders?: Order[];
   events?: Event[];
+  eCards?: ECard[];
 }
 
 export interface Session {
@@ -58,11 +59,11 @@ export interface ECardTemplate {
   createdAt: Date;
   updatedAt: Date;
   components?: ECardComponent[];
-  order?: Order[];
   imageURL: string | null;
   eventTheme?: EventTheme[];
   visible: boolean;
   invitation?: Event[];
+  eCards?: ECard[];
 }
 
 export interface ECardComponent {
@@ -85,11 +86,9 @@ export interface Order {
   orderNumber: string | null;
   createdAt: Date;
   updatedAt: Date;
-  ecardSku: string | null;
-  eCard?: ECardTemplate | null;
   status: string | null;
-  eventDate: Date | null;
   event?: Event[];
+  eCard?: ECard[];
   customerName: string | null;
   customerEmail: string | null;
   customerID: string | null;
@@ -111,23 +110,33 @@ export interface Event {
   invitation?: ECardTemplate | null;
   addOns: string[];
   recipients?: Recipient[];
-  options?: EventOption[];
+  options?: OptionItem[];
 }
 
-export interface EventOption {
+export interface ECard {
   id: string;
-  eventId: string;
-  event?: Event;
+  orderID: string;
+  order?: Order;
+  senderEmail: string | null;
+  senderID: string | null;
+  sender?: User | null;
+  deliveryDate: Date;
+  eCardNumber: string | null;
+  eCardTemplateSku: string;
+  eCardTemplate?: ECardTemplate;
+  addOns: string[];
+  recipients?: Recipient[];
+  options?: OptionItem[];
+}
+
+export interface OptionItem {
+  id: string;
+  eCardId: string | null;
+  eCard?: ECard | null;
+  eventId: string | null;
+  event?: Event | null;
   value: string;
   key: string;
-  createdAt: Date;
-  updatedAt: Date;
-}
-
-export interface EcardOrderOptions {
-  id: string;
-  value: string;
-  ecardComponentID: string;
   createdAt: Date;
   updatedAt: Date;
 }
@@ -140,6 +149,8 @@ export interface Recipient {
   phone: string | null;
   eventID: string | null;
   event?: Event | null;
+  eCardID: string | null;
+  eCard?: ECard | null;
   rsvpStatus: string | null;
 }
 
