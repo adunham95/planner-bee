@@ -95,7 +95,7 @@ export const actions: Actions = {
 			}
 		});
 
-		const eventOptions = await prisma.eventOption.createMany({
+		const eventOptions = await prisma.optionItem.createMany({
 			data: cartOptions.map((opt) => ({
 				eventId: event.id,
 				...opt
@@ -104,6 +104,6 @@ export const actions: Actions = {
 
 		console.log({ event, eventOptions });
 
-		// redirect(303, '/cart');
+		// redirect(303, '/shop/cart');
 	}
 };

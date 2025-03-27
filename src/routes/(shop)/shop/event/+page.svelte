@@ -129,7 +129,7 @@
 			>
 				{#each data.products as product}
 					<li class="inline-flex w-64 flex-col text-center lg:w-auto">
-						<a href={`/event/${product.sku}`} class="group relative">
+						<a href={`/shop/event/${product.sku}`} class="group relative">
 							<div class="aspect-h-1 aspect-w-1 w-full overflow-hidden rounded-md bg-gray-200">
 								<img
 									src={product.imageURL || '/images/happy.jpg'}

@@ -7,6 +7,6 @@
 		Want your own card?
 	</h2>
 	<div class="mt-10 flex items-center gap-x-6 lg:mt-0 lg:flex-shrink-0">
-		<a href="/ecard" class="btn btn-custom">Get started</a>
+		<a href="/shop/ecard" class="btn btn-custom">Get started</a>
 	</div>
 </div>

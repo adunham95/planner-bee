@@ -1,18 +1,22 @@
 <script lang="ts">
+	import AccountHeader from '$lib/components/Headers/AccountHeader.svelte';
+	import type { title } from 'process';
+
 	interface Props {
 		children?: import('svelte').Snippet;
 	}
 
 	let { children }: Props = $props();
 	const links = [
-		{ name: 'Dashboard', href: '/dashboard' },
-		{ name: 'Profile', href: '/profile' },
-		{ name: 'Orders', href: '/my-orders' },
-		{ name: 'Contacts', href: '/contacts' }
+		{ title: 'Shop', path: '/shop' },
+		{ title: 'Dashboard', path: '/dashboard' },
+		{ title: 'Profile', path: '/profile' },
+		{ title: 'Orders', path: '/my-orders' },
+		{ title: 'Contacts', path: '/contacts' }
 	];
 </script>
 
-<div class="bg-white py-1">
+<!-- <div class="bg-white py-1">
 	<nav class="flex mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 space-x-4">
 		{#each links as link}
 			<a
@@ -23,6 +27,8 @@
 			</a>
 		{/each}
 	</nav>
-</div>
+</div> -->
+
+<AccountHeader routes={links} />
 
 {@render children?.()}

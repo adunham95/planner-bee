@@ -22,7 +22,7 @@
 						{subTitle}
 					</p>
 					<div class="mt-10 flex items-center gap-x-6">
-						<a href="/ecards" class="btn">Get started</a>
+						<a href="/shop" class="btn">Get started</a>
 						<a href="/ecard-demo" class="text-sm font-semibold leading-6 text-gray-900"
 							>Live demo <span aria-hidden="true">→</span></a
 						>
