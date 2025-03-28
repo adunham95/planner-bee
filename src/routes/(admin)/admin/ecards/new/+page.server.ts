@@ -2,6 +2,7 @@ import prisma from '$lib/prisma';
 import { fail } from '@sveltejs/kit';
 import type { Actions } from './$types';
 import { eCardComponents } from '$lib/ecardComponents';
+import { toCamelCase } from '$lib/utils/toCamelCase';
 
 export const load = async () => {
 	return { eCardComponents };
@@ -15,6 +16,9 @@ export const actions: Actions = {
 		const sku = data.get('sku');
 		const price = data.get('price');
 		const imageURL = data.get('imageURL');
+		const visible = data.get('visible');
+
+		console.log({ visible });
 
 		const eCardComponents: {
 			[key: string]: {
@@ -24,6 +28,7 @@ export const actions: Actions = {
 				editable?: string;
 				customStyles?: string;
 				componentID?: string;
+				key?: string;
 				[key: string]: unknown;
 			};
 		} = {};
@@ -40,8 +45,6 @@ export const actions: Actions = {
 				eCardComponents[randomID][val] = value;
 			});
 		console.log({ eCardComponents });
-
-		// return { success: true };
 
 		if (!name || typeof name !== 'string' || name.length < 2) {
 			return fail(400, {
@@ -80,10 +83,12 @@ export const actions: Actions = {
 				sku: sku.toUpperCase(),
 				cost: parseInt(price) || 0,
 				imageURL,
+				visible: visible == 'on',
 				components: {
 					createMany: {
 						data: Object.values(eCardComponents).map((element) => {
 							return {
+								key: element.key || toCamelCase(element.label),
 								ecardComponentID: element.componentID || element.ecardComponentID,
 								label: element.label,
 								default: element.default,
@@ -95,6 +100,8 @@ export const actions: Actions = {
 				}
 			}
 		});
+
+		console.log({ ecard });
 
 		return { ecard };
 	}

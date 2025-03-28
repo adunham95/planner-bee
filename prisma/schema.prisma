@@ -153,7 +153,7 @@ model ECard {
   senderEmail      String?       @default("")
   senderID         String?
   sender           User?         @relation(references: [id], fields: [senderID])
-  deliveryDate     DateTime
+  deliveryDate     DateTime?
   eCardNumber      String?       @default("")
   eCardTemplateSku String
   eCardTemplate    ECardTemplate @relation(references: [sku], fields: [eCardTemplateSku])

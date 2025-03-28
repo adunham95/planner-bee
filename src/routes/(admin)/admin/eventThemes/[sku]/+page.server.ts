@@ -3,6 +3,7 @@ import prisma from '$lib/prisma';
 import { fail } from '@sveltejs/kit';
 
 import type { Actions, PageServerLoad } from './$types';
+import { toCamelCase } from '$lib/utils/toCamelCase';
 
 export const load: PageServerLoad = async (event) => {
 	// console.log({ user: event.locals });
@@ -58,6 +59,7 @@ export const actions: Actions = {
 				options?: string;
 				action?: string;
 				displayOrder?: string;
+				key?: string;
 				[key: string]: unknown;
 			};
 		} = {};
@@ -172,6 +174,7 @@ export const actions: Actions = {
 					.map((c) => ({
 						eventThemeID: id,
 						componentID: c.componentID,
+						key: c.key || toCamelCase(c.label),
 						label: c.label,
 						default: c.default,
 						editable: c.editable === 'on' || true,

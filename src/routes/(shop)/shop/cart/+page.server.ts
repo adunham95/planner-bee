@@ -13,47 +13,45 @@ export const load: PageServerLoad = async ({ cookies }) => {
 		return {};
 	}
 
-	let subTotal = 0;
+	const subTotal = 0;
 
 	const cart = await prisma.order.findFirst({
 		where: {
 			id: cartID
 		},
 		include: {
-			products: {
-				include: {
-					ecard: true,
-					eventTheme: true,
-					options: true
-				}
-			}
+			event: true,
+			eCard: true
 		}
 	});
 
-	const cartData = {
-		...cart,
-		products: cart?.products.map((p) => {
-			const addOn = addOnItems.find((i) => i.sku === p.addOnSku);
-			if (p.ecard?.cost) {
-				subTotal += p.ecard?.cost;
-			}
-			if (p.eventTheme?.cost) {
-				subTotal += p.eventTheme?.cost;
-			}
-			if (addOn?.cost) {
-				subTotal += addOn.cost;
-			}
-			return {
-				...p,
-				addOn
-			};
-		})
-	};
+	console.log({ cart });
+
+	// const cartData = {
+	// 	...cart,
+	// 	products: cart?.products.map((p) => {
+	// 		const addOn = addOnItems.find((i) => i.sku === p.addOnSku);
+	// 		if (p.ecard?.cost) {
+	// 			subTotal += p.ecard?.cost;
+	// 		}
+	// 		if (p.eventTheme?.cost) {
+	// 			subTotal += p.eventTheme?.cost;
+	// 		}
+	// 		if (addOn?.cost) {
+	// 			subTotal += addOn.cost;
+	// 		}
+	// 		return {
+	// 			...p,
+	// 			addOn
+	// 		};
+	// 	})
+	// };
 
 	const taxes = subTotal * 0.1;
 
 	return {
-		cart: cartData,
+		cartData: cart,
+		// cart: cartData,
 		orderEstimate: {
 			total: subTotal + taxes,
 			lineItems: [

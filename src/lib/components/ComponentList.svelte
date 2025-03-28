@@ -48,7 +48,7 @@
 				<TextInput
 					label="Order"
 					showLabel
-					class="col-span-1"
+					class="col-span-2"
 					type="number"
 					id={`${groupName}%%${item.id}%%displayOrder`}
 					{placeholder}
@@ -61,6 +61,14 @@
 					class="col-span-1"
 					bind:value={item.value.componentID}
 					options={components}
+				/>
+				<TextInput
+					label="Key"
+					showLabel
+					class="col-span-1"
+					id={`${groupName}%%${item.id}%%key`}
+					{placeholder}
+					bind:value={item.value.key}
 				/>
 				<TextArea
 					bind:value={item.value.default}

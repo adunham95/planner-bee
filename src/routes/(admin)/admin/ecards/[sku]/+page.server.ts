@@ -2,6 +2,7 @@ import prisma from '$lib/prisma';
 import { error, fail } from '@sveltejs/kit';
 import type { Actions, PageServerLoad } from './$types';
 import { eCardComponents } from '$lib/ecardComponents';
+import { toCamelCase } from '$lib/utils/toCamelCase';
 
 export const load: PageServerLoad = async (event) => {
 	// console.log({ user: event.locals });
@@ -40,6 +41,7 @@ export const actions: Actions = {
 		const sku = data.get('sku');
 		const price = data.get('price');
 		const imageURL = data.get('imageURL');
+		const visible = data.get('visible');
 
 		console.log('dataEntries', [...data.entries()]);
 
@@ -53,6 +55,7 @@ export const actions: Actions = {
 				action?: string;
 				customStyles?: string;
 				componentID?: string;
+				key?: string;
 				[key: string]: unknown;
 			};
 		} = {};
@@ -113,6 +116,7 @@ export const actions: Actions = {
 			},
 			data: {
 				name,
+				visible: visible == 'on',
 				description: description || '',
 				sku: sku.toUpperCase(),
 				cost: parseInt(price) || 0,
@@ -142,6 +146,7 @@ export const actions: Actions = {
 				.filter((c) => c.action === 'add')
 				.map((c) => ({
 					ecardID: id,
+					key: c.key || toCamelCase(c.label),
 					ecardComponentID: c.componentID || c.ecardComponentID,
 					label: c.label,
 					default: c.default,

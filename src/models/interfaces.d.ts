@@ -120,7 +120,7 @@ export interface ECard {
   senderEmail: string | null;
   senderID: string | null;
   sender?: User | null;
-  deliveryDate: Date;
+  deliveryDate: Date | null;
   eCardNumber: string | null;
   eCardTemplateSku: string;
   eCardTemplate?: ECardTemplate;

@@ -3,7 +3,6 @@ import { error } from 'console';
 import type { Actions, PageServerLoad } from './$types';
 import { redirect } from '@sveltejs/kit';
 import { logAllFormData } from '$lib/utils/logAllFormData';
-import { EOrderType } from '$lib/utils/types';
 
 export const load: PageServerLoad = async (event) => {
 	// console.log({ user: event.locals });
@@ -104,6 +103,6 @@ export const actions: Actions = {
 
 		console.log({ event, eventOptions });
 
-		// redirect(303, '/shop/cart');
+		redirect(303, '/shop/cart');
 	}
 };

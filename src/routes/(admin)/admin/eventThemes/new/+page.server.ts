@@ -2,6 +2,7 @@ import prisma from '$lib/prisma';
 import { eCardComponents } from '$lib/ecardComponents';
 import { fail } from '@sveltejs/kit';
 import type { Actions } from '../$types';
+import { toCamelCase } from '$lib/utils/toCamelCase';
 
 export const load = async () => {
 	const eCards = await prisma.eCardTemplate.findMany();
@@ -27,6 +28,7 @@ export const actions: Actions = {
 				editable?: string;
 				customStyles?: string;
 				options?: string;
+				key?: string;
 				[key: string]: unknown;
 			};
 		} = {};
@@ -95,6 +97,7 @@ export const actions: Actions = {
 						data: Object.values(components).map((element) => {
 							return {
 								componentID: element.componentID,
+								key: element.key || toCamelCase(element.label),
 								label: element.label,
 								default: element.default,
 								editable: element.editable === 'on' || true,

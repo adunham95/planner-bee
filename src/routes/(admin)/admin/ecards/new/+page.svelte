@@ -4,6 +4,7 @@
 	import ECard from '$lib/components/ECard.svelte';
 	import TextArea from '$lib/components/Inputs/TextArea.svelte';
 	import TextInput from '$lib/components/Inputs/TextInput.svelte';
+	import Toggle from '$lib/components/Inputs/Toggle.svelte';
 	import PageHeaderShell from '$lib/components/Shells/PageHeaderShell.svelte';
 
 	let { data } = $props();
@@ -36,6 +37,13 @@
 			<TextInput type="number" min="0" label="Price" id="price" showLabel />
 			<TextInput min="0" label="Image URL" id="imageURL" showLabel />
 			<TextArea label="Description" id="description" showLabel class="col-span-2" />
+			<Toggle
+				id="visible"
+				label="Active"
+				subLabel="Active in the product list"
+				class="col-span-2"
+				checked
+			/>
 			<h3 class="text-2xl">Components</h3>
 			<ComponentList
 				groupName="component"
