@@ -6,6 +6,7 @@
 		type?: 'checkbox' | 'radio';
 		groupName?: string;
 		hideCheck?: boolean;
+		passValue?: boolean;
 		options?: {
 			id: string;
 			name?: string;
@@ -21,6 +22,7 @@
 		type = 'checkbox',
 		groupName,
 		hideCheck = false,
+		passValue = false,
 		checkedOptions = $bindable([''])
 	}: Props = $props();
 
@@ -35,15 +37,16 @@
 
 <div class="gap-y-6 sm:gap-x-4">
 	{#each options as option}
+		{@const value = type === 'radio' || passValue ? option.name || option.id : ''}
 		<label
 			class="relative flex cursor-pointer rounded-lg border bg-white p-4 shadow-sm focus:outline-none mb-2"
 		>
 			<input
 				{type}
 				name={groupName || option.name || option.id}
-				value={type === 'radio' ? option.name || option.id : undefined}
-				checked={checkedOptions?.includes(option.id)}
-				onchange={() => toggleChecked(option.id)}
+				{value}
+				checked={checkedOptions?.includes(value)}
+				onchange={() => toggleChecked(value)}
 				class="peer sr-only"
 			/>
 			<span class="flex flex-1">

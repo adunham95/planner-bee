@@ -110,11 +110,13 @@
 				<fieldset>
 					<DisplayTitle title="Enhancements" />
 					<CheckCards
+						passValue
+						groupName="addOn"
 						bind:checkedOptions
 						options={addOnItems
 							.filter((item) => item.type.includes('event'))
 							.map((item) => ({
-								id: `addon-${item.sku}`,
+								id: item.sku,
 								title: item.name,
 								description: item.description,
 								price: item.cost

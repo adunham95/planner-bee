@@ -3,6 +3,7 @@ import { error } from 'console';
 import type { Actions, PageServerLoad } from './$types';
 import { redirect } from '@sveltejs/kit';
 import { logAllFormData } from '$lib/utils/logAllFormData';
+import { generateOrderNumber } from '$lib/utils/generateOrderNumber';
 
 export const load: PageServerLoad = async (event) => {
 	// console.log({ user: event.locals });
@@ -87,6 +88,7 @@ export const actions: Actions = {
 		const event = await prisma.event.create({
 			data: {
 				orderID: cartID,
+				eventNumber: generateOrderNumber('EVT'),
 				eventTemplateSku: sku,
 				invitationSku: themeData?.eCardSku,
 				eventDate,
@@ -96,6 +98,7 @@ export const actions: Actions = {
 
 		const eventOptions = await prisma.optionItem.createMany({
 			data: cartOptions.map((opt) => ({
+				orderID: cartID,
 				eventId: event.id,
 				...opt
 			}))

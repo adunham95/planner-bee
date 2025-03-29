@@ -1,4 +1,4 @@
-export function generateOrderNumber() {
+export function generateOrderNumber(prefix = 'ORD') {
 	// Get the current timestamp in milliseconds
 	const timestamp = Date.now();
 
@@ -9,7 +9,7 @@ export function generateOrderNumber() {
 	const randomSuffix = Math.random().toString(36).substring(2, 6).toUpperCase();
 
 	// Combine the base-36 timestamp with the random suffix
-	const orderNumber = `ORD-${base36Timestamp}-${randomSuffix}`;
+	const orderNumber = `${prefix}-${base36Timestamp}-${randomSuffix}`;
 
 	return orderNumber;
 }

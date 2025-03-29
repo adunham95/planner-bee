@@ -13,45 +13,51 @@ export const load: PageServerLoad = async ({ cookies }) => {
 		return {};
 	}
 
-	const subTotal = 0;
+	let subTotal = 0;
 
 	const cart = await prisma.order.findFirst({
 		where: {
 			id: cartID
 		},
 		include: {
-			event: true,
-			eCard: true
+			event: { include: { eventTemplate: true } },
+			eCard: { include: { eCardTemplate: true } },
+			orderOptions: true
 		}
 	});
 
 	console.log({ cart });
 
-	// const cartData = {
-	// 	...cart,
-	// 	products: cart?.products.map((p) => {
-	// 		const addOn = addOnItems.find((i) => i.sku === p.addOnSku);
-	// 		if (p.ecard?.cost) {
-	// 			subTotal += p.ecard?.cost;
-	// 		}
-	// 		if (p.eventTheme?.cost) {
-	// 			subTotal += p.eventTheme?.cost;
-	// 		}
-	// 		if (addOn?.cost) {
-	// 			subTotal += addOn.cost;
-	// 		}
-	// 		return {
-	// 			...p,
-	// 			addOn
-	// 		};
-	// 	})
-	// };
+	const products = [];
+
+	cart?.eCard.forEach((c) => {
+		const addOns = cart?.orderOptions
+			.filter((opt) => opt.eCardId === c.id && opt.key === 'addOn')
+			.map((opt) => {
+				const addOn = addOnItems.find((i) => i.sku === opt.value);
+				subTotal += addOn?.cost || 0;
+				return { ...addOn, id: opt.id };
+			});
+		products.push({ ...c, addOns });
+		subTotal += c.eCardTemplate?.cost || 0;
+	});
+
+	cart?.event.forEach((evt) => {
+		const addOns = cart?.orderOptions
+			.filter((opt) => opt.eventId === evt.id && opt.key === 'addOn')
+			.map((opt) => {
+				const addOn = addOnItems.find((i) => i.sku === opt.value);
+				subTotal += addOn?.cost || 0;
+				return { ...addOn, id: opt.id };
+			});
+		products.push({ ...evt, addOns });
+		subTotal += evt.eventTemplate?.cost || 0;
+	});
 
 	const taxes = subTotal * 0.1;
 
 	return {
-		cartData: cart,
-		// cart: cartData,
+		products,
 		orderEstimate: {
 			total: subTotal + taxes,
 			lineItems: [
@@ -74,11 +80,6 @@ export const actions: Actions = {
 		const senderEmail = data.get('senderEmail');
 		const senderID = locals.user?.id;
 
-		// Recipient
-		const recipientFirstName = data.get('recipientFirstName');
-		const recipientLastName = data.get('recipientLastName');
-		const recipientEmail = data.get('recipientEmail');
-
 		const orderNumber = generateOrderNumber();
 
 		if (!cartID || typeof cartID !== 'string') {
@@ -99,46 +100,12 @@ export const actions: Actions = {
 			});
 		}
 
-		if (recipientEmail && typeof recipientEmail !== 'string') {
-			return fail(400, {
-				message: 'Invalid Recipient Email'
-			});
-		}
-
-		if (recipientFirstName && typeof recipientFirstName !== 'string') {
-			return fail(400, {
-				message: 'Invalid Recipient First Name'
-			});
-		}
-
-		if (recipientLastName && typeof recipientLastName !== 'string') {
-			return fail(400, {
-				message: 'Invalid Recipient Last Name'
-			});
-		}
-
 		console.log({
 			senderName,
 			senderEmail,
 			senderID,
-			recipientEmail,
-			recipientFirstName,
-			recipientLastName,
 			orderNumber
 		});
-
-		if (recipientEmail && recipientFirstName && recipientLastName) {
-			const recipient = await prisma.recipient.create({
-				data: {
-					orderID: cartID,
-					firstName: recipientFirstName,
-					lastName: recipientLastName,
-					email: recipientEmail
-				}
-			});
-
-			console.log('recipient', recipient);
-		}
 
 		await prisma.order.update({
 			where: {
@@ -146,9 +113,9 @@ export const actions: Actions = {
 			},
 			data: {
 				orderNumber: orderNumber,
-				senderName: senderName,
-				senderEmail: senderEmail,
-				senderID: senderID,
+				customerName: senderName,
+				customerEmail: senderEmail,
+				customerID: senderID,
 				status: 'in progress'
 			}
 		});
@@ -159,20 +126,26 @@ export const actions: Actions = {
 	},
 	remove: async ({ request }) => {
 		const data = await request.formData();
-		const productID = data.get('productID');
+		const eventID = data.get('eventID');
+		const eCardID = data.get('eCardID');
+		const addOnID = data.get('addOnID');
 
-		console.log({ productID });
+		console.log({ eventID, eCardID, addOnID });
 
-		if (!productID || typeof productID !== 'string') {
-			return fail(400, {
-				message: 'Missing Product'
+		if (eventID && typeof eventID === 'string') {
+			await prisma.event.delete({
+				where: { id: eventID }
 			});
 		}
-
-		await prisma.orderProduct.delete({
-			where: {
-				id: productID
-			}
-		});
+		if (eCardID && typeof eCardID === 'string') {
+			await prisma.eCard.delete({
+				where: { id: eCardID }
+			});
+		}
+		if (addOnID && typeof addOnID === 'string') {
+			await prisma.optionItem.delete({
+				where: { id: addOnID }
+			});
+		}
 	}
 };

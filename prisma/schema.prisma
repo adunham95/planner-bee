@@ -118,6 +118,7 @@ model Order {
   status        String?  @default("draft")
   event         Event[]
   eCard         ECard[]
+  orderOptions OptionItem[]
   customerName  String?  @default("")
   customerEmail String?  @default("")
   customerID    String?
@@ -170,6 +171,8 @@ model OptionItem {
   eCard     ECard?   @relation(references: [id], fields: [eCardId])
   eventId   String?
   event     Event?   @relation(references: [id], fields: [eventId])
+  orderID String?
+  order Order? @relation(references: [id], fields: [orderID])
   value     String
   key       String
   createdAt DateTime @default(now())

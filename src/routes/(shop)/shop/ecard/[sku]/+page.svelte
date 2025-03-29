@@ -4,10 +4,11 @@
 	import ECard from '$lib/components/ECard.svelte';
 	import EcardEditComponent from '$lib/components/EcardEditComponent.svelte';
 	import CheckCards from '$lib/components/Inputs/CheckCards.svelte';
-	import DisplayDivider from '../../../../components/DisplayDivider.svelte';
-	import DisplaySection from '../../../../components/DisplaySection.svelte';
-	import DisplayTitle from '../../../../components/DisplayTitle.svelte';
-	import ItemBanner from '../../../../components/ItemBanner.svelte';
+	import { toCamelCase } from '$lib/utils/toCamelCase';
+	import DisplayDivider from '../../../components/DisplayDivider.svelte';
+	import DisplaySection from '../../../components/DisplaySection.svelte';
+	import DisplayTitle from '../../../components/DisplayTitle.svelte';
+	import ItemBanner from '../../../components/ItemBanner.svelte';
 
 	let { data } = $props();
 
@@ -27,7 +28,8 @@
 <div class="mx-auto mt-8 max-w-2xl px-4 sm:px-6 lg:max-w-7xl lg:px-8 pb-4">
 	<form
 		method="POST"
-		name="add-to-cart"
+		id="add-to-cart"
+		action="?/addToCart"
 		use:enhance
 		class="lg:grid lg:auto-rows-min lg:grid-cols-12 lg:gap-x-8 relative"
 	>
@@ -51,9 +53,11 @@
 						<DisplayTitle title={component.label || ''} />
 						<EcardEditComponent
 							showLabel={false}
+							name={component.key || toCamelCase(component.label)}
 							label={component.label || undefined}
 							value={component.default || ''}
 							componentKey={component.ecardComponentID}
+							options={component.options || ''}
 						/>
 						<DisplayDivider />
 					</div>
@@ -62,11 +66,13 @@
 				<fieldset>
 					<DisplayTitle title="Enhancements" />
 					<CheckCards
+						passValue
+						groupName="addOn"
 						bind:checkedOptions
 						options={addOnItems
 							.filter((item) => item.type.includes('eCard'))
 							.map((item) => ({
-								id: `addon-${item.sku}`,
+								id: item.sku,
 								title: item.name,
 								description: item.description,
 								price: item.cost

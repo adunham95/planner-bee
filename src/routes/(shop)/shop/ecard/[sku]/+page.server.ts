@@ -1,6 +1,8 @@
 import prisma from '$lib/prisma';
 import { error, redirect } from '@sveltejs/kit';
 import type { Actions, PageServerLoad } from './$types';
+import { logAllFormData } from '$lib/utils/logAllFormData';
+import { generateOrderNumber } from '$lib/utils/generateOrderNumber';
 
 export const load: PageServerLoad = async (event) => {
 	// console.log({ user: event.locals });
@@ -30,27 +32,22 @@ export const load: PageServerLoad = async (event) => {
 };
 
 export const actions: Actions = {
-	default: async ({ request, cookies, params }) => {
+	addToCart: async ({ request, cookies, params }) => {
 		const { sku } = params;
 		const data = await request.formData();
-		const addedSKUs: string[] = [];
+		logAllFormData(data);
 
 		const cartOptions = [];
 
 		for (const pair of data.entries()) {
 			const [key, value] = pair;
-			if (key.startsWith('addon')) {
-				const [, sku] = key.split('-');
-				addedSKUs.push(sku);
-			}
+
 			cartOptions.push({
 				key,
 				value: value.toString()
 			});
 			console.log(pair[0], pair[1]);
 		}
-
-		console.log('dataEntries', [...data.entries()]);
 
 		let cartID = cookies.get('cart');
 
@@ -70,15 +67,16 @@ export const actions: Actions = {
 
 		const ecard = await prisma.eCard.create({
 			data: {
+				eCardNumber: generateOrderNumber('ECARD'),
 				orderID: cartID,
 				eCardTemplateSku: sku,
-				addOns: addedSKUs,
 				deliveryDate: eventDate
 			}
 		});
 
 		const ecardOptions = await prisma.optionItem.createMany({
 			data: cartOptions.map((opt) => ({
+				orderID: cartID,
 				eCardId: ecard.id,
 				...opt
 			}))

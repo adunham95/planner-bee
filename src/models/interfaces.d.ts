@@ -89,6 +89,7 @@ export interface Order {
   status: string | null;
   event?: Event[];
   eCard?: ECard[];
+  orderOptions?: OptionItem[];
   customerName: string | null;
   customerEmail: string | null;
   customerID: string | null;
@@ -135,6 +136,8 @@ export interface OptionItem {
   eCard?: ECard | null;
   eventId: string | null;
   event?: Event | null;
+  orderID: string | null;
+  order?: Order | null;
   value: string;
   key: string;
   createdAt: Date;

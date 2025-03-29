@@ -109,35 +109,27 @@
 	{#snippet sidecar()}
 		<div class="flow-root">
 			<ul role="list" class="-my-6 divide-y divide-gray-200 mb-2">
-				{#if data?.cart}
-					{#each data?.cart.products || [] as product}
-						{#if product.ecard}
+				{#if data?.products}
+					{#each data?.products || [] as product}
+						{#if product.eCardTemplate}
 							<li class="space-x-6">
 								<ProductSlice
-									id={product.id}
-									src={product.ecard.imageURL}
-									title={`${product.ecard.name} ECard`}
-									price={product.ecard.cost}
+									eCardId={product.id}
+									src={product.eCardTemplate.imageURL}
+									title={`${product.eCardTemplate.name} ECard`}
+									price={product.eCardTemplate.cost}
+									subOptions={product.addOns}
 								/>
 							</li>
 						{/if}
-						{#if product.eventTheme}
+						{#if product.eventTemplate}
 							<li class="space-x-6">
 								<ProductSlice
-									id={product.id}
-									src={product.eventTheme.imageURL}
-									title={product.eventTheme.name}
-									price={product.eventTheme.cost || 0}
-								/>
-							</li>
-						{/if}
-						{#if product.addOn}
-							<li class="space-x-6">
-								<ProductSlice
-									id={product.id}
-									src={product.addOn.imageURL}
-									title={product.addOn.name}
-									price={product.addOn.cost || 0}
+									eventId={product.id}
+									src={product.eventTemplate.imageURL}
+									title={product.eventTemplate.name}
+									price={product.eventTemplate.cost || 0}
+									subOptions={product.addOns}
 								/>
 							</li>
 						{/if}

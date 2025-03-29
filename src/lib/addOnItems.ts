@@ -93,5 +93,14 @@ export const addOnItems = [
 		cost: 999,
 		imageURL: '/images/camera.jpg',
 		type: ['event']
+	},
+	{
+		id: 'schedulingEnabled',
+		name: 'Schedule',
+		sku: 'SCHD',
+		description: 'Add times that you are available and you schedule an event',
+		cost: 99,
+		imageURL: '/images/camera.jpg',
+		type: ['eCard']
 	}
 ];

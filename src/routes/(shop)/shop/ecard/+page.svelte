@@ -12,7 +12,7 @@
 	<div class="mx-auto max-w-7xl px-8">
 		<ItemGrid
 			items={data.eCards.map((e) => {
-				return { ...e, path: `/shop/ecard/${e.sku}/details` };
+				return { ...e, path: `/shop/ecard/${e.sku}` };
 			})}
 		/>
 	</div>
