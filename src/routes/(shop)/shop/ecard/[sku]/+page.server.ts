@@ -1,5 +1,5 @@
 import prisma from '$lib/prisma';
-import { error, redirect } from '@sveltejs/kit';
+import { error, fail, redirect } from '@sveltejs/kit';
 import type { Actions, PageServerLoad } from './$types';
 import { logAllFormData } from '$lib/utils/logAllFormData';
 import { generateOrderNumber } from '$lib/utils/generateOrderNumber';
@@ -18,6 +18,12 @@ export const load: PageServerLoad = async (event) => {
 		}
 	});
 
+	const contacts = await prisma.contact.findMany({
+		where: {
+			userID: event.locals.user?.id
+		}
+	});
+
 	console.log({ product });
 
 	if (!product) {
@@ -27,11 +33,59 @@ export const load: PageServerLoad = async (event) => {
 	}
 
 	return {
-		product
+		product,
+		contacts
 	};
 };
 
 export const actions: Actions = {
+	addContact: async ({ request, locals }) => {
+		const data = await request.formData();
+		logAllFormData(data);
+
+		const firstName = data.get('firstName');
+		const lastName = data.get('lastName');
+		const email = data.get('email');
+		const phone = data.get('phone');
+
+		if (typeof firstName !== 'string') {
+			return fail(400, {
+				message: 'Invalid first name'
+			});
+		}
+		if (typeof lastName !== 'string') {
+			return fail(400, {
+				message: 'Invalid last name'
+			});
+		}
+		if (typeof email !== 'string') {
+			return fail(400, {
+				message: 'Invalid email'
+			});
+		}
+		if (typeof phone !== 'string') {
+			return fail(400, {
+				message: 'Invalid phone'
+			});
+		}
+		if (phone === '' && email === '') {
+			return fail(400, {
+				message: 'No Contact Info Provided'
+			});
+		}
+
+		const newContact = await prisma.contact.create({
+			data: {
+				firstName,
+				lastName,
+				email,
+				phone,
+				userID: locals.user?.id
+			}
+		});
+
+		return { newContact };
+	},
 	addToCart: async ({ request, cookies, params }) => {
 		const { sku } = params;
 		const data = await request.formData();
@@ -82,8 +136,10 @@ export const actions: Actions = {
 			}))
 		});
 
+		cookies.set('eCard', ecard.id || '', { path: '/shop/ecard', maxAge: 86400 });
+
 		console.log({ ecardOptions, ecard });
 
-		redirect(303, '/shop/cart');
+		redirect(303, '/shop/ecard/preferences');
 	}
 };

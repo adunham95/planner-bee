@@ -10,7 +10,7 @@
 		showLabel?: boolean;
 		componentKey: string;
 		label?: string;
-		value?: string;
+		value?: string | null;
 		options?: string;
 	}
 

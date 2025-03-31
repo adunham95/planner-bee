@@ -96,7 +96,7 @@ export const addOnItems = [
 	},
 	{
 		id: 'schedulingEnabled',
-		name: 'Schedule',
+		name: 'Scheduling',
 		sku: 'SCHD',
 		description: 'Add times that you are available and you schedule an event',
 		cost: 99,

@@ -2,6 +2,7 @@
 	import { formatCurrency } from '$lib/utils/formatCurrency';
 
 	interface Props {
+		className?: string;
 		checkedOptions?: string[];
 		type?: 'checkbox' | 'radio';
 		groupName?: string;
@@ -18,6 +19,7 @@
 	}
 
 	let {
+		className = '',
 		options = [],
 		type = 'checkbox',
 		groupName,
@@ -27,7 +29,9 @@
 	}: Props = $props();
 
 	function toggleChecked(key: string) {
-		if (checkedOptions?.includes(key)) {
+		if (type === 'radio') {
+			checkedOptions = [key];
+		} else if (checkedOptions?.includes(key)) {
 			checkedOptions = checkedOptions.filter((o) => o !== key);
 		} else {
 			checkedOptions?.push(key);
@@ -35,7 +39,7 @@
 	}
 </script>
 
-<div class="gap-y-6 sm:gap-x-4">
+<div class={`gap-y-6 sm:gap-x-4 ${className}`}>
 	{#each options as option}
 		{@const value = type === 'radio' || passValue ? option.name || option.id : ''}
 		<label
@@ -45,7 +49,7 @@
 				{type}
 				name={groupName || option.name || option.id}
 				{value}
-				checked={checkedOptions?.includes(value)}
+				checked={checkedOptions?.includes(value) || option.checked}
 				onchange={() => toggleChecked(value)}
 				class="peer sr-only"
 			/>

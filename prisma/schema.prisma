@@ -32,6 +32,7 @@ model User {
   orders        Order[]
   events        Event[]
   eCards        ECard[]
+  contacts      Contact[]
 }
 
 model Session {
@@ -111,18 +112,18 @@ model ECardComponent {
 }
 
 model Order {
-  id            String   @id @default(uuid())
-  orderNumber   String?  @default("")
-  createdAt     DateTime @default(now())
-  updatedAt     DateTime @updatedAt
-  status        String?  @default("draft")
+  id            String       @id @default(uuid())
+  orderNumber   String?      @default("")
+  createdAt     DateTime     @default(now())
+  updatedAt     DateTime     @updatedAt
+  status        String?      @default("draft")
   event         Event[]
   eCard         ECard[]
-  orderOptions OptionItem[]
-  customerName  String?  @default("")
-  customerEmail String?  @default("")
+  orderOptions  OptionItem[]
+  customerName  String?      @default("")
+  customerEmail String?      @default("")
   customerID    String?
-  customer      User?    @relation(references: [id], fields: [customerID])
+  customer      User?        @relation(references: [id], fields: [customerID])
 
   @@index([orderNumber, customerID])
 }
@@ -171,8 +172,8 @@ model OptionItem {
   eCard     ECard?   @relation(references: [id], fields: [eCardId])
   eventId   String?
   event     Event?   @relation(references: [id], fields: [eventId])
-  orderID String?
-  order Order? @relation(references: [id], fields: [orderID])
+  orderID   String?
+  order     Order?   @relation(references: [id], fields: [orderID])
   value     String
   key       String
   createdAt DateTime @default(now())
@@ -183,15 +184,24 @@ model OptionItem {
 
 model Recipient {
   id         String  @id @default(uuid())
-  firstName  String
-  lastName   String?
-  email      String?
-  phone      String?
   eventID    String?
   event      Event?  @relation(references: [id], fields: [eventID])
   eCardID    String?
   eCard      ECard?  @relation(references: [id], fields: [eCardID])
   rsvpStatus String?
+  contactID  String
+  contact    Contact @relation(references: [id], fields: [contactID])
+}
+
+model Contact {
+  id         String      @id @default(uuid())
+  firstName  String
+  lastName   String?
+  email      String?
+  phone      String?
+  recipients Recipient[]
+  userID     String?
+  user       User?       @relation(references: [id], fields: [userID])
 }
 
 model NewsletterSignUp {

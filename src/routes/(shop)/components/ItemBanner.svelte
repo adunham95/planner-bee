@@ -6,9 +6,10 @@
 		price?: number | null;
 		formName?: string;
 		description?: string;
+		buttonText?: string;
 	}
 
-	const { name, price, formName, description }: Props = $props();
+	const { name, price, formName, description, buttonText = 'Add To Cart' }: Props = $props();
 </script>
 
 <div class="bg-white sticky top-0 z-40">
@@ -26,7 +27,7 @@
 						{formatCurrency(price || 0)}
 					</p>
 				</div>
-				<button class="btn btn-lg" form={formName}>Add To Cart</button>
+				<button class="btn btn-lg" form={formName}>{buttonText}</button>
 			</div>
 		</div>
 	</div>

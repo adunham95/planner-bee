@@ -7,7 +7,8 @@
 	const links = [
 		{ name: 'Shop', href: '/shop' },
 		{ name: 'Events', href: '/shop/event' },
-		{ name: 'ECards', href: '/shop/ecard' }
+		{ name: 'ECards', href: '/shop/ecard' },
+		{ name: 'Remind & Send', href: '/shop/remind-send' }
 	];
 
 	let { data, children } = $props();

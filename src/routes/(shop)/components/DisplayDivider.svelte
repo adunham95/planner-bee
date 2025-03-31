@@ -1,1 +1,1 @@
-<hr class="border-t border-gray-200 my-10" />
+<hr class="border-t border-gray-200 my-5" />

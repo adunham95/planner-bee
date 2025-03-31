@@ -12,6 +12,7 @@ export interface User {
   orders?: Order[];
   events?: Event[];
   eCards?: ECard[];
+  contacts?: Contact[];
 }
 
 export interface Session {
@@ -146,15 +147,24 @@ export interface OptionItem {
 
 export interface Recipient {
   id: string;
-  firstName: string;
-  lastName: string | null;
-  email: string | null;
-  phone: string | null;
   eventID: string | null;
   event?: Event | null;
   eCardID: string | null;
   eCard?: ECard | null;
   rsvpStatus: string | null;
+  contactID: string;
+  contact?: Contact;
+}
+
+export interface Contact {
+  id: string;
+  firstName: string;
+  lastName: string | null;
+  email: string | null;
+  phone: string | null;
+  recipients?: Recipient[];
+  userID: string | null;
+  user?: User | null;
 }
 
 export interface NewsletterSignUp {
