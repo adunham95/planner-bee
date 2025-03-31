@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { enhance } from '$app/forms';
 	import { formatCurrency } from '$lib/utils/formatCurrency';
+	import { slide } from 'svelte/transition';
 
 	interface Props {
 		src?: string | null;
@@ -55,11 +56,25 @@
 			</div>
 		</div>
 	</div>
-	{#each subOptions as option}
-		<div class="pt-4 ml-12">
-			{@render subSlice(option.id, option.imageURL, option.name, option.cost)}
+	<div class="flex pt-2 items-start">
+		<div class=" grid grid-cols-2 w-24 gap-1">
+			{#each subOptions.slice(0, 4) as option}
+				<div class="">
+					{@render subSlice(option.id, option.imageURL, option.name, option.cost)}
+				</div>
+			{/each}
 		</div>
-	{/each}
+		<div class="pl-4">
+			<h3 class="text-gray-900 text-base font-medium flex items-center">
+				<p class="">Add Ons</p>
+			</h3>
+			{#each subOptions as option}
+				<p class="text-gray-900 text-xs flex items-center">
+					{option.name}
+				</p>
+			{/each}
+		</div>
+	</div>
 </div>
 
 {#snippet subSlice(id = '', imageURL = '', name = '', price = 0)}
@@ -69,7 +84,7 @@
 			alt="Product Show"
 			class="h-12 w-12 flex-none rounded-md bg-gray-100 object-cover object-center"
 		/>
-		<h3 class="text-gray-900 text-xs font-medium flex items-center pl-1">
+		<!-- <h3 class="text-gray-900 text-xs font-medium flex items-center pl-1">
 			<p class="px-1">
 				{name}
 			</p>
@@ -79,6 +94,6 @@
 				<input class="hidden" name="addOnID" value={id} />
 				<button class="text-xs font-medium text-indigo-600 hover:text-indigo-500">Remove</button>
 			</form>
-		</h3>
+		</h3> -->
 	</div>
 {/snippet}
