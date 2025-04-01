@@ -184,13 +184,17 @@ model OptionItem {
 
 model Recipient {
   id         String  @id @default(uuid())
+  firstName  String?
+  lastName   String?
+  email      String?
+  phone      String?
   eventID    String?
   event      Event?  @relation(references: [id], fields: [eventID])
   eCardID    String?
   eCard      ECard?  @relation(references: [id], fields: [eCardID])
   rsvpStatus String?
-  contactID  String
-  contact    Contact @relation(references: [id], fields: [contactID])
+  contactID  String?
+  contact    Contact? @relation(references: [id], fields: [contactID])
 }
 
 model Contact {

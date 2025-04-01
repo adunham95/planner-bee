@@ -1,7 +1,6 @@
 <script lang="ts">
 	import { enhance } from '$app/forms';
 	import { formatCurrency } from '$lib/utils/formatCurrency';
-	import { slide } from 'svelte/transition';
 
 	interface Props {
 		src?: string | null;

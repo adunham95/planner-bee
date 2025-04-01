@@ -15,6 +15,7 @@
 			description?: string;
 			price?: number;
 			checked?: boolean;
+			disabled?: boolean;
 		}[];
 	}
 
@@ -39,7 +40,7 @@
 	}
 </script>
 
-<div class={`gap-y-6 sm:gap-x-4 ${className}`}>
+<div class={`gap-y-6 gap-x-4 ${className}`}>
 	{#each options as option}
 		{@const value = type === 'radio' || passValue ? option.name || option.id : ''}
 		<label
@@ -52,8 +53,9 @@
 				checked={checkedOptions?.includes(value) || option.checked}
 				onchange={() => toggleChecked(value)}
 				class="peer sr-only"
+				disabled={option.disabled}
 			/>
-			<span class="flex flex-1">
+			<span class="flex flex-1 peer-[:disabled]:opacity-30 peer-[:disabled]:cursor-not-allowed">
 				<span class="flex flex-col">
 					<span class="block text-sm font-medium text-gray-900">{option.title}</span>
 					{#if option.description}

@@ -18,12 +18,6 @@ export const load: PageServerLoad = async (event) => {
 		}
 	});
 
-	const contacts = await prisma.contact.findMany({
-		where: {
-			userID: event.locals.user?.id
-		}
-	});
-
 	console.log({ product });
 
 	if (!product) {
@@ -33,59 +27,58 @@ export const load: PageServerLoad = async (event) => {
 	}
 
 	return {
-		product,
-		contacts
+		product
 	};
 };
 
 export const actions: Actions = {
-	addContact: async ({ request, locals }) => {
-		const data = await request.formData();
-		logAllFormData(data);
+	// addContact: async ({ request, locals }) => {
+	// 	const data = await request.formData();
+	// 	logAllFormData(data);
 
-		const firstName = data.get('firstName');
-		const lastName = data.get('lastName');
-		const email = data.get('email');
-		const phone = data.get('phone');
+	// 	const firstName = data.get('firstName');
+	// 	const lastName = data.get('lastName');
+	// 	const email = data.get('email');
+	// 	const phone = data.get('phone');
 
-		if (typeof firstName !== 'string') {
-			return fail(400, {
-				message: 'Invalid first name'
-			});
-		}
-		if (typeof lastName !== 'string') {
-			return fail(400, {
-				message: 'Invalid last name'
-			});
-		}
-		if (typeof email !== 'string') {
-			return fail(400, {
-				message: 'Invalid email'
-			});
-		}
-		if (typeof phone !== 'string') {
-			return fail(400, {
-				message: 'Invalid phone'
-			});
-		}
-		if (phone === '' && email === '') {
-			return fail(400, {
-				message: 'No Contact Info Provided'
-			});
-		}
+	// 	if (typeof firstName !== 'string') {
+	// 		return fail(400, {
+	// 			message: 'Invalid first name'
+	// 		});
+	// 	}
+	// 	if (typeof lastName !== 'string') {
+	// 		return fail(400, {
+	// 			message: 'Invalid last name'
+	// 		});
+	// 	}
+	// 	if (typeof email !== 'string') {
+	// 		return fail(400, {
+	// 			message: 'Invalid email'
+	// 		});
+	// 	}
+	// 	if (typeof phone !== 'string') {
+	// 		return fail(400, {
+	// 			message: 'Invalid phone'
+	// 		});
+	// 	}
+	// 	if (phone === '' && email === '') {
+	// 		return fail(400, {
+	// 			message: 'No Contact Info Provided'
+	// 		});
+	// 	}
 
-		const newContact = await prisma.contact.create({
-			data: {
-				firstName,
-				lastName,
-				email,
-				phone,
-				userID: locals.user?.id
-			}
-		});
+	// 	const newContact = await prisma.contact.create({
+	// 		data: {
+	// 			firstName,
+	// 			lastName,
+	// 			email,
+	// 			phone,
+	// 			userID: locals.user?.id
+	// 		}
+	// 	});
 
-		return { newContact };
-	},
+	// 	return { newContact };
+	// },
 	addToCart: async ({ request, cookies, params }) => {
 		const { sku } = params;
 		const data = await request.formData();

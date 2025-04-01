@@ -21,7 +21,7 @@ export const load: PageServerLoad = async ({ cookies }) => {
 		},
 		include: {
 			event: { include: { eventTemplate: true } },
-			eCard: { include: { eCardTemplate: true } },
+			eCard: { include: { eCardTemplate: true, recipients: true } },
 			orderOptions: true
 		}
 	});

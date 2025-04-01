@@ -1,15 +1,12 @@
 <script lang="ts">
 	import { enhance } from '$app/forms';
 	import TextInput from '$lib/components/Inputs/TextInput.svelte';
-	import Toggle from '$lib/components/Inputs/Toggle.svelte';
 	import SidecarLayout from '$lib/components/layout/SidecarLayout.svelte';
 	import ProductSlice from '$lib/components/ProductSlice.svelte';
-	import UpsellRow from '$lib/components/UpsellRow.svelte';
 	import { formatCurrency } from '$lib/utils/formatCurrency';
 
 	let { data, form } = $props();
 
-	$inspect(form);
 	$inspect(data);
 </script>
 
@@ -44,36 +41,6 @@
 				</div>
 			{/if}
 		</div>
-
-		<!-- Recipient -->
-		<!-- <div class="pb-4">
-			<h2 class="w-full pt-6 pb-2 text-left text-lg font-medium text-gray-500">Recipient</h2>
-			<div class="grid grid-cols-2 gap-2 pt-2">
-				<TextInput id="recipientFirstName" label="First Name" showLabel />
-				<TextInput id="recipientLastName" label="Last Name" showLabel />
-				<TextInput id="recipientEmail" label="Email" showLabel class="col-span-2" />
-			</div>
-		</div> -->
-
-		<!-- Delivery -->
-		<!-- <div class="pb-4">
-			<h2
-				class="list-none w-full pt-6 pb-2 text-left text-lg font-medium text-gray-500 cursor-pointer"
-			>
-				Delivery
-			</h2>
-			<Toggle id="imediate" label="Delivery is immediate" showLabel />
-			<TextInput id="deliveryTime" label="Delivery Time" showLabel type="datetime-local" />
-		</div> -->
-
-		<!-- <div class="pb-4">
-			<h2
-				class="list-none w-full pt-6 pb-2 text-left text-lg font-medium text-gray-500 cursor-pointer"
-			>
-				Add On Products
-			</h2>
-			<UpsellRow options={[{ title: 'ECard', url: '/ecard' }]} />
-		</div> -->
 
 		<!-- Account Benefits -->
 		{#if !data.user}

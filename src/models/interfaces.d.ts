@@ -147,13 +147,17 @@ export interface OptionItem {
 
 export interface Recipient {
   id: string;
+  firstName: string | null;
+  lastName: string | null;
+  email: string | null;
+  phone: string | null;
   eventID: string | null;
   event?: Event | null;
   eCardID: string | null;
   eCard?: ECard | null;
   rsvpStatus: string | null;
-  contactID: string;
-  contact?: Contact;
+  contactID: string | null;
+  contact?: Contact | null;
 }
 
 export interface Contact {
