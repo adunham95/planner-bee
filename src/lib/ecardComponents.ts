@@ -8,7 +8,7 @@ export const eCardComponents = [
 		options: []
 	},
 	{
-		id: 'custom-input',
+		id: 'color-input',
 		name: 'Color Input',
 		description: 'Pick a color',
 		editComponentKey: 'colorInput',

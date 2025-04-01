@@ -15,6 +15,7 @@
 <HeroImages
 	title="Create, Send, and Celebrate"
 	subTitle="Make every occasion special with our all-in-one digital platform for invitations, RSVPs, and event planning. Whether it’s a birthday, wedding, business event, or holiday celebration, we make it easy to connect with your guests in a meaningful way."
+	ctaOne="Shop Now"
 	images={[
 		'/images/meal.jpg',
 		'/images/meal-packing.jpg',
@@ -29,24 +30,29 @@
 	description="Automation, Invitation, Collaboration and Customization. Send and celebrate with our events"
 	featureList={[
 		{
+			title: 'Customization',
+			description: 'Customize your message and style'
+		},
+		{
 			title: 'Automation',
 			description: 'Create a list of birthdays, well make sure they arrive on time',
 			comingSoon: true
 		},
 		{
-			title: 'Invitation',
-			description: 'Curate the perfect guest list. Well take care of the contact',
+			title: 'Add Ons',
+			description: 'Use our library of add ons to customize your event',
 			comingSoon: true
 		},
+		// {
+		// 	title: 'Invitation',
+		// 	description: 'Curate the perfect guest list. Well take care of the contact',
+		// 	comingSoon: true
+		// },
 		{
 			title: 'Collaboration',
 			description:
 				"Don't worry about passing the card around to all the family. Give us a list, well make sure they sign",
 			comingSoon: true
-		},
-		{
-			title: 'Customization',
-			description: 'Customize with a custom message, and colors to make the perfect eCard'
 		},
 		{
 			title: 'Contacts',
@@ -57,11 +63,6 @@
 		{
 			title: 'Schedule',
 			description: 'PreSchedule cards to out on when you want',
-			comingSoon: true
-		},
-		{
-			title: 'Adaption',
-			description: 'Use our library of add ons to customize your event',
 			comingSoon: true
 		}
 	]}

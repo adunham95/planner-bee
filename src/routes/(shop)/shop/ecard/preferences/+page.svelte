@@ -83,7 +83,7 @@
 					},
 					{
 						id: 'event',
-						title: 'Event Based',
+						title: 'Significant Event',
 						description:
 							'Send a eCard based on an contacts event, birthday, anniversary, etc (coming soon)',
 						disabled: true
@@ -127,7 +127,7 @@
 				<TextInput label="Last Name" id="lastName" placeholder="Last name" bind:value={lastName} />
 				<TextInput label="Email" id="email" placeholder="Email" bind:value={email} />
 				<TextInput label="Phone" id="phone" placeholder="Phone" bind:value={phone} />
-				<button onclick={addNewUser} type="button" class="btn">Add Contact</button>
+				<button onclick={addNewUser} type="button" class="btn">Add Recipient</button>
 			</div>
 			<CheckCards
 				className="grid grid-cols-2 md:grid-cols-4"

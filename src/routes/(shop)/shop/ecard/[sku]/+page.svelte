@@ -43,7 +43,7 @@
 							id: c.id,
 							ecardComponentID: c.ecardComponentID,
 							style: c.customStyles || undefined,
-							value: c.default || ''
+							value: c.editable ? `${c.label} Placeholder` : c.default || ''
 						};
 					})}
 				/>

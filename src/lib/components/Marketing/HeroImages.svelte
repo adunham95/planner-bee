@@ -3,9 +3,10 @@
 		title?: string;
 		subTitle?: string;
 		images?: string[];
+		ctaOne?: string;
 	}
 
-	let { title = '', subTitle = '', images = [] }: Props = $props();
+	let { title = '', subTitle = '', images = [], ctaOne = 'Get Started' }: Props = $props();
 </script>
 
 <div class="relative isolate">
@@ -22,7 +23,7 @@
 						{subTitle}
 					</p>
 					<div class="mt-10 flex items-center gap-x-6">
-						<a href="/shop" class="btn">Get started</a>
+						<a href="/shop" class="btn">{ctaOne}</a>
 						<a href="/ecard-demo" class="text-sm font-semibold leading-6 text-gray-900"
 							>Live demo <span aria-hidden="true">→</span></a
 						>

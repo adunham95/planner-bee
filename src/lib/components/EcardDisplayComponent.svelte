@@ -24,6 +24,8 @@
 
 {#if !component}
 	<p>Error loading {ecardComponentID}</p>
+{:else if component.displayComponentKey === 'custom-color'}
+	<div></div>
 {:else if component.displayComponentKey === 'message'}
 	<Message {value} {style} />
 {:else if component.displayComponentKey === 'color'}
