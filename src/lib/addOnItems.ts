@@ -33,7 +33,7 @@ export const addOnItems = [
 		sku: 'COLL',
 		description: 'Pre send a list of users',
 		path: '/collaboration',
-		cost: 199,
+		cost: 0,
 		imageURL: '/images/coffee-table.jpg',
 		type: ['eCard']
 	},
@@ -43,7 +43,7 @@ export const addOnItems = [
 		sku: 'RSVP',
 		description: 'Let users RSVP and track analytics',
 		path: '/rsvp',
-		cost: 199,
+		cost: 99,
 		imageURL: '/images/rsvp.jpg',
 		type: ['event']
 	},
@@ -53,7 +53,7 @@ export const addOnItems = [
 		sku: 'MLTR',
 		description: 'Add meal train sign up',
 		path: '/meal-train',
-		cost: 199,
+		cost: 0,
 		imageURL: '/images/meal-packing.jpg',
 		type: ['eCard']
 	},
@@ -63,7 +63,7 @@ export const addOnItems = [
 		sku: 'POTS',
 		description: 'Add a sign up for ',
 		path: '/potluck',
-		cost: 199,
+		cost: 0,
 		imageURL: '/images/meal.jpg',
 		type: ['event']
 	},
@@ -72,7 +72,7 @@ export const addOnItems = [
 		name: 'Privacy',
 		sku: 'PRCY',
 		description: 'Only let the people who have the access code sign view',
-		cost: 199,
+		cost: 99,
 		imageURL: '/images/lock.jpg',
 		type: ['eCard', 'event']
 	},
@@ -81,7 +81,7 @@ export const addOnItems = [
 		name: 'Remove Branding',
 		sku: 'RMBD',
 		description: 'Remove the planner bee branding',
-		cost: 599,
+		cost: 499,
 		imageURL: '/images/meal.jpg',
 		type: ['eCard', 'event']
 	},
@@ -99,7 +99,16 @@ export const addOnItems = [
 		name: 'Scheduling',
 		sku: 'SCHD',
 		description: 'Add times that you are available and you schedule an event',
-		cost: 99,
+		cost: 0,
+		imageURL: '/images/camera.jpg',
+		type: ['eCard']
+	},
+	{
+		id: 'signaturedEnabled',
+		name: 'Signature',
+		sku: 'SING',
+		description: 'Allow users to sign and leave messages',
+		cost: 0,
 		imageURL: '/images/camera.jpg',
 		type: ['eCard']
 	}

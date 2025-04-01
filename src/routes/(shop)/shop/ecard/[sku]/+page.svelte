@@ -1,12 +1,9 @@
 <script lang="ts">
 	import { enhance } from '$app/forms';
-	import { invalidate } from '$app/navigation';
 	import { addOnItems } from '$lib/addOnItems';
 	import ECard from '$lib/components/ECard.svelte';
 	import EcardEditComponent from '$lib/components/EcardEditComponent.svelte';
 	import CheckCards from '$lib/components/Inputs/CheckCards.svelte';
-	import DateInput from '$lib/components/Inputs/DateInput.svelte';
-	import TextInput from '$lib/components/Inputs/TextInput.svelte';
 	import { toCamelCase } from '$lib/utils/toCamelCase';
 	import DisplayDivider from '../../../components/DisplayDivider.svelte';
 	import DisplaySection from '../../../components/DisplaySection.svelte';
@@ -18,40 +15,9 @@
 	console.log(data);
 
 	let checkedOptions: string[] = $state([]);
-	let subscriptionType: string[] = $state(['single']);
-
-	let showAddContact: boolean = $state(false);
 	$inspect(checkedOptions);
 
 	$inspect(data);
-
-	let firstName = $state('');
-	let lastName = $state('');
-	let email = $state('');
-	let phone = $state('');
-
-	async function addNewUser() {
-		const formData = new FormData();
-		formData.append('firstName', firstName);
-		formData.append('lastName', lastName);
-		formData.append('email', email);
-		formData.append('phone', phone);
-
-		const response = await fetch('?/addContact', {
-			method: 'POST',
-			body: formData
-		});
-
-		let result = await response.json();
-		let resultData = JSON.parse(result.data);
-
-		firstName = '';
-		lastName = '';
-		email = '';
-		phone = '';
-
-		console.log({ resultData, result });
-	}
 </script>
 
 <ItemBanner
@@ -64,16 +30,14 @@
 />
 
 <div class="mx-auto mt-8 max-w-2xl px-4 sm:px-6 lg:max-w-7xl lg:px-8 pb-4">
-	<form
-		method="POST"
-		id="add-to-cart"
-		action="?/addToCart"
-		use:enhance
-		class="lg:grid lg:auto-rows-min lg:grid-cols-12 lg:gap-x-8 relative"
-	>
+	<div class="lg:grid lg:auto-rows-min lg:grid-cols-12 lg:gap-x-8 relative">
 		<DisplaySection sectionTitle="ECard Details">
 			{#snippet content()}
 				<ECard
+					signaturesEnabled={checkedOptions.includes('SING')}
+					mealTrainEnabled={checkedOptions.includes('MLTR')}
+					rsvpEnabled={checkedOptions.includes('RSVP')}
+					brandingDisabled={checkedOptions.includes('RMBD')}
 					components={data?.product?.components.map((c) => {
 						return {
 							id: c.id,
@@ -86,37 +50,39 @@
 			{/snippet}
 
 			{#snippet sidebarContent()}
-				{#each data?.product.components.filter((c) => c.editable) as component}
-					<div>
-						<DisplayTitle title={component.label || ''} />
-						<EcardEditComponent
-							showLabel={false}
-							name={component.key || toCamelCase(component.label)}
-							label={component.label || undefined}
-							bind:value={component.default}
-							componentKey={component.ecardComponentID}
-							options={component.options || ''}
-						/>
-						<DisplayDivider />
-					</div>
-				{/each}
+				<form method="POST" id="add-to-cart" action="?/addToCart" use:enhance>
+					{#each data?.product.components.filter((c) => c.editable) as component}
+						<div>
+							<DisplayTitle title={component.label || ''} />
+							<EcardEditComponent
+								showLabel={false}
+								name={component.key || toCamelCase(component.label)}
+								label={component.label || undefined}
+								bind:value={component.default}
+								componentKey={component.ecardComponentID}
+								options={component.options || ''}
+							/>
+							<DisplayDivider />
+						</div>
+					{/each}
 
-				<fieldset>
-					<DisplayTitle title="Enhancements" />
-					<CheckCards
-						passValue
-						groupName="addOn"
-						bind:checkedOptions
-						options={addOnItems
-							.filter((item) => item.type.includes('eCard'))
-							.map((item) => ({
-								id: item.sku,
-								title: item.name,
-								description: item.description,
-								price: item.cost
-							}))}
-					/>
-				</fieldset>
+					<fieldset>
+						<DisplayTitle title="Enhancements" />
+						<CheckCards
+							passValue
+							groupName="addOn"
+							bind:checkedOptions
+							options={addOnItems
+								.filter((item) => item.type.includes('eCard'))
+								.map((item) => ({
+									id: item.sku,
+									title: item.name,
+									description: item.description,
+									price: item.cost
+								}))}
+						/>
+					</fieldset>
+				</form>
 			{/snippet}
 		</DisplaySection>
 
@@ -165,5 +131,5 @@
 				</fieldset>
 			{/snippet}
 		</DisplaySection>
-	</form>
+	</div>
 </div>

@@ -1,6 +1,4 @@
 <script lang="ts">
-	import { generateColorString, hexToTailwindPallette } from '$lib/utils/gererateColorValues';
-	import EmptyWrapper from './Containers/EmptyWrapper.svelte';
 	import MealTrainSignUp from './EcardComponents/MealTrainSignUp.svelte';
 	import PotluckSignUp from './EcardComponents/PotluckSignUp.svelte';
 	import PromoSlot from './EcardComponents/PromoSlot.svelte';
@@ -16,11 +14,12 @@
 			style?: string;
 			value: string;
 		}[];
-		signatures?: { name: string; message: string }[];
 		mealTrainEnabled?: boolean;
 		rsvpEnabled?: boolean;
+		brandingDisabled?: boolean;
+		signaturesEnabled?: boolean;
 		potluckOptions?: { id: string; title: string }[];
-		brandingEnabled?: boolean;
+		signatures?: { name: string; message: string }[];
 	}
 
 	let {
@@ -30,7 +29,8 @@
 		mealTrainEnabled = false,
 		rsvpEnabled = false,
 		potluckOptions = [],
-		brandingEnabled = true
+		brandingDisabled = false,
+		signaturesEnabled = false
 	}: Props = $props();
 
 	console.log('eCard', { components });
@@ -40,7 +40,6 @@
 	{style}
 	class="w-full ecard rounded border border-solid border-gray-200 bg-custom-100 @container/ecard"
 >
-	<!-- <EmptyWrapper {...tailwindPallette}> -->
 	{#each components as component}
 		<EcardDisplayComponent {...component} />
 	{/each}
@@ -57,13 +56,11 @@
 		<MealTrainSignUp />
 	{/if}
 
-	{#if signatures.length > 0}
+	{#if signaturesEnabled}
 		<Signature {signatures} />
 	{/if}
 
-	{#if brandingEnabled}
+	{#if !brandingDisabled}
 		<PromoSlot />
 	{/if}
-
-	<!-- </EmptyWrapper> -->
 </div>

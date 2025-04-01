@@ -59,6 +59,7 @@ export interface ECardTemplate {
   cost: number;
   createdAt: Date;
   updatedAt: Date;
+  includedOptions: string[];
   components?: ECardComponent[];
   imageURL: string | null;
   eventTheme?: EventTheme[];
@@ -113,6 +114,7 @@ export interface Event {
   addOns: string[];
   recipients?: Recipient[];
   options?: OptionItem[];
+  totalPrice: number;
 }
 
 export interface ECard {
@@ -129,6 +131,7 @@ export interface ECard {
   addOns: string[];
   recipients?: Recipient[];
   options?: OptionItem[];
+  totalPrice: number;
 }
 
 export interface OptionItem {

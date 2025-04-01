@@ -77,19 +77,20 @@ model EventThemeOptions {
 }
 
 model ECardTemplate {
-  id          String           @id @default(uuid())
-  sku         String           @unique
-  name        String
-  description String
-  cost        Int
-  createdAt   DateTime         @default(now())
-  updatedAt   DateTime         @default(now()) @updatedAt
-  components  ECardComponent[]
-  imageURL    String?
-  eventTheme  EventTheme[]
-  visible     Boolean          @default(true)
-  invitation  Event[]
-  eCards      ECard[]
+  id              String           @id @default(uuid())
+  sku             String           @unique
+  name            String
+  description     String
+  cost            Int
+  createdAt       DateTime         @default(now())
+  updatedAt       DateTime         @default(now()) @updatedAt
+  includedOptions String[]         @default([])
+  components      ECardComponent[]
+  imageURL        String?
+  eventTheme      EventTheme[]
+  visible         Boolean          @default(true)
+  invitation      Event[]
+  eCards          ECard[]
 
   @@index([sku])
 }
@@ -144,6 +145,7 @@ model Event {
   addOns           String[]
   recipients       Recipient[]
   options          OptionItem[]
+  totalPrice       Int            @default(0)
 
   @@index([orderID, senderID, eventNumber])
 }
@@ -162,6 +164,7 @@ model ECard {
   addOns           String[]
   recipients       Recipient[]
   options          OptionItem[]
+  totalPrice       Int           @default(0)
 
   @@index([orderID, senderID, eCardNumber])
 }
@@ -183,15 +186,15 @@ model OptionItem {
 }
 
 model Recipient {
-  id         String  @id @default(uuid())
+  id         String   @id @default(uuid())
   firstName  String?
   lastName   String?
   email      String?
   phone      String?
   eventID    String?
-  event      Event?  @relation(references: [id], fields: [eventID])
+  event      Event?   @relation(references: [id], fields: [eventID])
   eCardID    String?
-  eCard      ECard?  @relation(references: [id], fields: [eCardID])
+  eCard      ECard?   @relation(references: [id], fields: [eCardID])
   rsvpStatus String?
   contactID  String?
   contact    Contact? @relation(references: [id], fields: [contactID])

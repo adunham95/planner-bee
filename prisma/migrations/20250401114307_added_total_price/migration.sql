@@ -1,0 +1,5 @@
+-- AlterTable
+ALTER TABLE "ECard" ADD COLUMN     "totalPrice" INTEGER NOT NULL DEFAULT 0;
+
+-- AlterTable
+ALTER TABLE "Event" ADD COLUMN     "totalPrice" INTEGER NOT NULL DEFAULT 0;
