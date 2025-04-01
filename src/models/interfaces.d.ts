@@ -13,6 +13,7 @@ export interface User {
   events?: Event[];
   eCards?: ECard[];
   contacts?: Contact[];
+  dateTypes?: DateType[];
 }
 
 export interface Session {
@@ -132,6 +133,17 @@ export interface ECard {
   recipients?: Recipient[];
   options?: OptionItem[];
   totalPrice: number;
+  dateTypeID: string | null;
+  dateType?: DateType | null;
+}
+
+export interface DateType {
+  id: string;
+  name: string;
+  userID: string;
+  user?: User;
+  eCard?: ECard[];
+  significantDates?: SignificantDate[];
 }
 
 export interface OptionItem {
@@ -172,6 +184,18 @@ export interface Contact {
   recipients?: Recipient[];
   userID: string | null;
   user?: User | null;
+  SignificantDate?: SignificantDate[];
+}
+
+export interface SignificantDate {
+  id: string;
+  contactID: string;
+  contact?: Contact;
+  dateTypeID: string;
+  dateType?: DateType;
+  month: number;
+  day: number;
+  year: number | null;
 }
 
 export interface NewsletterSignUp {

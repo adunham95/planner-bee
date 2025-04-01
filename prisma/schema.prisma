@@ -21,11 +21,11 @@ datasource db {
 }
 
 model User {
-  id            String    @id
-  email         String    @unique
+  id            String     @id
+  email         String     @unique
   password_hash String
-  createdAt     DateTime  @default(now())
-  updatedAt     DateTime  @updatedAt
+  createdAt     DateTime   @default(now())
+  updatedAt     DateTime   @updatedAt
   firstName     String?
   lastName      String?
   sessions      Session[]
@@ -33,6 +33,7 @@ model User {
   events        Event[]
   eCards        ECard[]
   contacts      Contact[]
+  dateTypes     DateType[]
 }
 
 model Session {
@@ -165,8 +166,19 @@ model ECard {
   recipients       Recipient[]
   options          OptionItem[]
   totalPrice       Int           @default(0)
+  dateTypeID       String?
+  dateType         DateType?     @relation(references: [id], fields: [dateTypeID])
 
   @@index([orderID, senderID, eCardNumber])
+}
+
+model DateType {
+  id               String            @id @default(uuid())
+  name             String
+  userID           String
+  user             User              @relation(references: [id], fields: [userID])
+  eCard            ECard[]
+  significantDates SignificantDate[]
 }
 
 model OptionItem {
@@ -201,14 +213,26 @@ model Recipient {
 }
 
 model Contact {
-  id         String      @id @default(uuid())
-  firstName  String
-  lastName   String?
-  email      String?
-  phone      String?
-  recipients Recipient[]
-  userID     String?
-  user       User?       @relation(references: [id], fields: [userID])
+  id              String            @id @default(uuid())
+  firstName       String
+  lastName        String?
+  email           String?
+  phone           String?
+  recipients      Recipient[]
+  userID          String?
+  user            User?             @relation(references: [id], fields: [userID])
+  SignificantDate SignificantDate[]
+}
+
+model SignificantDate {
+  id         String   @id @default(uuid())
+  contactID  String
+  contact    Contact  @relation(references: [id], fields: [contactID])
+  dateTypeID String
+  dateType   DateType @relation(references: [id], fields: [dateTypeID])
+  month      Int
+  day        Int
+  year       Int?
 }
 
 model NewsletterSignUp {
